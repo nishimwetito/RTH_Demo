@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags%}
+
+{% block title %}Register - TempConnect Hub{% endblock %}
+
+{% block content %}
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Register</h2>
+    
+    {{form|crispy }}
+
+    <label>Choose Registration Type:</label>
+    <select name="profile_type" id="profile_type">
+        <option value="level1">Level 1 - Skilled but No Certification</option>
+        <option value="level2">Level 2 - Certified Professional</option>
+        <option value="level3">Level 3 - Expert/ Experienced</option>
+        <option value="company">Company</option>
+    </select>
+
+
+    <button type="submit">Register</button>
+</form>
+
+{% endblock %}

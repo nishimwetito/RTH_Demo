@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags%}
+
+{% block title %}Level 3 Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Welcome to the Level 3 Dashboard</h2>
+    <p>Manage your business profile, showcase services, and attract clients.</p>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Update profile</h2>
+        
+        {{form|crispy }}
+    
+    
+    
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

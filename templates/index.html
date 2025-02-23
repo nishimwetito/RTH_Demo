@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - TempConnect Hub{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Welcome to Rwanda TempConnect Hub</h1>
+        <p>Connecting skilled workers with job opportunities!</p>
+        <a href="{% url 'register' %}" class="btn btn-primary">Get Started</a>
+    </div>
+{% endblock %}
