@@ -104,7 +104,7 @@ def level3_dashboard(request):
             return redirect('index')
 
     else:
-         form = Level1ProfileForm()
+         form = Level3ProfileForm()
   
    
     return render(request, 'users/level3.html',{'form':form})
@@ -123,4 +123,9 @@ def company_dashboard(request):
     
     
     return render(request, 'users/company.html',{'form':form})
+def profile_view(request):
+    return render(request,'profile.html')
+
+def profile1_view(request):
+    return render(request,'profile1.html')
 

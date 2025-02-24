@@ -62,10 +62,8 @@ class Level1Profile(models.Model):
     skills = models.ManyToManyField(Skill, related_name='level1_profiles', blank=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='level1',editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Only set level for new instances
-            self.level = 'level1'
-        super().save(*args, **kwargs)  # Call Django’s original save method
+    def __str__(self):
+        return f"{self.user.username} Profile"
 
 class Level2Profile(models.Model):
     LEVEL_CHOICES = [
@@ -89,10 +87,8 @@ class Level2Profile(models.Model):
     skills = models.ManyToManyField(Skill, related_name='level2_profiles', blank=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='level2',editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Only set level for new instances
-            self.level = 'level1'
-        super().save(*args, **kwargs)  # Call Django’s original save method
+    def __str__(self):
+        return f"{self.user.username} profile"
 
 class Level3Profile(models.Model):
     LEVEL_CHOICES = [
@@ -108,7 +104,7 @@ class Level3Profile(models.Model):
     cv = models.FileField(upload_to='cvs/', blank=True, null=True)
     education = models.TextField(blank=True, null=True)
     achievements = models.TextField(blank=True, null=True)
-    intro_video = models.URLField(blank=True, null=True)
+    intro_video_link = models.URLField(blank=True, null=True)
     youtube_link = models.URLField(blank=True, null=True)
     twitter_link = models.URLField(blank=True, null=True)
     instagram_link = models.URLField(blank=True, null=True)
@@ -116,14 +112,12 @@ class Level3Profile(models.Model):
     linkedin_link = models.URLField(blank=True, null=True)
     github_link = models.URLField(blank=True, null=True)
     website_link = models.URLField(blank=True, null=True)
-
     skills = models.ManyToManyField(Skill, related_name='level3_profiles', blank=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='level3',editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Only set level for new instances
-            self.level = 'level1'
-        super().save(*args, **kwargs)  # Call Django’s original save method
+    def __str__(self):
+        return f"{self.user.username} profile"
+    
 
 class CompanyProfile(models.Model):
     LEVEL_CHOICES = [
@@ -146,5 +140,7 @@ class CompanyProfile(models.Model):
     website_link = models.URLField(blank=True, null=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='company',editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.user.username} profile"
    
 
