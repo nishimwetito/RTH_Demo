@@ -123,9 +123,17 @@ def company_dashboard(request):
     
     
     return render(request, 'users/company.html',{'form':form})
-def profile_view(request):
-    return render(request,'profile.html')
+def user_profile_view(request):
+    return render(request,'profile_user.html')
+
+def company_profile_view(request):
+    return render(request,'profile_company.html')
+
+def profile2_view(request):
+    return render(request,'profile_2.html')
 
 def profile1_view(request):
-    return render(request,'profile1.html')
+    return render(request,'profile_1.html')
+def profile3_view(request):
+    return render(request,'profile_3.html')
 
