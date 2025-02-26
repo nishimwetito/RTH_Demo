@@ -1,0 +1,223 @@
+
+/* General Styles */
+/* body {
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
+} */
+
+/* Container for Profile Cards */
+.profile-container-3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Profile Card Container */
+.profile-card-3 {
+    background: white;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+    padding-bottom: 20px;
+    flex: 1 1 280px; /* Flex-grow, flex-shrink, flex-basis */
+}
+
+.profile-card-3:hover {
+    transform: translateY(-10px);
+}
+
+/* Header Background */
+.header-bg-3 {
+    background: #e76f51;
+    height: 120px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+}
+
+/* Profile Image */
+.profile-img-3{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-top: 60px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Name and Job Title */
+.profile-card-3 h5 {
+    margin: 15px 0 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.profile-card-3 .job-title-3 {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 20px;
+}
+
+/* Contact and Skill Info */
+.info-3 {
+    font-size: 0.9rem;
+    color: #333;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-3 i {
+    color: #e76f51;
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+/* Social Icons */
+.social-icons-3 {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+.social-icons-3 a {
+    color: #e76f51;
+    margin: 0 12px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons-3 a:hover {
+    color: #d84315;
+    transform: translateY(-5px);
+}
+
+/* Buttons */
+.btn-3 {
+    background: #e76f51;
+    color: white;
+    border-radius: 25px;
+    padding: 10px 20px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 1px 5px;
+    transition: background 0.3s ease;
+}
+
+.btn-3:hover {
+    background: #d84315;
+}
+
+/* Like Button and Count */
+.stats-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.like-btn-3 {
+    background: none;
+    border: none;
+    color: #e76f51;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.like-btn-3:hover {
+    color: #d84315;
+    transform: scale(1.1);
+}
+
+.like-count-3 {
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-card-3 {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .profile-card-3 h5 {
+        font-size: 1.3rem;
+    }
+
+    .profile-card-3 .job-title-3 {
+        font-size: 0.9rem;
+    }
+
+    .info-3 {
+        font-size: 0.8rem;
+    }
+
+    .btn-3 {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+
+    .like-btn-3 {
+        font-size: 1rem;
+    }
+
+    .like-count-3 {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-card-3 {
+        border-radius: 10px;
+    }
+
+    .profile-card-3 h5 {
+        font-size: 1.2rem;
+    }
+
+    .profile-card-3 .job-title-3 {
+        font-size: 0.8rem;
+    }
+
+    .info-3 {
+        font-size: 0.75rem;
+    }
+
+    .btn-3 {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+    }
+
+    .like-btn-3 {
+        font-size: 0.9rem;
+    }
+
+    .like-count-3 {
+        font-size: 0.75rem;
+    }
+}

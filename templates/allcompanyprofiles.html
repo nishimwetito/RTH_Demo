@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Page Banner -->
+    <div class="page-banner2">
+        <h1>Find Skilled Workers Near You</h1>
+        <p>Browse a variety of professionals available for temporary, contract, and seasonal work.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="input-group mb-4">
+                <input type="text" class="form-control" placeholder="Search profiles...">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Filters (Col 3) -->
+            <div class="col-md-2">
+                <div class="filters-section">
+                    <h4>Filters</h4>
+                    <input type="text" class="form-control mb-3" placeholder="Location">
+                    <input type="text" class="form-control mb-3" placeholder="Skill">
+                    <select class="form-select mb-3">
+                        <option value="">All Categories</option>
+                        <option value="Home Services">Home Services</option>
+                        <option value="Events">Events</option>
+                        <option value="Food & Beverage">Food & Beverage</option>
+                    </select>
+                    <button class="btn btn-primary w-100">Reset Filters</button>
+                </div>
+                
+            </div>
+
+            <!-- Profile Cards (Col 9) -->
+            <div class="col-md-10">
+                <div class="row">
+                    <!-- Worker 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="worker-card">
+                <img src="https://img.freepik.com/premium-photo/colorful-background-with-yellow-blue-geometric-pattern_481527-25413.jpg" class="background-img" alt="Background">
+                <img src="https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D" class="profile-img" alt="Profile">
+                <h5>John Doe</h5>
+                <p>Web Developer | Django & React</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> New York, USA</p>
+                    <p><i class="fas fa-envelope"></i> john.doe@example.com</p>
+                    <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+                <button class="like-button"><i class="fas fa-thumbs-up"></i> Like</button>
+                <button class="message-button"><i class="fas fa-envelope"></i> Send Message</button>
+                <div class="likes-count">123 Likes</div>
+            </div>
+        </div>
+
+        <!-- Worker 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="worker-card">
+                <img src="https://img.freepik.com/free-vector/gradient-glassmorphism-background_23-2149447863.jpg?semt=ais_hybrid" class="background-img" alt="Background">
+                <img src="https://media.istockphoto.com/id/1416037924/photo/bearded-man-standing-showing-his-smart-watch-and-looking-at-camera-with-toothy-smile.jpg?s=612x612&w=0&k=20&c=IOiqa1N8UR4CMIdfYJJ76qBoH5DyjGxudI9Beegiw5w=" class="profile-img" alt="Profile">
+                <h5>Jane Smith</h5>
+                <p>Graphic Designer | UI/UX & Branding</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> London, UK</p>
+                    <p><i class="fas fa-envelope"></i> jane.smith@example.com</p>
+                    <p><i class="fas fa-phone"></i> +44 123 456 789</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-dribbble"></i></a>
+                </div>
+                <button class="like-button"><i class="fas fa-thumbs-up"></i> Like</button>
+                <button class="message-button"><i class="fas fa-envelope"></i> Send Message</button>
+                <div class="likes-count">456 Likes</div>
+            </div>
+        </div>
+
+        <!-- Worker 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="worker-card">
+                <img src="https://previews.123rf.com/images/monsitj/monsitj1901/monsitj190100064/118035074-programming-code-abstract-technology-background-of-software-developer-and-computer-script.jpg" class="background-img" alt="Background">
+                <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" class="profile-img" alt="Profile">
+                <h5>David Karekezi</h5>
+                <p>Digital Marketer | SEO & Ads</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+                    <p><i class="fas fa-envelope"></i> david.karekezi@example.com</p>
+                    <p><i class="fas fa-phone"></i> +254 712 345 678</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <button class="like-button"><i class="fas fa-thumbs-up"></i> Like</button>
+                <button class="message-button"><i class="fas fa-envelope"></i> Send Message</button>
+                <div class="likes-count">789 Likes</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="worker-card">
+                <img src="https://www.autodesk.com/blogs/construction/wp-content/uploads/2024/07/140-Common-Construction-Terms-to-Know.jpg" class="background-img" alt="Background">
+                <img src="https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D" class="profile-img" alt="Profile">
+                <h5>John Doe</h5>
+                <p>Web Developer | Django & React</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> New York, USA</p>
+                    <p><i class="fas fa-envelope"></i> john.doe@example.com</p>
+                    <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+                <button class="like-button"><i class="fas fa-thumbs-up"></i> Like</button>
+                <button class="message-button"><i class="fas fa-envelope"></i> Send Message</button>
+                <div class="likes-count">123 Likes</div>
+            </div>
+        </div>
+
+        <!-- Worker 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="worker-card">
+                <img src="https://static.vecteezy.com/system/resources/previews/036/483/161/non_2x/ai-generated-interior-of-a-recording-studio-with-lots-of-equipment-ai-generative-photo.jpg" class="background-img" alt="Background">
+                <img src="https://media.istockphoto.com/id/1416037924/photo/bearded-man-standing-showing-his-smart-watch-and-looking-at-camera-with-toothy-smile.jpg?s=612x612&w=0&k=20&c=IOiqa1N8UR4CMIdfYJJ76qBoH5DyjGxudI9Beegiw5w=" class="profile-img" alt="Profile">
+                <h5>Jane Smith</h5>
+                <p>Graphic Designer | UI/UX & Branding</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> London, UK</p>
+                    <p><i class="fas fa-envelope"></i> jane.smith@example.com</p>
+                    <p><i class="fas fa-phone"></i> +44 123 456 789</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-dribbble"></i></a>
+                </div>
+                <button class="like-button"><i class="fas fa-thumbs-up"></i> Like</button>
+                <button class="message-button"><i class="fas fa-envelope"></i> Send Message</button>
+                <div class="likes-count">456 Likes</div>
+            </div>
+        </div>
+
+        <!-- Worker 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="worker-card">
+                <img src="https://www.shutterstock.com/image-vector/futuristic-tech-repair-concept-laptop-600nw-2450529691.jpg" class="background-img" alt="Background">
+                <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" class="profile-img" alt="Profile">
+                <h5>David Karekezi</h5>
+                <p>Digital Marketer | SEO & Ads</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+                    <p><i class="fas fa-envelope"></i> david.karekezi@example.com</p>
+                    <p><i class="fas fa-phone"></i> +254 712 345 678</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <button class="like-button"><i class="fas fa-thumbs-up"></i> Like</button>
+                <button class="message-button"><i class="fas fa-envelope"></i> Send Message</button>
+                <div class="likes-count">789 Likes</div>
+            </div>
+        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

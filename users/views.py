@@ -141,4 +141,8 @@ def home_view(request):
 
 def allprofiles_view(request):
     return render(request,'allprofiles.html')
+def allcompanyprofiles_view(request):
+    return render(request,'allcompanyprofiles.html')
+def allprofiles3_view(request):
+    return render(request,'allprofile3.html')
 

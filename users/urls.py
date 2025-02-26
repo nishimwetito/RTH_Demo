@@ -18,5 +18,8 @@ urlpatterns = [
     path('profile3/',views.profile3_view,name='profile3'),
     path('profile_company/',views.company_profile_view,name='company-profile'),
     path('allprofiles/',views.allprofiles_view,name='allprofiles'),
+    path('allcompanyprofiles/',views.allcompanyprofiles_view,name='allcompanyprofiles'),
+    path('allprofile3/',views.allprofiles3_view,name='allprofiles3'),
+
 
 ]
