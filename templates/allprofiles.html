@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Page Banner -->
+    <div class="page-banner2">
+        <h1>Find Skilled Workers Near You</h1>
+        <p>Browse a variety of professionals available for temporary, contract, and seasonal work.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="input-group mb-4">
+                <input type="text" class="form-control" placeholder="Search profiles...">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Filters (Col 3) -->
+            <div class="col-md-2">
+                <div class="filters-section">
+                    <h4>Filters</h4>
+                    <input type="text" class="form-control mb-3" placeholder="Location">
+                    <input type="text" class="form-control mb-3" placeholder="Skill">
+                    <select class="form-select mb-3">
+                        <option value="">All Categories</option>
+                        <option value="Home Services">Home Services</option>
+                        <option value="Events">Events</option>
+                        <option value="Food & Beverage">Food & Beverage</option>
+                    </select>
+                    <button class="btn btn-primary w-100">Reset Filters</button>
+                </div>
+            </div>
+
+            <!-- Profile Cards (Col 9) -->
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="profile-card">
+                        <div class="header-bg"></div>
+                        <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
+                        <h5>John Doe</h5>
+                    
+                        <p class="info"><i class="fas fa-phone"></i> +250 788 123 456</p>
+                        <p class="info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                        <p class="skills"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
+                    
+                        <div class="btn-container">
+                            <button class="like-btn" onclick="toggleLike()">
+                                <i id="heartIcon" class="far fa-heart"></i>
+                                <span id="likeCount">1.2k Likes</span>
+                            </button>
+                            <button class="btn">Send Message</button>
+                        </div>
+                    
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="header-bg"></div>
+                        <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
+                        <h5>John Doe</h5>
+                    
+                        <p class="info"><i class="fas fa-phone"></i> +250 788 123 456</p>
+                        <p class="info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                        <p class="skills"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
+                    
+                        <div class="btn-container">
+                            <button class="like-btn" onclick="toggleLike()">
+                                <i id="heartIcon" class="far fa-heart"></i>
+                                <span id="likeCount">1.2k Likes</span>
+                            </button>
+                            <button class="btn">Send Message</button>
+                        </div>
+                    
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="header-bg"></div>
+                        <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
+                        <h5>John Doe</h5>
+                    
+                        <p class="info"><i class="fas fa-phone"></i> +250 788 123 456</p>
+                        <p class="info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                        <p class="skills"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
+                    
+                        <div class="btn-container">
+                            <button class="like-btn" onclick="toggleLike()">
+                                <i id="heartIcon" class="far fa-heart"></i>
+                                <span id="likeCount">1.2k Likes</span>
+                            </button>
+                            <button class="btn">Send Message</button>
+                        </div>
+                    
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="header-bg"></div>
+                        <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
+                        <h5>John Doe</h5>
+                    
+                        <p class="info"><i class="fas fa-phone"></i> +250 788 123 456</p>
+                        <p class="info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                        <p class="skills"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
+                    
+                        <div class="btn-container">
+                            <button class="like-btn" onclick="toggleLike()">
+                                <i id="heartIcon" class="far fa-heart"></i>
+                                <span id="likeCount">1.2k Likes</span>
+                            </button>
+                            <button class="btn">Send Message</button>
+                        </div>
+                    
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="header-bg"></div>
+                        <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
+                        <h5>John Doe</h5>
+                    
+                        <p class="info"><i class="fas fa-phone"></i> +250 788 123 456</p>
+                        <p class="info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                        <p class="skills"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
+                    
+                        <div class="btn-container">
+                            <button class="like-btn" onclick="toggleLike()">
+                                <i id="heartIcon" class="far fa-heart"></i>
+                                <span id="likeCount">1.2k Likes</span>
+                            </button>
+                            <button class="btn">Send Message</button>
+                        </div>
+                    
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="header-bg"></div>
+                        <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
+                        <h5>John Doe</h5>
+                    
+                        <p class="info"><i class="fas fa-phone"></i> +250 788 123 456</p>
+                        <p class="info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                        <p class="skills"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
+                    
+                        <div class="btn-container">
+                            <button class="like-btn" onclick="toggleLike()">
+                                <i id="heartIcon" class="far fa-heart"></i>
+                                <span id="likeCount">1.2k Likes</span>
+                            </button>
+                            <button class="btn">Send Message</button>
+                        </div>
+                    
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

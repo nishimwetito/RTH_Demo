@@ -1,0 +1,152 @@
+
+/* body {
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    flex-wrap: wrap;
+    padding: 20px;
+} */
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-width: 1200px;
+}
+
+.profile-card {
+    background: white;
+    width: 280px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.profile-card .header-bg {
+    background: #2b6ef3;
+    height: 80px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 15px 15px 0 0;
+}
+
+.profile-card img.profile-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 5px solid white;
+    position: relative;
+    top: 40px;
+}
+
+.profile-card h5 {
+    margin-top: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.info {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+}
+
+.info i {
+    margin-right: 6px;
+    color: #2b6ef3;
+}
+
+.skills {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    margin: 10px 0;
+    word-wrap: break-word; /* Fix for long skill names */
+    white-space: normal;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.btn {
+    background: #2b6ef3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
+}
+
+.btn:hover {
+    background: #1a4dbf;
+}
+
+.like-btn {
+    background: transparent;
+    border: 2px solid #2b6ef3;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    margin: 0 5px;
+    gap: 6px; /* Fix for icon and text spacing */
+}
+
+.like-btn i {
+    color: #2b6ef3;
+}
+
+.like-btn:hover {
+    background: #f1f1f1;
+}
+
+.social-icons {
+    margin-top: 15px;
+}
+
+.social-icons a {
+    color: #555;
+    margin: 0 6px;
+    font-size: 18px;
+}
+
+.social-icons a:hover {
+    color: #2b6ef3;
+}
+
+@media (max-width: 600px) {
+    .profile-card {
+        width: 90%;
+    }
+
+    .btn-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn, .like-btn {
+        width: 100%;
+    }
+}

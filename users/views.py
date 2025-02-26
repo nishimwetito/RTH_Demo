@@ -136,4 +136,9 @@ def profile1_view(request):
     return render(request,'profile_1.html')
 def profile3_view(request):
     return render(request,'profile_3.html')
+def home_view(request):
+    return render(request,'home.html')
+
+def allprofiles_view(request):
+    return render(request,'allprofiles.html')
 
