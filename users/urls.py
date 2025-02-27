@@ -21,6 +21,7 @@ urlpatterns = [
     path('allcompanyprofiles/',views.allcompanyprofiles_view,name='allcompanyprofiles'),
     path('allprofile3/',views.allprofiles3_view,name='allprofiles3'),
     path('allprofile1/',views.allprofiles1_view,name='allprofiles1'),
+    
 
 
 ]

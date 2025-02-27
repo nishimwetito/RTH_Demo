@@ -149,3 +149,4 @@ def allprofiles3_view(request):
 def allprofiles1_view(request):
     return render(request,'allprofile1.html')
 
+
