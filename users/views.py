@@ -139,10 +139,13 @@ def profile3_view(request):
 def home_view(request):
     return render(request,'home.html')
 
-def allprofiles_view(request):
-    return render(request,'allprofiles.html')
+def allprofiles2_view(request):
+    return render(request,'allprofile2.html')
 def allcompanyprofiles_view(request):
     return render(request,'allcompanyprofiles.html')
 def allprofiles3_view(request):
     return render(request,'allprofile3.html')
+
+def allprofiles1_view(request):
+    return render(request,'allprofile1.html')
 

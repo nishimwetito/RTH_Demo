@@ -10,7 +10,7 @@
     padding: 20px;
 } */
 
-.container {
+.container-2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -18,7 +18,7 @@
     max-width: 1200px;
 }
 
-.profile-card {
+.profile-card-2 {
     background: white;
     width: 280px;
     border-radius: 15px;
@@ -30,7 +30,7 @@
     margin: 10px;
 }
 
-.profile-card .header-bg {
+.profile-card-2 .header-bg-2 {
     background: #2b6ef3;
     height: 80px;
     width: 100%;
@@ -40,7 +40,7 @@
     border-radius: 15px 15px 0 0;
 }
 
-.profile-card img.profile-img {
+.profile-card-2 img.profile-img {
     width: 90px;
     height: 90px;
     border-radius: 50%;
@@ -49,25 +49,25 @@
     top: 40px;
 }
 
-.profile-card h5 {
+.profile-card-2 h5 {
     margin-top: 50px;
     font-size: 18px;
     font-weight: bold;
     color: #333;
 }
 
-.info {
+.info-2 {
     font-size: 14px;
     color: #666;
     margin: 10px 0;
 }
 
-.info i {
+.info-2 i {
     margin-right: 6px;
     color: #2b6ef3;
 }
 
-.skills {
+.skills-2 {
     font-size: 14px;
     color: #333;
     font-weight: bold;
@@ -76,14 +76,14 @@
     white-space: normal;
 }
 
-.btn-container {
+.btn-container-2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
 }
 
-.btn {
+.btn-2 {
     background: #2b6ef3;
     color: white;
     border: none;
@@ -95,11 +95,11 @@
     margin: 0 5px;
 }
 
-.btn:hover {
+.btn-2:hover {
     background: #1a4dbf;
 }
 
-.like-btn {
+.like-btn-2 {
     background: transparent;
     border: 2px solid #2b6ef3;
     border-radius: 5px;
@@ -114,39 +114,39 @@
     gap: 6px; /* Fix for icon and text spacing */
 }
 
-.like-btn i {
+.like-btn-2 i {
     color: #2b6ef3;
 }
 
-.like-btn:hover {
+.like-btn-2:hover {
     background: #f1f1f1;
 }
 
-.social-icons {
+.social-icons-2 {
     margin-top: 15px;
 }
 
-.social-icons a {
+.social-icons-2 a {
     color: #555;
     margin: 0 6px;
     font-size: 18px;
 }
 
-.social-icons a:hover {
+.social-icons-2 a:hover {
     color: #2b6ef3;
 }
 
 @media (max-width: 600px) {
-    .profile-card {
+    .profile-card-2 {
         width: 90%;
     }
 
-    .btn-container {
+    .btn-container-2 {
         flex-direction: column;
         gap: 8px;
     }
 
-    .btn, .like-btn {
+    .btn-2, .like-btn-2 {
         width: 100%;
     }
 }

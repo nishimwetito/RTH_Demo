@@ -1,8 +1,8 @@
 let liked = false;
 
 function toggleLike() {
-    let heartIcon = document.getElementById("heartIcon");
-    let likeCount = document.getElementById("likeCount");
+    let heartIcon = document.getElementById("heartIcon-3");
+    let likeCount = document.getElementById("likeCount-3");
 
     if (!liked) {
         heartIcon.classList.remove("far");

@@ -42,7 +42,7 @@
 
 /* Header Background */
 .header-bg-3 {
-    background: #e76f51;
+    background: #516de7;
     height: 120px;
     width: 100%;
     position: absolute;
@@ -88,7 +88,7 @@
 }
 
 .info-3 i {
-    color: #e76f51;
+    color:#516de7;
     margin-right: 8px;
     font-size: 1rem;
 }
@@ -101,20 +101,20 @@
 }
 
 .social-icons-3 a {
-    color: #e76f51;
+    color:#516de7;
     margin: 0 12px;
     font-size: 1.2rem;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icons-3 a:hover {
-    color: #d84315;
+    color:#516de7;
     transform: translateY(-5px);
 }
 
 /* Buttons */
 .btn-3 {
-    background: #e76f51;
+    background:#516de7;
     color: white;
     border-radius: 25px;
     padding: 10px 20px;
@@ -127,7 +127,7 @@
 }
 
 .btn-3:hover {
-    background: #d84315;
+    background:#516de7;
 }
 
 /* Like Button and Count */
@@ -141,14 +141,14 @@
 .like-btn-3 {
     background: none;
     border: none;
-    color: #e76f51;
+    color:#516de7;
     font-size: 1.2rem;
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .like-btn-3:hover {
-    color: #d84315;
+    color:#516de7;
     transform: scale(1.1);
 }
 

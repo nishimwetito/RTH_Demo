@@ -17,9 +17,10 @@ urlpatterns = [
     path('profile2/',views.profile2_view,name='profile2'),
     path('profile3/',views.profile3_view,name='profile3'),
     path('profile_company/',views.company_profile_view,name='company-profile'),
-    path('allprofiles/',views.allprofiles_view,name='allprofiles'),
+    path('allprofile2/',views.allprofiles2_view,name='allprofiles2'),
     path('allcompanyprofiles/',views.allcompanyprofiles_view,name='allcompanyprofiles'),
     path('allprofile3/',views.allprofiles3_view,name='allprofiles3'),
+    path('allprofile1/',views.allprofiles1_view,name='allprofiles1'),
 
 
 ]
