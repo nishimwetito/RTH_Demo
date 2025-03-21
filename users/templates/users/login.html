@@ -2,6 +2,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block navbar %}
+{% include "login_navbar.html" %}
+{% endblock%}
+
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="card shadow-lg p-4 login-card">

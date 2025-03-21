@@ -19,7 +19,7 @@ def login_view(request):
             if user is not None:
                 login(request,user)
                 messages.success(request,f'You are logged in as {username}.')
-                return redirect('index')
+                return redirect('home')
             else:
                 messages.error(request,'Something went wrong!')
 
@@ -148,7 +148,7 @@ def allprofiles2_view(request):
 
 def allcompanyprofiles_view(request):
     return render(request,'allcompanyprofiles.html')
-    
+
 def allprofiles3_view(request):
     return render(request,'allprofile3.html')
 

@@ -1,19 +1,79 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags%}
+{% load crispy_forms_tags %}
 
 {% block title %}Company Dashboard{% endblock %}
 
 {% block content %}
-    <h2>Welcome to the Company Dashboard</h2>
-    <p>Post job openings, find skilled workers, and manage recruitment.</p>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h2>Update profile</h2>
-        
-        {{form|crispy }}
-    
-    
-    
-        <button type="submit">Save</button>
-    </form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">Welcome to the Company Dashboard</h2>
+            <p class="text-center mb-4">Post job openings, find skilled workers, and manage recruitment.</p>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Update Profile</h3>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* Background Style */
+    body {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Subtle gradient background */
+        min-height: 100vh; /* Ensure the background covers the full page */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Glassmorphic Card */
+    .card {
+        background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+        backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+    /* Card Title */
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Form Field Styling */
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+</style>
 {% endblock %}
