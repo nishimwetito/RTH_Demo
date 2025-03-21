@@ -14,9 +14,9 @@
             
             <!-- Registration Form Fields -->
             {% for field in form %}
-            <div class="mb-3">
-                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                <div class="input-group">
+            <div class="mb-3 ">
+                {% comment %} <label for="{{ field.id_for_label }}" class="form-label d-flex justify-content-center align-items-center">{{ field.label }}</label> {% endcomment %}
+                <div class="input-group d-flex justify-content-center align-items-center">
                     <span class="input-group-text">
                         {% if field.name == 'username' %}
                             <i class="fas fa-user"></i>
@@ -29,12 +29,24 @@
                         {% endif %}
                     </span>
                     {{ field }}
+                    
                 </div>
                 {% for error in field.errors %}
                     <div class="text-danger">{{ error }}</div>
                 {% endfor %}
             </div>
             {% endfor %}
+
+            <!-- Registration Type Dropdown -->
+            <div class="mb-3">
+                <label for="profile_type" class="form-label">Choose Registration Type:</label>
+                <select name="profile_type" id="profile_type" class="form-select">
+                    <option value="level1">Level 1 - Skilled but No Certification</option>
+                    <option value="level2">Level 2 - Certified Professional</option>
+                    <option value="level3">Level 3 - Expert/Experienced</option>
+                    <option value="company">Company</option>
+                </select>
+            </div>
 
             <!-- Register Button -->
             <button type="submit" class="btn btn-primary w-100">
@@ -84,7 +96,7 @@
         background: rgba(255, 255, 255, 0.2);
         border: none;
         color: white;
-        padding: 12px;
+        padding: 8px;
         border-radius: 8px;
         transition: all 0.3s ease;
     }
