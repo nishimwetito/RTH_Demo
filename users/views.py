@@ -123,6 +123,8 @@ def company_dashboard(request):
     
     
     return render(request, 'users/company.html',{'form':form})
+
+
 def user_profile_view(request):
     return render(request,'profile_user.html')
 
@@ -134,15 +136,19 @@ def profile2_view(request):
 
 def profile1_view(request):
     return render(request,'profile_1.html')
+
 def profile3_view(request):
     return render(request,'profile_3.html')
+
 def home_view(request):
     return render(request,'home.html')
 
 def allprofiles2_view(request):
     return render(request,'allprofile2.html')
+
 def allcompanyprofiles_view(request):
     return render(request,'allcompanyprofiles.html')
+    
 def allprofiles3_view(request):
     return render(request,'allprofile3.html')
 

@@ -9,6 +9,22 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ['first_name', 'email', 'username', 'password1', 'password2']
         labels = {'first_name': 'Name'}
+    
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            # Add a base class to all fields
+            field.widget.attrs.update({'class': 'input'})
+            
+            # Add specific classes based on the field type
+            if name == 'username':
+                field.widget.attrs.update({'placeholder': 'Enter your username'})
+            elif name == 'email':
+                field.widget.attrs.update({'placeholder': 'Enter your email'})
+            elif name == 'first_name':
+                field.widget.attrs.update({'placeholder': 'Enter your name'})
+            elif name in ['password1', 'password2']:
+                field.widget.attrs.update({'placeholder': 'Enter your password'})
 
 
 class ProfileForm(forms.ModelForm):
