@@ -1,7 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404, redirect
 from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from. forms import ProfileForm,Level1ProfileForm,Level2ProfileForm,Level3ProfileForm,CompanyProfileForm
+from . models import Level1Profile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 
@@ -135,6 +139,7 @@ def profile2_view(request):
     return render(request,'profile_2.html')
 
 def profile1_view(request):
+
     return render(request,'profile_1.html')
 
 def profile3_view(request):
@@ -153,6 +158,27 @@ def allprofiles3_view(request):
     return render(request,'allprofile3.html')
 
 def allprofiles1_view(request):
-    return render(request,'allprofile1.html')
+    profiles1 =  Level1Profile.objects.all()
+    context = {
+        'profiles1':profiles1
+    }
+    return render(request,'allprofile1.html',context)
+
+@require_POST
+@login_required
+def like_profile(request, profile_id):
+    profile = get_object_or_404(Level1Profile, id=profile_id)
+    liked = False
+    
+    if request.user in profile.likes.all():
+        profile.likes.remove(request.user)
+    else:
+        profile.likes.add(request.user)
+        liked = True
+    
+    return JsonResponse({
+        'liked': liked,
+        'total_likes': profile.likes.count()
+    })
 
 

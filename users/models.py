@@ -61,7 +61,12 @@ class Level1Profile(models.Model):
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)
     skills = models.ManyToManyField(Skill, related_name='level1_profiles', blank=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='level1',editable=False)
+    likes = models.ManyToManyField(User, related_name="liked_profiles", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    def total_likes(self):
+        return self.likes.count()
+
+        
     def __str__(self):
         return f"{self.user.username} Profile"
 
@@ -129,6 +134,7 @@ class CompanyProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = PhoneNumberField(unique=False, region="RW")  # Default country: Rwanda
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
+    profile_picture_company = models.ImageField(upload_to='companies/', blank=True, null=True)
     profile_picture_logo = models.ImageField(upload_to='companies/', blank=True, null=True)
     services = models.TextField(blank=True, null=True)
     youtube_link = models.URLField(blank=True, null=True)

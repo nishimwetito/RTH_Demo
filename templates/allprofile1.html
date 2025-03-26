@@ -38,7 +38,7 @@
             <!-- Profile Cards (Col 9) -->
             <div class="col-md-10">
                 <div class="row">
-                    <div class="col-12 col-md-6 col-lg-4">
+                {% comment %} <div class="col-12 col-md-6 col-lg-4">
                     <div class="profile-card-1">
                         <!-- Profile Image -->
                         <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
@@ -242,17 +242,22 @@
                             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
+                {% for profile in profiles1%}
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="profile-card-1">
                         <!-- Profile Image -->
-                        <img src="https://assets.entrepreneur.com/content/3x2/2000/20150406145944-dos-donts-taking-perfect-linkedin-profile-picture-selfie-mobile-camera-2.jpeg?format=pjeg&auto=webp&crop=1:1" alt="Profile Image" class="profile-image">
+                         {% if  profile.profile_picture  %}
+                        <img src="{{ profile.profile_picture.url }}" alt="Profile Image" class="profile-image">
+                        {% else %}
+                        <img src="{% static 'images/default-profile.jpg' %}" alt="Profile Image" class="profile-image">
+                        {% endif %}
     
                         <!-- Profile Name -->
-                        <div class="profile-name-1">NISHIMWE TITO</div>
+                        <div class="profile-name-1">{{ profile.user.username }}</div>
     
                         <!-- Profile Info -->
-                        <div class="profile-info-1"><i class="fas fa-phone"></i> +250 788 123 456</div>
+                        <div class="profile-info-1"><i class="fas fa-phone"></i> +250 {{profile.phone}}</div>
                         <div class="profile-info-1"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
     
                         <!-- Profile Skills -->
@@ -272,9 +277,11 @@
     
                         <!-- Like Section -->
                         <div class="like-section-1">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span>1.2k Likes</span>
+                            <i class="fas fa-thumbs-up {% if request.user in profile.likes.all %}liked{% endif %}" 
+                               id="like-button-{{ profile.id }}"></i>
+                            <span id="like-count-{{ profile.id }}">{{ profile.total_likes }} Like{{ profile.total_likes|pluralize }}</span>
                         </div>
+                        
     
                         <!-- Social Media Links -->
                         <div class="social-icons-1">
@@ -284,9 +291,53 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 
+<style>
+    .fa-thumbs-up {
+        color: #666;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    
+    .fa-thumbs-up.liked {
+        color: #4267B2;
+    }
+    
+    .fa-thumbs-up:hover {
+        color: #4267B2;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle all like button clicks
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id.startsWith('like-button-')) {
+                const profileId = e.target.id.split('-')[2];
+                const likeCount = document.getElementById('like-count-' + profileId);
+                
+                fetch(`/like_profile/${profileId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    e.target.classList.toggle('liked', data.liked);
+                    likeCount.textContent = `${data.total_likes} Like${data.total_likes !== 1 ? 's' : ''}`;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+    </script>
+
 {% endblock %}
+
