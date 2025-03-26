@@ -36,7 +36,7 @@ class ProfileForm(forms.ModelForm):
 class Level1ProfileForm(forms.ModelForm):
     class Meta:
         model = Level1Profile
-        exclude = ['user','created_at','level']
+        exclude = ['user','created_at','level','likes']
 
 class Level2ProfileForm(forms.ModelForm):
     class Meta:
