@@ -182,3 +182,15 @@ def like_profile(request, profile_id):
     })
 
 
+# views.py
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Message
+
+@login_required(login_url='login')
+def inbox_view(request):
+
+    return render(request, 'inbox.html')
+
+
