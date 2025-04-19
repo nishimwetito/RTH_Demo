@@ -38,7 +38,41 @@
             <!-- Profile Cards (Col 9) -->
             <div class="col-md-10">
                 <div class="row">
+                    {% for profile in profiles2 %}
                     <div class="profile-card-2">
+                        <div class="header-bg-2"></div>
+                        {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}" class="profile-img" alt="Profile">
+                        {% else %}
+                        <img src="{% static 'images/default-profile.jpg' %}" class="profile-img" alt="Profile">
+                        {% endif %}
+                        <a href="{% url 'level2_profile_detail' profile.id %}" >
+                        <h5>{{ profile.user.username }}</h5>
+                    </a>
+                        <p class="info-2"><i class="fas fa-phone"></i> +250 {{profile.phone}}</p>
+                        <p class="info-2"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                        <p class="skills-2"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
+            
+                        <div class="btn-container-2">
+                            <button class="like-btn-2" onclick="toggleLike()">
+                                <i id="heartIcon" class="far fa-heart"></i>
+                                <span id="likeCount">1.2k Likes</span>
+                            </button>
+                            {% if profiles2 %}
+                          <button class="btn-2" >  <a href="{% url 'create-message' profile.user.profile.id %}">Send Message</a></button>
+                         {%endif%}
+                        </div>
+            
+                        <div class="social-icons-2">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                
+                    {% endfor %}
+                    {% comment %} <div class="profile-card-2">
                         <div class="header-bg-2"></div>
                         <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
                         <h5>John Doe</h5>
@@ -133,31 +167,7 @@
                             <a href="#"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-linkedin"></i></a>
                         </div>
-                    </div>
-                    <div class="profile-card-2">
-                        <div class="header-bg-2"></div>
-                        <img src="https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg" class="profile-img" alt="Profile">
-                        <h5>John Doe</h5>
-            
-                        <p class="info-2"><i class="fas fa-phone"></i> +250 788 123 456</p>
-                        <p class="info-2"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
-                        <p class="skills-2"><i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation</p>
-            
-                        <div class="btn-container-2">
-                            <button class="like-btn-2" onclick="toggleLike()">
-                                <i id="heartIcon" class="far fa-heart"></i>
-                                <span id="likeCount">1.2k Likes</span>
-                            </button>
-                            <button class="btn-2">Send Message</button>
-                        </div>
-            
-                        <div class="social-icons-2">
-                            <a href="#"><i class="fab fa-facebook"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                        </div>
-                    </div>
+                    </div> {% endcomment %}
                                                                      
                 </div>
             </div>

@@ -93,6 +93,7 @@ class Level2Profile(models.Model):
     github_link = models.URLField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, related_name='level2_profiles', blank=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='level2',editable=False)
+    likes = models.ManyToManyField(User, related_name="liked_level2_profiles", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.user.username} profile"
@@ -152,15 +153,27 @@ class CompanyProfile(models.Model):
         return f"{self.user.username} profile"
 
 class Message(models.Model):
-    sender = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,blank=True)
-    recipient = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,blank=True,related_name="messages")
+    sender = models.ForeignKey(
+        Profile,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        
+    )
+    recipient = models.ForeignKey(
+        Profile,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="messages"  # More descriptive than just "messages"
+    )
     name = models.CharField(max_length=200,null=True,blank=True)
     email =models.EmailField(max_length=200,null=True,blank=True)
     subject = models.CharField(max_length=200,null=True,blank=True)
     body = models.TextField()
     is_read = models.BooleanField(default=False,null=True)
     created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True,editable=False)
 
     def __str__(self):
         return self.subject

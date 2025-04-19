@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Message Details
+{% endblock %}
+
+{% block content %}
+<style>
+    .message-detail-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .message-header {
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 20px;
+    }
+    .message-header h4 {
+        font-weight: bold;
+    }
+    .message-meta {
+        color: #6c757d;
+    }
+</style>
+
+<div class="container message-detail-container">
+    <div class="message-header">
+        <h4>{{ message.subject }}</h4>
+        <p class="message-meta">
+            From: <strong>{{ message.name }}</strong> | 
+            Email: <a href="mailto:{{ message.email }}">{{ message.email }}</a>
+        </p>
+    </div>
+
+    <div class="message-body">
+        <p>{{ message.body }}</p>
+    </div>
+
+    <a href="{% url 'new-inbox' %}" class="btn btn-secondary mt-4">⬅ Back to Inbox</a>
+</div>
+{% endblock %}

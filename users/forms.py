@@ -1,7 +1,8 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile,Level1Profile,Level2Profile,Level3Profile,CompanyProfile
+from .models import Profile,Level1Profile,Level2Profile,Level3Profile,CompanyProfile,Message
 
 # Base user registration form
 class CustomUserCreationForm(UserCreationForm):
@@ -51,6 +52,18 @@ class CompanyProfileForm(forms.ModelForm):
     class Meta:
         model = CompanyProfile
         exclude = ['user','created_at','level']
+
+
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = ['name', 'email', 'subject', 'body']
+
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})
 
 
    

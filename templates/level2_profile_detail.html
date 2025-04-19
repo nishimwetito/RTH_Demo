@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row g-5">
+    <!-- Left Side Profile Card -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm text-center sticky-top p-4">
+        <div class="mb-3">
+          {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #eee;" alt="{{ profile.user.get_full_name }}">
+          {% else %}
+            <img src="{% static 'images/default_profile.png' %}" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #eee;" alt="Default profile picture">
+          {% endif %}
+        </div>
+        <h2 class="h4">{{ profile.user.get_full_name|default:profile.user.username }}</h2>
+        <p class="text-muted mb-1">Fullstack Developer</p>
+        <p class="text-secondary small">Based in {{ profile.address.city|default:"Florida" }}, {{ profile.address.country|default:"USA" }}</p>
+
+        <!-- Social Media Links -->
+        <div class="d-flex justify-content-center my-3 gap-3">
+          {% if profile.github_link %}<a href="{{ profile.github_link }}" target="_blank"><i class="fab fa-github fa-lg"></i></a>{% endif %}
+          {% if profile.linkedin_link %}<a href="{{ profile.linkedin_link }}" target="_blank"><i class="fab fa-linkedin fa-lg"></i></a>{% endif %}
+          {% if profile.facebook_link %}<a href="{{ profile.facebook_link }}" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>{% endif %}
+          {% if profile.twitter_link %}<a href="{{ profile.twitter_link }}" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>{% endif %}
+          {% if profile.instagram_link %}<a href="{{ profile.instagram_link }}" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>{% endif %}
+        </div>
+
+        <a href="mailto:{{ profile.user.email }}" class="btn btn-primary btn-sm mt-2">Send Message</a>
+
+        <div class="mt-4 d-grid gap-2">
+          {% if profile.cv %}
+            <a href="{{ profile.cv.url }}" class="btn btn-outline-primary" download>Download CV</a>
+          {% endif %}
+          {% if profile.certificate %}
+            <a href="{{ profile.certificate.url }}" class="btn btn-outline-secondary" download>View Certificate</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side Content -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm p-4">
+        <section class="mb-4">
+          <h1 class="h4 border-bottom pb-2 mb-3">ABOUT ME</h1>
+          <p>I build new projects just to tickle my brain and love teaching others how they're made. While I keep busy with my work, I'm always open to interesting team projects that challenge me.</p>
+        </section>
+
+        <section class="mb-4">
+          <h2 class="h5 border-bottom pb-2 mb-3">SKILLS</h2>
+          {% for skill in profile.skills.all %}
+            <div class="mb-3">
+              <h6 class="fw-bold mb-1">{{ skill.name }}</h6>
+              <p class="mb-1 text-muted">{{ skill.description|default:"Lorem Ipsum is simply dummy text of the printing and typesetting industry." }}</p>
+              {% if forloop.first %}
+                <p class="text-muted">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+              {% endif %}
+            </div>
+          {% empty %}
+            <div class="mb-3">
+              <h6 class="fw-bold">React</h6>
+              <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            </div>
+            <div class="mb-3">
+              <h6 class="fw-bold">Django</h6>
+              <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            </div>
+          {% endfor %}
+        </section>
+
+        <section>
+          <h2 class="h5 border-bottom pb-2 mb-3">OTHER SKILLS</h2>
+          <div class="row g-2">
+            {% for skill in profile.skills.all|slice:":3" %}
+              <div class="col-6 col-md-4">
+                <div class="bg-light text-center p-2 rounded">{{ skill.name }}</div>
+              </div>
+            {% empty %}
+              <div class="col-6 col-md-4"><div class="bg-light text-center p-2 rounded">Python</div></div>
+              <div class="col-6 col-md-4"><div class="bg-light text-center p-2 rounded">HTML</div></div>
+              <div class="col-6 col-md-4"><div class="bg-light text-center p-2 rounded">CSS</div></div>
+            {% endfor %}
+          </div>
+        </section>
+      </div>
+
+      <!-- PROJECTS SECTION -->
+      <div class="card shadow-sm mt-4 p-4">
+        <h2 class="h5 border-bottom pb-2 mb-3">PROJECTS</h2>
+        <div class="row">
+          {% for i in "123" %}
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="border rounded p-3 h-100">
+              <h6 class="fw-bold">Project {{ i }}</h6>
+              <p class="text-muted small">A cool project with great features and a clean UI design.</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- PRODUCTS SECTION -->
+      <div class="card shadow-sm mt-4 p-4">
+        <h2 class="h5 border-bottom pb-2 mb-3">PRODUCTS</h2>
+        <div class="row">
+          {% for i in "12" %}
+          <div class="col-md-6 mb-3">
+            <div class="border rounded p-3 h-100">
+              <img src="{% static 'images/demo_product.jpg' %}" class="img-fluid mb-2 rounded" alt="Product {{ i }}">
+              <h6 class="fw-bold">Product {{ i }}</h6>
+              <p class="text-muted small">This is a sample product description for product {{ i }}.</p>
+              <a href="#" class="btn btn-sm btn-outline-secondary">View Product</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- COMMENTS SECTION -->
+      <div class="card shadow-sm mt-4 p-4">
+        <h2 class="h5 border-bottom pb-2 mb-3">COMMENTS</h2>
+        <div class="mb-3">
+          <div class="bg-light rounded p-3 mb-2">
+            <strong>Alice:</strong>
+            <p class="mb-1">Great work on your profile and projects!</p>
+            <small class="text-muted">2 days ago</small>
+          </div>
+          <div class="bg-light rounded p-3 mb-2">
+            <strong>Bob:</strong>
+            <p class="mb-1">I love your clean layout and design skills.</p>
+            <small class="text-muted">5 days ago</small>
+          </div>
+          <div class="bg-light rounded p-3">
+            <strong>Charlie:</strong>
+            <p class="mb-1">Keep pushing forward. Amazing stuff!</p>
+            <small class="text-muted">1 week ago</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
