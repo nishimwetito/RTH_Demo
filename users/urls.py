@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from .import views
 
 urlpatterns = [
@@ -29,7 +29,8 @@ urlpatterns = [
     path('inbox/', views.inbox_view, name='inbox'),
     path('new_inbox/', views.new_inbox_view, name='new-inbox'),
     path('message/<str:pk>/', views.viewMessage, name='message'),
-    path('create-message/<uuid:pk>/', views.createMessage, name='create-message')
+    path('create-message/<uuid:pk>/', views.createMessage, name='create-message'),
+    path('chaining/', include("smart_selects.urls")),
 
 
 

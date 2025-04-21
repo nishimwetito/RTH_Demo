@@ -261,7 +261,15 @@ level 1
     
                         <!-- Profile Info -->
                         <div class="profile-info-1"><i class="fas fa-phone"></i> +250 {{profile.phone}}</div>
-                        <div class="profile-info-1"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
+                        <div class="profile-info-1">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {% if profile.address %}
+                              {{ profile.address.cell }}, {{ profile.address.province }}
+                            {% else %}
+                              <span class="text-muted">No address provided</span>
+                            {% endif %}
+                          </div>
+                          
     
                         <!-- Profile Skills -->
                         <div class="skills-container-1">

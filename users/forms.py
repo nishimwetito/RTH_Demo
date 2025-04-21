@@ -37,7 +37,7 @@ class ProfileForm(forms.ModelForm):
 class Level1ProfileForm(forms.ModelForm):
     class Meta:
         model = Level1Profile
-        exclude = ['user','created_at','level','likes']
+        exclude = ['user','created_at','level','likes','address']
 
 class Level2ProfileForm(forms.ModelForm):
     class Meta:
@@ -66,7 +66,7 @@ class MessageForm(ModelForm):
             field.widget.attrs.update({'class': 'input'})
 
 
-   
+ 
 
 
 

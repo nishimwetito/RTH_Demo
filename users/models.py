@@ -2,7 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-
+from smart_selects.db_fields import ChainedForeignKey
 # User Profile Model with different levels
 class Profile(models.Model):
 
@@ -18,8 +18,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.email
 
-
-
 # Address Model
 class Address(models.Model):
     province = models.CharField(max_length=100)
@@ -30,6 +28,9 @@ class Address(models.Model):
 
     def __str__(self):
         return f"{self.village}, {self.cell}, {self.sector}, {self.district}, {self.province}"
+
+
+
 
 # Category Model (e.g., Construction, Event Services, etc.)
 class Category(models.Model):

@@ -5,9 +5,12 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from. forms import ProfileForm,Level1ProfileForm,Level2ProfileForm,Level3ProfileForm,CompanyProfileForm,MessageForm
-from . models import Level1Profile,Level2Profile,Level3Profile, CompanyProfile,Message,Profile
+from . models import Level1Profile,Level2Profile,Level3Profile, CompanyProfile,Message,Profile,Address
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+#location fields
+import json
+from django.conf import settings
 
 def index_view(request):
     return render(request, 'index.html')
@@ -80,17 +83,43 @@ def register(request):
 # Level1_Profile
 
 def level1_dashboard(request):
+    with open(settings.BASE_DIR / 'static' / 'rwandaState.json') as f:
+        address_data = json.load(f)
+
     if request.method == 'POST':
-        form = Level1ProfileForm(request.POST,request.FILES)
+        form = Level1ProfileForm(request.POST, request.FILES)
         if form.is_valid():
+            # ✅ 1. Read selected address values
+            province = request.POST.get('province')
+            district = request.POST.get('district')
+            sector = request.POST.get('sector')
+            cell = request.POST.get('cell')
+            village = request.POST.get('village')
+
+            # ✅ 2. Create or get Address instance
+            address, created = Address.objects.get_or_create(
+                province=province,
+                district=district,
+                sector=sector,
+                cell=cell,
+                village=village
+            )
+
+            # ✅ 3. Save profile with that address
             level1_profile = form.save(commit=False)
             level1_profile.user = request.user
+            level1_profile.address = address  # <- this is crucial
             level1_profile.save()
-            return redirect('index')
+            form.save_m2m()  # for skills
+
+            return redirect('index')  # or wherever
     else:
         form = Level1ProfileForm()
 
-    return render(request, 'users/level1.html',{'form':form})
+    return render(request, 'users/level1.html', {
+        'form': form,
+        'address_json': json.dumps(address_data)
+    })
 
 
 

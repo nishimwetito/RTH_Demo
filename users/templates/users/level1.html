@@ -16,6 +16,25 @@
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
+
+<!-- Cascading Address Dropdowns -->
+<div class="form-group">
+    <label for="province">Province:</label>
+    <select id="province" name="province" class="form-control mb-2"></select>
+
+    <label for="district">District:</label>
+    <select id="district" name="district" class="form-control mb-2"></select>
+
+    <label for="sector">Sector:</label>
+    <select id="sector" name="sector" class="form-control mb-2"></select>
+
+    <label for="cell">Cell:</label>
+    <select id="cell" name="cell" class="form-control mb-2"></select>
+
+    <label for="village">Village:</label>
+    <select id="village" name="village" class="form-control mb-2"></select>
+</div>
+
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
@@ -76,4 +95,62 @@
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
 </style>
+
+<script>
+    const addressData = {{ address_json|safe }};
+
+    const provinceSelect = document.getElementById("province");
+    const districtSelect = document.getElementById("district");
+    const sectorSelect = document.getElementById("sector");
+    const cellSelect = document.getElementById("cell");
+    const villageSelect = document.getElementById("village");
+
+    function populate(select, options) {
+        select.innerHTML = "";
+        for (const key of Object.keys(options)) {
+            const opt = document.createElement("option");
+            opt.value = key;
+            opt.textContent = key;
+            select.appendChild(opt);
+        }
+    }
+
+    function populateList(select, items) {
+        select.innerHTML = "";
+        for (const item of items) {
+            const opt = document.createElement("option");
+            opt.value = item;
+            opt.textContent = item;
+            select.appendChild(opt);
+        }
+    }
+
+    provinceSelect.addEventListener("change", () => {
+        const districts = addressData[provinceSelect.value];
+        populate(districtSelect, districts);
+        districtSelect.dispatchEvent(new Event("change"));
+    });
+
+    districtSelect.addEventListener("change", () => {
+        const sectors = addressData[provinceSelect.value][districtSelect.value];
+        populate(sectorSelect, sectors);
+        sectorSelect.dispatchEvent(new Event("change"));
+    });
+
+    sectorSelect.addEventListener("change", () => {
+        const cells = addressData[provinceSelect.value][districtSelect.value][sectorSelect.value];
+        populate(cellSelect, cells);
+        cellSelect.dispatchEvent(new Event("change"));
+    });
+
+    cellSelect.addEventListener("change", () => {
+        const villages = addressData[provinceSelect.value][districtSelect.value][sectorSelect.value][cellSelect.value];
+        populateList(villageSelect, villages);
+    });
+
+    // Start the dropdown chain
+    populate(provinceSelect, addressData);
+    provinceSelect.dispatchEvent(new Event("change"));
+</script>
+
 {% endblock %}
