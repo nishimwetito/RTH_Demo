@@ -11,6 +11,7 @@ from django.contrib import messages
 #location fields
 import json
 from django.conf import settings
+from django.core.paginator import Paginator
 
 def index_view(request):
     return render(request, 'index.html')
@@ -206,7 +207,6 @@ def level2_profile_detail(request, pk):
     return render(request, 'level2_profile_detail.html', {'profile': profile})
 
 #Company profiles
-
 def allcompanyprofiles_view(request):
     companies =  CompanyProfile.objects.all()
     context = {
@@ -222,11 +222,15 @@ def allprofiles3_view(request):
     return render(request,'allprofile3.html',context)
 
 def allprofiles1_view(request):
-    profiles1 =  Level1Profile.objects.all()
+    profiles1_list = Level1Profile.objects.all()
+    paginator = Paginator(profiles1_list, 6)  # 6 profiles per page
+    page_number = request.GET.get('page')
+    profiles1 = paginator.get_page(page_number)
+
     context = {
-        'profiles1':profiles1
+        'profiles1': profiles1
     }
-    return render(request,'allprofile1.html',context)
+    return render(request, 'allprofile1.html', context)
 
 
     #_____________________Liking profile________________________________
