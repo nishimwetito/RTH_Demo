@@ -195,6 +195,8 @@ def home_view(request):
 
 def appoitment_view(request):
     return render(request,'appoitment.html')
+def market_place_view(request):
+    return render(request,'market_place.html')
 
 def allprofiles2_view(request):
     profiles2 = Level2Profile.objects.all()

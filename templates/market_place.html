@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TempConnect Hub Marketplace</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #0d6efd;
+        --secondary-color: #6c757d;
+        --success-color: #198754;
+        --warning-color: #ffc107;
+        --info-color: #0dcaf0;
+      }
+
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .marketplace-header {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+        color: white;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .listing-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+        border: none;
+      }
+
+      .listing-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .listing-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 0.75rem;
+      }
+
+      .card-img-container {
+        height: 180px;
+        overflow: hidden;
+      }
+
+      .card-img-top {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+
+      .filter-card {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .nav-tabs .nav-link {
+        color: var(--secondary-color);
+        font-weight: 500;
+      }
+
+      .nav-tabs .nav-link.active {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+
+      .quick-action-btn {
+        transition: all 0.3s ease;
+      }
+
+      .quick-action-btn:hover {
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Marketplace Header -->
+    <header class="marketplace-header py-4 mb-4">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h1 class="fw-bold mb-3">TempConnect Marketplace</h1>
+            <p class="lead mb-0">
+              Buy, sell, or rent items within your community. Find services you
+              need.
+            </p>
+          </div>
+          <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <button class="btn btn-light me-2">
+              <i class="fas fa-search me-1"></i> Browse
+            </button>
+            <button class="btn btn-warning">
+              <i class="fas fa-plus me-1"></i> Create Listing
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+      <div class="row">
+        <!-- Left Sidebar - Filters -->
+        <div class="col-lg-3 mb-4">
+          <div class="card filter-card h-100">
+            <div class="card-header bg-white border-bottom">
+              <h5 class="mb-0 fw-bold">
+                <i class="fas fa-filter me-2"></i>Filters
+              </h5>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Category</label>
+                  <select class="form-select">
+                    <option selected>All Categories</option>
+                    <option>Electronics</option>
+                    <option>Furniture</option>
+                    <option>Tools & Equipment</option>
+                    <option>Vehicles</option>
+                    <option>Services</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Listing Type</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="for-sale"
+                      checked
+                    />
+                    <label class="form-check-label" for="for-sale"
+                      >For Sale</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="for-rent"
+                      checked
+                    />
+                    <label class="form-check-label" for="for-rent"
+                      >For Rent</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="transport"
+                    />
+                    <label class="form-check-label" for="transport"
+                      >Transport</label
+                    >
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Price Range</label>
+                  <input
+                    type="range"
+                    class="form-range"
+                    min="0"
+                    max="1000000"
+                    step="10000"
+                    value="500000"
+                  />
+                  <div class="d-flex justify-content-between">
+                    <small>0 RWF</small>
+                    <small>1,000,000 RWF</small>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Location</label>
+                  <select class="form-select">
+                    <option selected>All Rwanda</option>
+                    <option>Kigali</option>
+                    <option>Northern Province</option>
+                    <option>Southern Province</option>
+                    <option>Eastern Province</option>
+                    <option>Western Province</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="fas fa-check me-1"></i> Apply Filters
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Listings Area -->
+        <div class="col-lg-6 mb-4">
+          <!-- Search and Tabs -->
+          <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4"
+          >
+            <ul
+              class="nav nav-tabs mb-3 mb-md-0"
+              id="listingTabs"
+              role="tablist"
+            >
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="all-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#all"
+                  type="button"
+                >
+                  All Listings
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="sale-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#sale"
+                  type="button"
+                >
+                  For Sale
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="rent-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#rent"
+                  type="button"
+                >
+                  For Rent
+                </button>
+              </li>
+            </ul>
+
+            <div class="input-group" style="max-width: 300px">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search listings..."
+              />
+              <button class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content" id="listingTabsContent">
+            <div class="tab-pane fade show active" id="all" role="tabpanel">
+              <div class="row g-4">
+                <!-- Listing 1 -->
+                <div class="col-md-6">
+                  <div class="card listing-card h-100">
+                    <span class="badge bg-success listing-badge">For Sale</span>
+                    <div class="card-img-container">
+                      <img
+                        src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aXBob25lfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+                        class="card-img-top"
+                        alt="iPhone"
+                      />
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">iPhone 12 Pro</h5>
+                      <p class="card-text text-muted">
+                        128GB, excellent condition, includes original box and
+                        accessories.
+                      </p>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="fw-bold text-primary">450,000 RWF</span>
+                        <small class="text-muted"
+                          ><i class="fas fa-map-marker-alt me-1"></i
+                          >Kigali</small
+                        >
+                      </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="fas fa-eye me-1"></i> View Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Listing 2 -->
+                <div class="col-md-6">
+                  <div class="card listing-card h-100">
+                    <span class="badge bg-warning text-dark listing-badge"
+                      >For Rent</span
+                    >
+                    <div class="card-img-container">
+                      <img
+                        src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtZXJhfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+                        class="card-img-top"
+                        alt="Camera"
+                      />
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Canon EOS 2000D</h5>
+                      <p class="card-text text-muted">
+                        DSLR camera with 18-55mm lens. Perfect for events and
+                        photography.
+                      </p>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="fw-bold text-primary">15,000 RWF/day</span>
+                        <small class="text-muted"
+                          ><i class="fas fa-map-marker-alt me-1"></i>Huye</small
+                        >
+                      </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="fas fa-eye me-1"></i> View Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Listing 3 -->
+                <div class="col-md-6">
+                  <div class="card listing-card h-100">
+                    <span class="badge bg-info listing-badge">Company</span>
+                    <div class="card-img-container">
+                      <img
+                        src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                        class="card-img-top"
+                        alt="Laptop Parts"
+                      />
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Laptop Spare Parts</h5>
+                      <p class="card-text text-muted">
+                        Genuine replacement parts for HP, Dell, and Lenovo
+                        laptops.
+                      </p>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="fw-bold text-primary">Various Prices</span>
+                        <small class="text-muted"
+                          ><i class="fas fa-map-marker-alt me-1"></i>Kigali
+                          Tech</small
+                        >
+                      </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="fas fa-eye me-1"></i> View Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Listing 4 -->
+                <div class="col-md-6">
+                  <div class="card listing-card h-100">
+                    <span class="badge bg-secondary listing-badge"
+                      >Transport</span
+                    >
+                    <div class="card-img-container">
+                      <img
+                        src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRydWNrfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+                        class="card-img-top"
+                        alt="Truck"
+                      />
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Moving Truck Available</h5>
+                      <p class="card-text text-muted">
+                        Relocation services within Kigali. Can handle furniture
+                        and boxes.
+                      </p>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="fw-bold text-primary">50,000 RWF</span>
+                        <small class="text-muted"
+                          ><i class="fas fa-map-marker-alt me-1"></i
+                          >Gasabo</small
+                        >
+                      </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="fas fa-eye me-1"></i> View Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <nav class="mt-4" aria-label="Listings pagination">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <!-- Other tab panes would go here -->
+            <div class="tab-pane fade" id="sale" role="tabpanel">
+              <!-- For Sale listings would appear here -->
+            </div>
+            <div class="tab-pane fade" id="rent" role="tabpanel">
+              <!-- For Rent listings would appear here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="col-lg-3">
+          <!-- Quick Actions -->
+          <div class="card filter-card mb-4">
+            <div class="card-header bg-white border-bottom">
+              <h5 class="mb-0 fw-bold">
+                <i class="fas fa-bolt me-2"></i>Quick Actions
+              </h5>
+            </div>
+            <div class="card-body">
+              <button class="btn btn-success w-100 mb-3 quick-action-btn">
+                <i class="fas fa-tag me-2"></i>Sell an Item
+              </button>
+              <button class="btn btn-warning w-100 mb-3 quick-action-btn">
+                <i class="fas fa-hand-holding-usd me-2"></i>Rent Out Equipment
+              </button>
+              <button class="btn btn-info w-100 quick-action-btn">
+                <i class="fas fa-truck me-2"></i>Request Transport
+              </button>
+            </div>
+          </div>
+
+          <!-- Safety Tips -->
+          <div class="card filter-card mb-4">
+            <div class="card-header bg-white border-bottom">
+              <h5 class="mb-0 fw-bold">
+                <i class="fas fa-shield-alt me-2"></i>Safety Tips
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="d-flex mb-3">
+                <div class="me-3 text-success">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                  <small>Meet in public places during daylight hours</small>
+                </div>
+              </div>
+              <div class="d-flex mb-3">
+                <div class="me-3 text-success">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                  <small>Inspect items thoroughly before payment</small>
+                </div>
+              </div>
+              <div class="d-flex mb-3">
+                <div class="me-3 text-success">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                  <small>Use secure payment methods when possible</small>
+                </div>
+              </div>
+              <div class="d-flex">
+                <div class="me-3 text-success">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                  <small
+                    >Trust your instincts - if something feels wrong, walk
+                    away</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Companies -->
+          <div class="card filter-card">
+            <div class="card-header bg-white border-bottom">
+              <h5 class="mb-0 fw-bold">
+                <i class="fas fa-star me-2"></i>Featured Companies
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <img
+                  src="https://via.placeholder.com/40"
+                  class="rounded-circle me-2"
+                  alt="Company Logo"
+                />
+                <div>
+                  <h6 class="mb-0">Kigali Tech Solutions</h6>
+                  <small class="text-muted">Electronics & Repairs</small>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <img
+                  src="https://via.placeholder.com/40"
+                  class="rounded-circle me-2"
+                  alt="Company Logo"
+                />
+                <div>
+                  <h6 class="mb-0">Home Comfort</h6>
+                  <small class="text-muted">Furniture & Appliances</small>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <img
+                  src="https://via.placeholder.com/40"
+                  class="rounded-circle me-2"
+                  alt="Company Logo"
+                />
+                <div>
+                  <h6 class="mb-0">Move It Rwanda</h6>
+                  <small class="text-muted">Transport Services</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
