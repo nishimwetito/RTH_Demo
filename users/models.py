@@ -58,6 +58,18 @@ class Level1Profile(models.Model):
         ('level3', 'Level 3 - Expert/Business'),
         ('company', 'Company Hiring'),
     ]
+      # Add these new fields for availability tracking
+    AVAILABILITY_CHOICES = [
+        ('available', 'Available'),
+        ('booked_today', 'Booked Today'),
+        ('unavailable', 'Unavailable'),
+    ]
+    availability_status = models.CharField(
+        max_length=20,
+        choices=AVAILABILITY_CHOICES,
+        default='available'
+    )
+    next_available_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = PhoneNumberField(unique=False, region="RW")  # Default country: Rwanda
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)

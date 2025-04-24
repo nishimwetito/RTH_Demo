@@ -12,19 +12,19 @@
 } */
 
 /* Container for Profile Cards */
-.profile-container-3 {
+/* .profile-container-3 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     max-width: 1200px;
     width: 100%;
-}
+} */
 
 /* Profile Card Container */
-.profile-card-3 {
+.profile-card-3{
     background: white;
-    width: 100%;
+    width: 280px;
     max-width: 300px;
     border-radius: 20px;
     text-align: center;
@@ -32,7 +32,7 @@
     overflow: hidden;
     position: relative;
     transition: transform 0.3s ease;
-    padding-bottom: 20px;
+    padding-bottom: 2px;
     flex: 1 1 280px; /* Flex-grow, flex-shrink, flex-basis */
 }
 

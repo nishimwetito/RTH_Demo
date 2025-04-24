@@ -32,6 +32,13 @@ urlpatterns = [
     path('create-message/<uuid:pk>/', views.createMessage, name='create-message'),
     path('chaining/', include("smart_selects.urls")),
 
+    path('appoitment/',views.appoitment_view,name='appoitment'),
+    path('update_availability/<int:pk>/', views.update_availability, name='update_availability'),
+    path('profile/update/<int:pk>/', views.update_profile, name='update_profile'),
+
+
+
+
 
 
     

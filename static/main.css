@@ -36,7 +36,7 @@
     font-weight: bold;
     color: #333;
 }
-.profile-card h5 {
+/* .profile-card h5 {
     color: #007bff;
     font-weight: bold;
     margin-bottom: 15px;
@@ -44,7 +44,7 @@
 .profile-card p {
     margin-bottom: 10px;
     color: #555;
-}
+} */
 .footer {
     background-color: #007bff;
     color: white;

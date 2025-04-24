@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from. forms import ProfileForm,Level1ProfileForm,Level2ProfileForm,Level3ProfileForm,CompanyProfileForm,MessageForm
-from . models import Level1Profile,Level2Profile,Level3Profile, CompanyProfile,Message,Profile,Address
+from . models import Level1Profile,Level2Profile,Level3Profile, CompanyProfile,Message,Profile,Address,Skill
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 #location fields
@@ -193,6 +193,9 @@ def profile3_view(request):
 def home_view(request):
     return render(request,'home.html')
 
+def appoitment_view(request):
+    return render(request,'appoitment.html')
+
 def allprofiles2_view(request):
     profiles2 = Level2Profile.objects.all()
     context = {
@@ -344,3 +347,48 @@ def createMessage(request, pk):
 
     context = {'recipient': recipient, 'form': form}
     return render(request, 'message_form.html', context)
+
+
+# updating availability
+@login_required
+def update_availability(request, pk):
+    profile = get_object_or_404(Level1Profile, pk=pk, user=request.user)
+    if request.method == 'POST':
+        status = request.POST.get('availability_status')
+        if status in ['available', 'booked_today', 'unavailable']:
+            profile.availability_status = status
+            profile.save()
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+
+# Updating profile 1
+@login_required
+def update_profile(request, pk):
+    profile = get_object_or_404(Level1Profile, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        profile.phone = request.POST.get('phone')
+        profile.availability_status = request.POST.get('availability_status')
+        profile.next_available_date = request.POST.get('next_available_date')
+
+        if request.FILES.get('profile_picture'):
+            profile.profile_picture = request.FILES.get('profile_picture')
+
+        # Update Address if passed
+        address_id = request.POST.get('address_id')
+        if address_id:
+            try:
+                profile.address = Address.objects.get(pk=address_id)
+            except Address.DoesNotExist:
+                pass
+
+        # Update Skills
+        skill_ids = request.POST.getlist('skills')
+        profile.skills.set(skill_ids)
+
+        profile.save()
+        return redirect('profile_list')  # Replace with your actual URL name
+
+    return redirect('profile_list')
+

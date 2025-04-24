@@ -11,7 +11,7 @@ level 1
     </div>
 
     <!-- Main Content -->
-    <div class="container">
+    <div class="container-fluid">
         <!-- Search Bar -->
         <div class="search-bar">
             <div class="input-group mb-4">
@@ -39,223 +39,70 @@ level 1
             </div>
 
             <!-- Profile Cards (Col 9) -->
-            <div class="col-md-10">
+<div class="col-md-8">
                 <div class="row">
-                {% comment %} <div class="col-12 col-md-6 col-lg-4">
-                    <div class="profile-card-1">
-                        <!-- Profile Image -->
-                        <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
-    
-                        <!-- Profile Name -->
-                        <div class="profile-name-1">NISHIMWE TITO</div>
-    
-                        <!-- Profile Info -->
-                        <div class="profile-info-1"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                        <div class="profile-info-1"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-    
-                        <!-- Profile Skills -->
-                        <div class="skills-container-1">
-                            <div class="skills-label-1">Skills</div>
-                            <div class="skills-list-1">
-                                <span class="skill-tag-1">Plumbing</span>
-                                <span class="skill-tag-1">Welding & Metal Fabrication</span>
-                                <span class="skill-tag-1">Roofing</span>
-                                <span class="skill-tag-1">Glass Installation</span>
-                                <span class="skill-tag-1">Interior Design</span>
-                                <span class="skill-tag-1">Electrical Wiring</span>
-                                <span class="skill-tag-1">Carpentry</span>
-                                <span class="skill-tag-1">Landscaping</span>
+                    {% for profile in profiles1%}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="profile-card-1">
+
+{% if request.user == profile.user %}
+<!-- Edit Button (opens modal) -->
+<div class="position-absolute top-0 m-2">
+  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal{{ profile.id }}">
+    <i class="bi bi-pencil"></i> Edit
+  </button>
+</div>
+{% endif %}
+                            <!-- Add the availability status indicator RIGHT HERE - at the beginning of the card -->
+<div class="availability-status">
+    {% if request.user == profile.user %}
+    <form method="POST" action="{% url 'update_availability' profile.id %}" class="availability-form">
+        {% csrf_token %}
+        <label><input type="radio" name="availability_status" value="available" {% if profile.availability_status == 'available' %}checked{% endif %} onchange="this.form.submit()"> Available</label>
+        <label><input type="radio" name="availability_status" value="booked_today" {% if profile.availability_status == 'booked_today' %}checked{% endif %} onchange="this.form.submit()"> Booked Today</label>
+        <label><input type="radio" name="availability_status" value="unavailable" {% if profile.availability_status == 'unavailable' %}checked{% endif %} onchange="this.form.submit()"> Unavailable</label>
+    </form>
+    {% endif %}
+
+    {% if profile.availability_status == 'available' %}
+        <span class="badge bg-success"><i class="fas fa-check-circle"></i> Available</span>
+    {% elif profile.availability_status == 'booked_today' %}
+        <span class="badge bg-warning text-dark"><i class="fas fa-clock"></i> Booked Today</span>
+        {% if profile.next_available_date %}
+            <span class="badge bg-info">Next: {{ profile.next_available_date|date:"M d" }}</span>
+        {% endif %}
+    {% else %}
+        <span class="badge bg-secondary"><i class="fas fa-times-circle"></i> Unavailable</span>
+        {% if profile.next_available_date %}
+            <span class="badge bg-info">Next: {{ profile.next_available_date|date:"M d" }}</span>
+        {% endif %}
+    {% endif %}
+</div>
+
+                            <!-- Add the availability status indicator RIGHT HERE - at the beginning of the card -->
+                            <div class="availability-status">
+                                {% if profile.availability_status == 'available' %}
+                                    <span class="badge bg-success"><i class="fas fa-check-circle"></i> Available</span>
+                                {% elif profile.availability_status == 'booked_today' %}
+                                    <span class="badge bg-warning text-dark"><i class="fas fa-clock"></i> Booked Today</span>
+                                    {% if profile.next_available_date %}
+                                        <span class="badge bg-info">Next: {{ profile.next_available_date|date:"M d" }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="badge bg-secondary"><i class="fas fa-times-circle"></i> Unavailable</span>
+                                    {% if profile.next_available_date %}
+                                        <span class="badge bg-info">Next: {{ profile.next_available_date|date:"M d" }}</span>
+                                    {% endif %}
+                                {% endif %}
                             </div>
-                        </div>
-    
-                        <!-- Like Section -->
-                        <div class="like-section-1">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span>1.2k Likes</span>
-                        </div>
-    
-                        <!-- Social Media Links -->
-                        <div class="social-icons-1">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="profile-card-1">
-                        <!-- Profile Image -->
-                        <img src="https://marketplace.canva.com/EAFHfL_zPBk/1/0/1600w/canva-yellow-inspiration-modern-instagram-profile-picture-kpZhUIzCx_w.jpg" alt="Profile Image" class="profile-image">
-    
-                        <!-- Profile Name -->
-                        <div class="profile-name-1">NISHIMWE TITO</div>
-    
-                        <!-- Profile Info -->
-                        <div class="profile-info-1"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                        <div class="profile-info-1"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-    
-                        <!-- Profile Skills -->
-                        <div class="skills-container-1">
-                            <div class="skills-label-1">Skills</div>
-                            <div class="skills-list-1">
-                                <span class="skill-tag-1">Plumbing</span>
-                                <span class="skill-tag-1">Welding & Metal Fabrication</span>
-                                <span class="skill-tag-1">Roofing</span>
-                                <span class="skill-tag-1">Glass Installation</span>
-                                <span class="skill-tag-1">Interior Design</span>
-                                <span class="skill-tag-1">Electrical Wiring</span>
-                                <span class="skill-tag-1">Carpentry</span>
-                                <span class="skill-tag-1">Landscaping</span>
-                            </div>
-                        </div>
-    
-                        <!-- Like Section -->
-                        <div class="like-section-1">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span>1.2k Likes</span>
-                        </div>
-    
-                        <!-- Social Media Links -->
-                        <div class="social-icons-1">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="profile-card-1">
-                        <!-- Profile Image -->
-                        <img src="https://www.shutterstock.com/image-photo/happy-mid-aged-business-man-600nw-2307212331.jpg" alt="Profile Image" class="profile-image">
-    
-                        <!-- Profile Name -->
-                        <div class="profile-name-1">NISHIMWE TITO</div>
-    
-                        <!-- Profile Info -->
-                        <div class="profile-info-1"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                        <div class="profile-info-1"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-    
-                        <!-- Profile Skills -->
-                        <div class="skills-container-1">
-                            <div class="skills-label-1">Skills</div>
-                            <div class="skills-list-1">
-                                <span class="skill-tag-1">Plumbing</span>
-                                <span class="skill-tag-1">Welding & Metal Fabrication</span>
-                                <span class="skill-tag-1">Roofing</span>
-                                <span class="skill-tag-1">Glass Installation</span>
-                                <span class="skill-tag-1">Interior Design</span>
-                                <span class="skill-tag-1">Electrical Wiring</span>
-                                <span class="skill-tag-1">Carpentry</span>
-                                <span class="skill-tag-1">Landscaping</span>
-                            </div>
-                        </div>
-    
-                        <!-- Like Section -->
-                        <div class="like-section-1">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span>1.2k Likes</span>
-                        </div>
-    
-                        <!-- Social Media Links -->
-                        <div class="social-icons-1">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="profile-card-1">
-                        <!-- Profile Image -->
-                        <img src="https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ" alt="Profile Image" class="profile-image">
-    
-                        <!-- Profile Name -->
-                        <div class="profile-name-1">NISHIMWE TITO</div>
-    
-                        <!-- Profile Info -->
-                        <div class="profile-info-1"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                        <div class="profile-info-1"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-    
-                        <!-- Profile Skills -->
-                        <div class="skills-container-1">
-                            <div class="skills-label-1">Skills</div>
-                            <div class="skills-list-1">
-                                <span class="skill-tag-1">Plumbing</span>
-                                <span class="skill-tag-1">Welding & Metal Fabrication</span>
-                                <span class="skill-tag-1">Roofing</span>
-                                <span class="skill-tag-1">Glass Installation</span>
-                                <span class="skill-tag-1">Interior Design</span>
-                                <span class="skill-tag-1">Electrical Wiring</span>
-                                <span class="skill-tag-1">Carpentry</span>
-                                <span class="skill-tag-1">Landscaping</span>
-                            </div>
-                        </div>
-    
-                        <!-- Like Section -->
-                        <div class="like-section-1">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span>1.2k Likes</span>
-                        </div>
-    
-                        <!-- Social Media Links -->
-                        <div class="social-icons-1">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="profile-card-1">
-                        <!-- Profile Image -->
-                        <img src="https://annemariesegal.com/wp-content/uploads/2017/04/adobestock_86346713-cropped-young-woman-in-suit.jpg?w=640" alt="Profile Image" class="profile-image">
-    
-                        <!-- Profile Name -->
-                        <div class="profile-name-1">NISHIMWE TITO</div>
-    
-                        <!-- Profile Info -->
-                        <div class="profile-info-1"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                        <div class="profile-info-1"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-    
-                        <!-- Profile Skills -->
-                        <div class="skills-container-1">
-                            <div class="skills-label-1">Skills</div>
-                            <div class="skills-list-1">
-                                <span class="skill-tag-1">Plumbing</span>
-                                <span class="skill-tag-1">Welding & Metal Fabrication</span>
-                                <span class="skill-tag-1">Roofing</span>
-                                <span class="skill-tag-1">Glass Installation</span>
-                                <span class="skill-tag-1">Interior Design</span>
-                                <span class="skill-tag-1">Electrical Wiring</span>
-                                <span class="skill-tag-1">Carpentry</span>
-                                <span class="skill-tag-1">Landscaping</span>
-                            </div>
-                        </div>
-    
-                        <!-- Like Section -->
-                        <div class="like-section-1">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span>1.2k Likes</span>
-                        </div>
-    
-                        <!-- Social Media Links -->
-                        <div class="social-icons-1">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div> {% endcomment %}
-                {% for profile in profiles1%}
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="profile-card-1">
-                        <!-- Profile Image -->
-                         {% if  profile.profile_picture  %}
-                        <img src="{{ profile.profile_picture.url }}" alt="Profile Image" class="profile-image">
-                        {% else %}
-                        <img src="{% static 'images/default-profile.jpg' %}" alt="Profile Image" class="profile-image">
-                        {% endif %}
-    
+                            
+                            
+                            <!-- Profile Image -->
+                            {% if profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" alt="Profile Image" class="profile-image">
+                            {% else %}
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Profile Image" class="profile-image">
+                            {% endif %}
                         <!-- Profile Name -->
                         <div class="profile-name-1">{{ profile.user.username }}</div>
     
@@ -301,6 +148,79 @@ level 1
                             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
+
+
+                    {% if request.user == profile.user %}
+<div class="modal fade" id="editProfileModal{{ profile.id }}" tabindex="-1" aria-labelledby="editProfileModalLabel{{ profile.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form method="POST" action="{% url 'update_profile' profile.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel{{ profile.id }}">Edit Your Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Phone -->
+          <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="text" name="phone" class="form-control" value="{{ profile.phone }}">
+          </div>
+
+          <!-- Profile Picture -->
+          <div class="mb-3">
+            <label class="form-label">Profile Picture</label>
+            <input type="file" name="profile_picture" class="form-control">
+            {% if profile.profile_picture %}
+              <img src="{{ profile.profile_picture.url }}" class="mt-2 rounded" style="max-height: 100px;">
+            {% endif %}
+          </div>
+
+          <!-- Address (Simplified for now; ideally, use dynamic select widgets) -->
+          <div class="mb-3">
+            <label class="form-label">Address (ID)</label>
+            <input type="text" name="address_id" class="form-control" value="{{ profile.address.id }}">
+            <small class="text-muted">Use actual address ID or implement select field</small>
+          </div>
+
+          <!-- Availability -->
+          <div class="mb-3">
+            <label class="form-label">Availability Status</label>
+            <select name="availability_status" class="form-select">
+              {% for value, label in profile.AVAILABILITY_CHOICES %}
+                <option value="{{ value }}" {% if profile.availability_status == value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Next Available Date -->
+          <div class="mb-3">
+            <label class="form-label">Next Available Date</label>
+            <input type="date" name="next_available_date" class="form-control" value="{{ profile.next_available_date|date:'Y-m-d' }}">
+          </div>
+
+          <!-- Skills (Multi-Select) -->
+          <div class="mb-3">
+            <label class="form-label">Skills</label>
+            <select name="skills" class="form-select" multiple>
+              {% for skill in all_skills %}
+                <option value="{{ skill.id }}" {% if skill in profile.skills.all %}selected{% endif %}>{{ skill.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save Changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
                 </div>
                 {% endfor %}
                 </div>
@@ -337,9 +257,12 @@ level 1
                         {% endif %}
                       </ul>
                     </nav>
-                  </div>                  
+                  </div>     
+                               
             </div>
+
         </div>
+      
     </div>
 
 <style>
@@ -356,6 +279,63 @@ level 1
     .fa-thumbs-up:hover {
         color: #4267B2;
     }
+
+
+
+    /* Add these new styles to your existing style section */
+    .availability-status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .availability-status .badge {
+        font-size: 0.75rem;
+        padding: 4px 6px;
+        white-space: nowrap;
+    }
+
+    .profile-card-1 {
+        position: relative; /* This is needed for the absolute positioning of the status */
+    }
+
+    /* Your existing styles remain unchanged */
+    .fa-thumbs-up {
+        color: #666;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    
+    .fa-thumbs-up.liked {
+        color: #4267B2;
+    }
+    
+    .fa-thumbs-up:hover {
+        color: #4267B2;
+    }
+
+
+
+  
+        .availability-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 5px;
+        }
+        .availability-form label {
+            font-size: 0.7rem;
+            color: #333;
+        }
+        .availability-form input[type="radio"] {
+            margin-right: 4px;
+        }
+       
+        
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
