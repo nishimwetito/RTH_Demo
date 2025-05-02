@@ -113,7 +113,7 @@ def level1_dashboard(request):
             level1_profile.save()
             form.save_m2m()  # for skills
 
-            return redirect('index')  # or wherever
+            return redirect('home')  # or wherever
     else:
         form = Level1ProfileForm()
 
@@ -127,17 +127,56 @@ def level1_dashboard(request):
 # Level2
 
 def level2_dashboard(request):
-    if request.method == 'POST':
-        form = Level2ProfileForm(request.POST,request.FILES)
-        if form.is_valid():
-            level2_profile = form.save(commit=False)
-            level2_profile.user= request.user
-            level2_profile.save()
-            return redirect('index')
-    else:
-        form = Level2ProfileForm()  
+    with open(settings.BASE_DIR / 'static' / 'rwandaState.json') as f:
+        address_data = json.load(f)
 
-    return render(request, 'users/level2.html', {'form': form})
+    if request.method == 'POST':
+        form = Level2ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            # ✅ 1. Read selected address values
+            province = request.POST.get('province')
+            district = request.POST.get('district')
+            sector = request.POST.get('sector')
+            cell = request.POST.get('cell')
+            village = request.POST.get('village')
+
+            # ✅ 2. Create or get Address instance
+            address, created = Address.objects.get_or_create(
+                province=province,
+                district=district,
+                sector=sector,
+                cell=cell,
+                village=village
+            )
+
+            # ✅ 3. Save profile with that address
+            level2_profile = form.save(commit=False)
+            level2_profile.user = request.user
+            level2_profile.address = address  # <- this is crucial
+            level2_profile.save()
+            form.save_m2m()  # for skills
+
+            return redirect('home')  # or wherever
+    else:
+        form = Level2ProfileForm()
+
+    return render(request, 'users/level2.html', {
+        'form': form,
+        'address_json': json.dumps(address_data)
+    })
+
+# def level2_dashboard(request):
+#     if request.method == 'POST':
+#         form = Level2ProfileForm(request.POST,request.FILES)
+#         if form.is_valid():
+#             level2_profile = form.save(commit=False)
+#             level2_profile.user= request.user
+#             level2_profile.save()
+#             return redirect('index')
+#     else:
+#         form = Level2ProfileForm()  
+
+#     return render(request, 'users/level2.html', {'form': form})
 
 # Level3
 
@@ -199,7 +238,11 @@ def market_place_view(request):
     return render(request,'market_place.html')
 
 def allprofiles2_view(request):
-    profiles2 = Level2Profile.objects.all()
+    profiles2_list = Level2Profile.objects.all()
+    paginator = Paginator(profiles2_list,8)
+    page_number = request.GET.get('page')
+    profiles2 = paginator.get_page(page_number)
+
     context = {
         'profiles2':profiles2
     }
@@ -213,14 +256,22 @@ def level2_profile_detail(request, pk):
 
 #Company profiles
 def allcompanyprofiles_view(request):
-    companies =  CompanyProfile.objects.all()
+    companies_list =  CompanyProfile.objects.all()
+    paginator = Paginator(companies_list,6)
+    page_number = request.GET.get('page')
+    companies = paginator.get_page(page_number)
+
     context = {
         'companies':companies
     }
     return render(request,'allcompanyprofiles.html',context)
 
 def allprofiles3_view(request):
-    profiles3 = Level3Profile.objects.all()
+    profiles3_list = Level3Profile.objects.all()
+    paginator = Paginator(profiles3_list,8)
+    page_number = request.GET.get('page')
+    profiles3 = paginator.get_page(page_number)
+
     context = {
         'profiles3':profiles3
     }

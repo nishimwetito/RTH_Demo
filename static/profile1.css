@@ -1,106 +1,105 @@
-
 /* body {
     background-color: #f8f9fa;
     padding: 20px;
 } */
 .profile-card-1 {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px; /* Add spacing between cards */
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px; /* Add spacing between cards */
 }
 .profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #007bff;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #007bff;
 }
 .profile-name-1 {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #333;
-    margin-top: 10px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
 }
 .profile-info-1 {
-    color: #6c757d;
-    font-size: 0.95rem;
-    margin: 5px 0;
+  color: #6c757d;
+  font-size: 0.95rem;
+  margin: 5px 0;
 }
 .profile-info-1 i {
-    margin-right: 8px;
-    color: #007bff;
+  margin-right: 8px;
+  color: #007bff;
 }
 .skills-container-1 {
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 15px;
-    text-align: center;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 15px;
+  text-align: center;
 }
 .skills-label-1 {
-    background-color: rgba(241, 241, 241, 0.9); /* Gray with low opacity */
-    color: #333;
-    padding: 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    width: 100%; /* Full width */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgba(241, 241, 241, 0.9); /* Gray with low opacity */
+  color: #333;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  width: 100%; /* Full width */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .skills-list-1 {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-    max-height: 100px; /* Limit height for scrollable container */
-    overflow-y: auto; /* Add scrollbar if skills exceed container height */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  max-height: 100px; /* Limit height for scrollable container */
+  overflow-y: auto; /* Add scrollbar if skills exceed container height */
 }
 .skill-tag-1 {
-    background-color: #e9f5ff; /* Light blue background */
-    color: #007bff; /* Blue text */
-    padding: 8px 16px;
-    border-radius: 2px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border: 1px solid #007bff; /* Blue border */
-    transition: all 0.3s ease;
+  background-color: #e9f5ff; /* Light blue background */
+  color: #007bff; /* Blue text */
+  padding: 8px 16px;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #007bff; /* Blue border */
+  transition: all 0.3s ease;
 }
 .skill-tag-1:hover {
-    background-color: #007bff; /* Blue background on hover */
-    color: white; /* White text on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
+  background-color: #007bff; /* Blue background on hover */
+  color: white; /* White text on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
 }
 .like-section-1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 15px;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 10px;
 }
 .like-section-1 i {
-    font-size: 1.5rem;
-    color: #007bff;
+  font-size: 1.5rem;
+  color: #007bff;
 }
 .like-section-1 span {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
 }
 .social-icons-1 {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 .social-icons-1 a {
-    font-size: 1.4rem;
-    margin: 0 8px;
-    color: #007bff;
+  font-size: 1.4rem;
+  margin: 0 8px;
+  color: #007bff;
 }
 .social-icons-1 a:hover {
-    color: #0056b3;
+  color: #0056b3;
 }

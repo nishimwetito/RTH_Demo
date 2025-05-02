@@ -1,375 +1,445 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Level 1 Profile</title>
     <!-- Bootstrap CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Font Awesome for Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> 
-    <style> 
-        body {
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-        .profile-card {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 20px; /* Add spacing between cards */
-        }
-        .profile-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #007bff;
-        }
-        .profile-name {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #333;
-            margin-top: 10px;
-        }
-        .profile-info {
-            color: #6c757d;
-            font-size: 0.95rem;
-            margin: 5px 0;
-        }
-        .profile-info i {
-            margin-right: 8px;
-            color: #007bff;
-        }
-        .skills-container {
-            background-color: #f1f1f1;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 15px;
-            text-align: center;
-        }
-        .skills-label {
-            background-color: rgba(241, 241, 241, 0.9); /* Gray with low opacity */
-            color: #333;
-            padding: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            width: 100%; /* Full width */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-            max-height: 100px; /* Limit height for scrollable container */
-            overflow-y: auto; /* Add scrollbar if skills exceed container height */
-        }
-        .skill-tag {
-            background-color: #e9f5ff; /* Light blue background */
-            color: #007bff; /* Blue text */
-            padding: 8px 16px;
-            border-radius: 2px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border: 1px solid #007bff; /* Blue border */
-            transition: all 0.3s ease;
-        }
-        .skill-tag:hover {
-            background-color: #007bff; /* Blue background on hover */
-            color: white; /* White text on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
-        }
-        .like-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 15px;
-            gap: 10px;
-        }
-        .like-section i {
-            font-size: 1.5rem;
-            color: #007bff;
-        }
-        .like-section span {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-        }
-        .social-icons {
-            margin-top: 15px;
-        }
-        .social-icons a {
-            font-size: 1.4rem;
-            margin: 0 8px;
-            color: #007bff;
-        }
-        .social-icons a:hover {
-            color: #0056b3;
-        }
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding: 20px;
+      }
+      /* Filter Section */
+      .filter-section {
+        background-color: white;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .filter-section h5 {
+        color: #007bff;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+      .filter-option {
+        margin-bottom: 15px;
+      }
+      .filter-option label {
+        font-weight: 500;
+        color: #495057;
+      }
+
+      /* Top Rated Section */
+      .top-rated-section {
+        background-color: white;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .top-rated-section h5 {
+        color: #007bff;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+      .top-rated-profile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+      .top-rated-profile:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      .top-rated-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #007bff;
+        margin-right: 10px;
+      }
+      .top-rated-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 3px;
+      }
+      .top-rated-likes {
+        font-size: 0.8rem;
+        color: #6c757d;
+      }
+
+      /* Profile Cards (Original Style) */
+      .profile-card {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #007bff;
+      }
+      .profile-name {
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #333;
+        margin-top: 10px;
+      }
+      .profile-info {
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin: 5px 0;
+      }
+      .profile-info i {
+        margin-right: 8px;
+        color: #007bff;
+      }
+      .skills-container {
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: center;
+      }
+      .skills-label {
+        background-color: rgba(241, 241, 241, 0.9);
+        color: #333;
+        padding: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+        max-height: 100px;
+        overflow-y: auto;
+      }
+      .skill-tag {
+        background-color: #e9f5ff;
+        color: #007bff;
+        padding: 8px 16px;
+        border-radius: 2px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: 1px solid #007bff;
+        transition: all 0.3s ease;
+      }
+      .skill-tag:hover {
+        background-color: #007bff;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+      }
+      .like-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 15px;
+        gap: 10px;
+      }
+      .like-section i {
+        font-size: 1.5rem;
+        color: #007bff;
+      }
+      .like-section span {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+      }
+      .social-icons {
+        margin-top: 15px;
+      }
+      .social-icons a {
+        font-size: 1.4rem;
+        margin: 0 8px;
+        color: #007bff;
+      }
+      .social-icons a:hover {
+        color: #0056b3;
+      }
+
+      /* Center column layout */
+      .center-column {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="profile-card">
-                    <!-- Profile Image -->
-                    <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Left Column - Filter Section (col-md-2) -->
+        <div class="col-md-2">
+          <div class="filter-section">
+            <h5>Filter Profiles</h5>
 
-                    <!-- Profile Name -->
-                    <div class="profile-name">NISHIMWE TITO</div>
-
-                    <!-- Profile Info -->
-                    <div class="profile-info"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                    <div class="profile-info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-
-                    <!-- Profile Skills -->
-                    <div class="skills-container">
-                        <div class="skills-label">Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-tag">Plumbing</span>
-                            <span class="skill-tag">Welding & Metal Fabrication</span>
-                            <span class="skill-tag">Roofing</span>
-                            <span class="skill-tag">Glass Installation</span>
-                            <span class="skill-tag">Interior Design</span>
-                            <span class="skill-tag">Electrical Wiring</span>
-                            <span class="skill-tag">Carpentry</span>
-                            <span class="skill-tag">Landscaping</span>
-                        </div>
-                    </div>
-
-                    <!-- Like Section -->
-                    <div class="like-section">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>1.2k Likes</span>
-                    </div>
-
-                    <!-- Social Media Links -->
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+            <div class="filter-option">
+              <label class="form-label">By Skill</label>
+              <select class="form-select">
+                <option selected>All Skills</option>
+                <option>Plumbing</option>
+                <option>Electrical</option>
+                <option>Carpentry</option>
+                <option>Welding</option>
+              </select>
             </div>
-            <!-- Repeat the above card structure for other cards -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="profile-card">
-                    <!-- Profile Image -->
-                    <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
 
-                    <!-- Profile Name -->
-                    <div class="profile-name">NISHIMWE TITO</div>
-
-                    <!-- Profile Info -->
-                    <div class="profile-info"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                    <div class="profile-info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-
-                    <!-- Profile Skills -->
-                    <div class="skills-container">
-                        <div class="skills-label">Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-tag">Plumbing</span>
-                            <span class="skill-tag">Welding & Metal Fabrication</span>
-                            <span class="skill-tag">Roofing</span>
-                            <span class="skill-tag">Glass Installation</span>
-                            <span class="skill-tag">Interior Design</span>
-                            <span class="skill-tag">Electrical Wiring</span>
-                            <span class="skill-tag">Carpentry</span>
-                            <span class="skill-tag">Landscaping</span>
-                        </div>
-                    </div>
-
-                    <!-- Like Section -->
-                    <div class="like-section">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>1.2k Likes</span>
-                    </div>
-
-                    <!-- Social Media Links -->
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+            <div class="filter-option">
+              <label class="form-label">By Location</label>
+              <select class="form-select">
+                <option selected>All Locations</option>
+                <option>Kigali</option>
+                <option>Musanze</option>
+                <option>Rubavu</option>
+                <option>Huye</option>
+              </select>
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="profile-card">
-                    <!-- Profile Image -->
-                    <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
 
-                    <!-- Profile Name -->
-                    <div class="profile-name">NISHIMWE TITO</div>
-
-                    <!-- Profile Info -->
-                    <div class="profile-info"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                    <div class="profile-info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-
-                    <!-- Profile Skills -->
-                    <div class="skills-container">
-                        <div class="skills-label">Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-tag">Plumbing</span>
-                            <span class="skill-tag">Welding & Metal Fabrication</span>
-                            <span class="skill-tag">Roofing</span>
-                            <span class="skill-tag">Glass Installation</span>
-                            <span class="skill-tag">Interior Design</span>
-                            <span class="skill-tag">Electrical Wiring</span>
-                            <span class="skill-tag">Carpentry</span>
-                            <span class="skill-tag">Landscaping</span>
-                        </div>
-                    </div>
-
-                    <!-- Like Section -->
-                    <div class="like-section">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>1.2k Likes</span>
-                    </div>
-
-                    <!-- Social Media Links -->
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+            <div class="filter-option">
+              <label class="form-label">By Rating</label>
+              <select class="form-select">
+                <option selected>Any Rating</option>
+                <option>4+ Stars</option>
+                <option>3+ Stars</option>
+                <option>2+ Stars</option>
+              </select>
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="profile-card">
-                    <!-- Profile Image -->
-                    <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
 
-                    <!-- Profile Name -->
-                    <div class="profile-name">NISHIMWE TITO</div>
-
-                    <!-- Profile Info -->
-                    <div class="profile-info"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                    <div class="profile-info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-
-                    <!-- Profile Skills -->
-                    <div class="skills-container">
-                        <div class="skills-label">Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-tag">Plumbing</span>
-                            <span class="skill-tag">Welding & Metal Fabrication</span>
-                            <span class="skill-tag">Roofing</span>
-                            <span class="skill-tag">Glass Installation</span>
-                            <span class="skill-tag">Interior Design</span>
-                            <span class="skill-tag">Electrical Wiring</span>
-                            <span class="skill-tag">Carpentry</span>
-                            <span class="skill-tag">Landscaping</span>
-                        </div>
-                    </div>
-
-                    <!-- Like Section -->
-                    <div class="like-section">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>1.2k Likes</span>
-                    </div>
-
-                    <!-- Social Media Links -->
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="profile-card">
-                    <!-- Profile Image -->
-                    <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
-
-                    <!-- Profile Name -->
-                    <div class="profile-name">NISHIMWE TITO</div>
-
-                    <!-- Profile Info -->
-                    <div class="profile-info"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                    <div class="profile-info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-
-                    <!-- Profile Skills -->
-                    <div class="skills-container">
-                        <div class="skills-label">Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-tag">Plumbing</span>
-                            <span class="skill-tag">Welding & Metal Fabrication</span>
-                            <span class="skill-tag">Roofing</span>
-                            <span class="skill-tag">Glass Installation</span>
-                            <span class="skill-tag">Interior Design</span>
-                            <span class="skill-tag">Electrical Wiring</span>
-                            <span class="skill-tag">Carpentry</span>
-                            <span class="skill-tag">Landscaping</span>
-                        </div>
-                    </div>
-
-                    <!-- Like Section -->
-                    <div class="like-section">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>1.2k Likes</span>
-                    </div>
-
-                    <!-- Social Media Links -->
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="profile-card">
-                    <!-- Profile Image -->
-                    <img src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY=" alt="Profile Image" class="profile-image">
-
-                    <!-- Profile Name -->
-                    <div class="profile-name">NISHIMWE TITO</div>
-
-                    <!-- Profile Info -->
-                    <div class="profile-info"><i class="fas fa-phone"></i> +250 788 123 456</div>
-                    <div class="profile-info"><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</div>
-
-                    <!-- Profile Skills -->
-                    <div class="skills-container">
-                        <div class="skills-label">Skills</div>
-                        <div class="skills-list">
-                            <span class="skill-tag">Plumbing</span>
-                            <span class="skill-tag">Welding & Metal Fabrication</span>
-                            <span class="skill-tag">Roofing</span>
-                            <span class="skill-tag">Glass Installation</span>
-                            <span class="skill-tag">Interior Design</span>
-                            <span class="skill-tag">Electrical Wiring</span>
-                            <span class="skill-tag">Carpentry</span>
-                            <span class="skill-tag">Landscaping</span>
-                        </div>
-                    </div>
-
-                    <!-- Like Section -->
-                    <div class="like-section">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>1.2k Likes</span>
-                    </div>
-
-                    <!-- Social Media Links -->
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
+            <button class="btn btn-primary w-100 mt-2">Apply Filters</button>
+            <button class="btn btn-outline-secondary w-100 mt-2">Reset</button>
+          </div>
         </div>
+
+        <!-- Center Column - Profile Cards (col-md-8) -->
+        <div class="col-md-8">
+          <div class="center-column">
+            <!-- Profile Card 1 -->
+
+            <div class="profile-card">
+              <img
+                src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY="
+                alt="Profile Image"
+                class="profile-image"
+              />
+              <div class="profile-name">NISHIMWE TITO</div>
+              <div class="profile-info">
+                <i class="fas fa-phone"></i> +250 788 123 456
+              </div>
+              <div class="profile-info">
+                <i class="fas fa-map-marker-alt"></i> Kigali, Rwanda
+              </div>
+              <div class="skills-container">
+                <div class="skills-label">Skills</div>
+                <div class="skills-list">
+                  <span class="skill-tag">Plumbing</span>
+                  <span class="skill-tag">Welding & Metal Fabrication</span>
+                  <span class="skill-tag">Roofing</span>
+                  <span class="skill-tag">Glass Installation</span>
+                  <span class="skill-tag">Interior Design</span>
+                  <span class="skill-tag">Electrical Wiring</span>
+                  <span class="skill-tag">Carpentry</span>
+                  <span class="skill-tag">Landscaping</span>
+                </div>
+              </div>
+              <div class="like-section">
+                <i class="fas fa-thumbs-up"></i>
+                <span>1.2k Likes</span>
+              </div>
+              <div class="social-icons">
+                <a href="#" aria-label="Facebook"
+                  ><i class="fab fa-facebook"></i
+                ></a>
+                <a href="#" aria-label="Twitter"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="#" aria-label="Instagram"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Profile Card 2 -->
+            <div class="profile-card">
+              <img
+                src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY="
+                alt="Profile Image"
+                class="profile-image"
+              />
+              <div class="profile-name">JANE DOE</div>
+              <div class="profile-info">
+                <i class="fas fa-phone"></i> +250 788 654 321
+              </div>
+              <div class="profile-info">
+                <i class="fas fa-map-marker-alt"></i> Kigali, Rwanda
+              </div>
+              <div class="skills-container">
+                <div class="skills-label">Skills</div>
+                <div class="skills-list">
+                  <span class="skill-tag">Plumbing</span>
+                  <span class="skill-tag">Welding & Metal Fabrication</span>
+                  <span class="skill-tag">Roofing</span>
+                  <span class="skill-tag">Glass Installation</span>
+                  <span class="skill-tag">Interior Design</span>
+                  <span class="skill-tag">Electrical Wiring</span>
+                  <span class="skill-tag">Carpentry</span>
+                  <span class="skill-tag">Landscaping</span>
+                </div>
+              </div>
+              <div class="like-section">
+                <i class="fas fa-thumbs-up"></i>
+                <span>850 Likes</span>
+              </div>
+              <div class="social-icons">
+                <a href="#" aria-label="Facebook"
+                  ><i class="fab fa-facebook"></i
+                ></a>
+                <a href="#" aria-label="Twitter"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="#" aria-label="Instagram"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Profile Card 3 -->
+            <div class="profile-card">
+              <img
+                src="https://media.istockphoto.com/id/1317804578/photo/one-businesswoman-headshot-smiling-at-the-camera.jpg?s=612x612&w=0&k=20&c=EqR2Lffp4tkIYzpqYh8aYIPRr-gmZliRHRxcQC5yylY="
+                alt="Profile Image"
+                class="profile-image"
+              />
+              <div class="profile-name">JOHN SMITH</div>
+              <div class="profile-info">
+                <i class="fas fa-phone"></i> +250 788 987 654
+              </div>
+              <div class="profile-info">
+                <i class="fas fa-map-marker-alt"></i> Kigali, Rwanda
+              </div>
+              <div class="skills-container">
+                <div class="skills-label">Skills</div>
+                <div class="skills-list">
+                  <span class="skill-tag">Plumbing</span>
+                  <span class="skill-tag">Welding & Metal Fabrication</span>
+                  <span class="skill-tag">Roofing</span>
+                  <span class="skill-tag">Glass Installation</span>
+                  <span class="skill-tag">Interior Design</span>
+                  <span class="skill-tag">Electrical Wiring</span>
+                  <span class="skill-tag">Carpentry</span>
+                  <span class="skill-tag">Landscaping</span>
+                </div>
+              </div>
+              <div class="like-section">
+                <i class="fas fa-thumbs-up"></i>
+                <span>1.5k Likes</span>
+              </div>
+              <div class="social-icons">
+                <a href="#" aria-label="Facebook"
+                  ><i class="fab fa-facebook"></i
+                ></a>
+                <a href="#" aria-label="Twitter"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="#" aria-label="Instagram"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Top Rated Profiles (col-md-2) -->
+        <div class="col-md-2">
+          <div class="top-rated-section">
+            <h5>Top Rated</h5>
+
+            <div class="top-rated-profile">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                class="top-rated-img"
+              />
+              <div>
+                <div class="top-rated-name">James Wilson</div>
+                <div class="top-rated-likes">2.4k Likes</div>
+              </div>
+            </div>
+
+            <div class="top-rated-profile">
+              <img
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                class="top-rated-img"
+              />
+              <div>
+                <div class="top-rated-name">Sarah Johnson</div>
+                <div class="top-rated-likes">2.1k Likes</div>
+              </div>
+            </div>
+
+            <div class="top-rated-profile">
+              <img
+                src="https://randomuser.me/api/portraits/men/75.jpg"
+                class="top-rated-img"
+              />
+              <div>
+                <div class="top-rated-name">Michael Brown</div>
+                <div class="top-rated-likes">1.9k Likes</div>
+              </div>
+            </div>
+
+            <div class="top-rated-profile">
+              <img
+                src="https://randomuser.me/api/portraits/women/68.jpg"
+                class="top-rated-img"
+              />
+              <div>
+                <div class="top-rated-name">Emily Davis</div>
+                <div class="top-rated-likes">1.8k Likes</div>
+              </div>
+            </div>
+
+            <div class="top-rated-profile">
+              <img
+                src="https://randomuser.me/api/portraits/men/25.jpg"
+                class="top-rated-img"
+              />
+              <div>
+                <div class="top-rated-name">David Miller</div>
+                <div class="top-rated-likes">1.7k Likes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>

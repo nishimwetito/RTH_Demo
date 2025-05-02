@@ -58,7 +58,7 @@ class Level1Profile(models.Model):
         ('level3', 'Level 3 - Expert/Business'),
         ('company', 'Company Hiring'),
     ]
-      # Add these new fields for availability tracking
+    #fields for availability tracking
     AVAILABILITY_CHOICES = [
         ('available', 'Available'),
         ('booked_today', 'Booked Today'),
@@ -92,6 +92,12 @@ class Level2Profile(models.Model):
         ('level3', 'Level 3 - Expert/Business'),
         ('company', 'Company Hiring'),
     ]
+    #fields for availability tracking
+    AVAILABILITY_CHOICES = [
+        ('available', 'Available'),
+        ('booked_today', 'Booked Today'),
+        ('unavailable', 'Unavailable'),
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = PhoneNumberField(unique=False, region="RW")  # Default country: Rwanda
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
@@ -107,6 +113,12 @@ class Level2Profile(models.Model):
     skills = models.ManyToManyField(Skill, related_name='level2_profiles', blank=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='level2',editable=False)
     likes = models.ManyToManyField(User, related_name="liked_level2_profiles", blank=True)
+    availability_status = models.CharField(
+        max_length=20,
+        choices=AVAILABILITY_CHOICES,
+        default='available'
+    )
+    next_available_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.user.username} profile"
@@ -118,6 +130,18 @@ class Level3Profile(models.Model):
         ('level3', 'Level 3 - Expert/Business'),
         ('company', 'Company Hiring'),
     ]
+    #fields for availability tracking
+    AVAILABILITY_CHOICES = [
+        ('available', 'Available'),
+        ('booked_today', 'Booked Today'),
+        ('unavailable', 'Unavailable'),
+    ]
+    availability_status = models.CharField(
+        max_length=20,
+        choices=AVAILABILITY_CHOICES,
+        default='available'
+    )
+    next_available_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = PhoneNumberField(unique=False, region="RW")  # Default country: Rwanda
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
@@ -135,6 +159,7 @@ class Level3Profile(models.Model):
     website_link = models.URLField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, related_name='level3_profiles', blank=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='level3',editable=False)
+    likes = models.ManyToManyField(User, related_name="liked_level3_profiles", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.user.username} profile"
@@ -161,6 +186,7 @@ class CompanyProfile(models.Model):
     github_link = models.URLField(blank=True, null=True)
     website_link = models.URLField(blank=True, null=True)
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES,default='company',editable=False)
+    likes = models.ManyToManyField(User, related_name="liked_company_profiles", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.user.username} profile"
