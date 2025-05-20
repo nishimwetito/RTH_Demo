@@ -179,21 +179,60 @@ def level2_dashboard(request):
 #     return render(request, 'users/level2.html', {'form': form})
 
 # Level3
-
 def level3_dashboard(request):
+    with open(settings.BASE_DIR / 'static' / 'rwandaState.json') as f:
+        address_data = json.load(f)
+
     if request.method == 'POST':
-        form = Level3ProfileForm(request.POST,request.FILES)
+        form = Level3ProfileForm(request.POST, request.FILES)
         if form.is_valid():
+            # ✅ 1. Read selected address values
+            province = request.POST.get('province')
+            district = request.POST.get('district')
+            sector = request.POST.get('sector')
+            cell = request.POST.get('cell')
+            village = request.POST.get('village')
+
+            # ✅ 2. Create or get Address instance
+            address, created = Address.objects.get_or_create(
+                province=province,
+                district=district,
+                sector=sector,
+                cell=cell,
+                village=village
+            )
+
+            # ✅ 3. Save profile with that address
             level3_profile = form.save(commit=False)
             level3_profile.user = request.user
+            level3_profile.address = address  # <- this is crucial
             level3_profile.save()
-            return redirect('index')
+            form.save_m2m()  # for skills
 
+            return redirect('home')  # or wherever
     else:
-         form = Level3ProfileForm()
+        form = Level3ProfileForm()
+
+    return render(request, 'users/level3.html', {
+        'form': form,
+        'address_json': json.dumps(address_data)
+    })
+
+# def level3_dashboard(request):
+#     if request.method == 'POST':
+#         form = Level3ProfileForm(request.POST,request.FILES)
+#         if form.is_valid():
+#             level3_profile = form.save(commit=False)
+#             level3_profile.user = request.user
+#             level3_profile.save()
+#             return redirect('index')
+
+#     else:
+#          form = Level3ProfileForm()
   
    
-    return render(request, 'users/level3.html',{'form':form})
+#     return render(request, 'users/level3.html',{'form':form})
+
 
 # Company
 
@@ -250,9 +289,23 @@ def allprofiles2_view(request):
 
 # Profile details
 
+@login_required
 def level2_profile_detail(request, pk):
     profile = get_object_or_404(Level2Profile, pk=pk)
-    return render(request, 'level2_profile_detail.html', {'profile': profile})
+
+    if request.method == 'POST' and request.user == profile.user:
+        form = Level2ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('level2_profile_detail', pk=pk)
+    else:
+        form = Level2ProfileForm(instance=profile) if request.user == profile.user else None
+
+    return render(request, 'level2_profile_detail.html', {
+        'profile': profile,
+        'form': form
+    })
+
 
 #Company profiles
 def allcompanyprofiles_view(request):
@@ -402,46 +455,11 @@ def createMessage(request, pk):
     return render(request, 'message_form.html', context)
 
 
-# updating availability
-@login_required
-def update_availability(request, pk):
-    profile = get_object_or_404(Level1Profile, pk=pk, user=request.user)
-    if request.method == 'POST':
-        status = request.POST.get('availability_status')
-        if status in ['available', 'booked_today', 'unavailable']:
-            profile.availability_status = status
-            profile.save()
-    return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 
 
-# Updating profile 1
-@login_required
-def update_profile(request, pk):
-    profile = get_object_or_404(Level1Profile, pk=pk, user=request.user)
 
-    if request.method == 'POST':
-        profile.phone = request.POST.get('phone')
-        profile.availability_status = request.POST.get('availability_status')
-        profile.next_available_date = request.POST.get('next_available_date')
 
-        if request.FILES.get('profile_picture'):
-            profile.profile_picture = request.FILES.get('profile_picture')
 
-        # Update Address if passed
-        address_id = request.POST.get('address_id')
-        if address_id:
-            try:
-                profile.address = Address.objects.get(pk=address_id)
-            except Address.DoesNotExist:
-                pass
 
-        # Update Skills
-        skill_ids = request.POST.getlist('skills')
-        profile.skills.set(skill_ids)
-
-        profile.save()
-        return redirect('profile_list')  # Replace with your actual URL name
-
-    return redirect('profile_list')
 

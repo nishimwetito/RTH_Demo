@@ -33,8 +33,7 @@ urlpatterns = [
     path('chaining/', include("smart_selects.urls")),
 
     path('appoitment/',views.appoitment_view,name='appoitment'),
-    path('update_availability/<int:pk>/', views.update_availability, name='update_availability'),
-    path('profile/update/<int:pk>/', views.update_profile, name='update_profile'),
+   
     path('marketplace/', views.market_place_view, name='market-place'),
 
 

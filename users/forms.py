@@ -37,21 +37,21 @@ class ProfileForm(forms.ModelForm):
 class Level1ProfileForm(forms.ModelForm):
     class Meta:
         model = Level1Profile
-        exclude = ['user','created_at','level','likes','address']
+        exclude = ['user','created_at','level','likes','address','next_available_date']
 
 class Level2ProfileForm(forms.ModelForm):
     class Meta:
         model = Level2Profile
-        exclude = ['user','created_at','level','address']
+        exclude = ['user','created_at','level','address','next_available_date','likes']
 
 class Level3ProfileForm(forms.ModelForm):
     class Meta:
         model = Level3Profile
-        exclude = ['user','created_at','level','address']
+        exclude = ['user','created_at','level','address','next_available_date','likes']
 class CompanyProfileForm(forms.ModelForm):
     class Meta:
         model = CompanyProfile
-        exclude = ['user','created_at','level','address']
+        exclude = ['user','created_at','level','address','likes']
 
 
 class MessageForm(ModelForm):
