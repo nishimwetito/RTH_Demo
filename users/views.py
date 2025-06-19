@@ -402,6 +402,20 @@ def allprofiles1_view(request):
     if category:
         profiles1_list = profiles1_list.filter(skills__category__name__icontains=category).distinct()
 
+     # Form logic for the logged-in user's profile
+    try:
+        user_profile = Level1Profile.objects.get(user=request.user)
+    except Level1Profile.DoesNotExist:
+        user_profile = None
+
+    if request.method == 'POST' and user_profile:
+        form = Level1ProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('allprofiles1')  # reload the page after saving
+    else:
+        form = Level1ProfileForm(instance=user_profile) if user_profile else None
+
     # Pagination
     paginator = Paginator(profiles1_list, 6)
     page_number = request.GET.get('page')
@@ -416,26 +430,13 @@ def allprofiles1_view(request):
         'query': query,
         'categories': categories,
         'skills': skills,
+        'form':form,
     }
 
     return render(request, 'allprofile1.html', context)
 
-#______________________Updating Level1 profile_________________________
-@login_required
-def update_profile1(request):
-    profile = get_object_or_404(Level1Profile, user=request.user)
 
-    if request.method == 'POST':
-        form = Level1ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('allprofiles1')  # or any page you want
-    else:
-        form = Level1ProfileForm(instance=profile)
-
-    return render(request, 'update_profile1_modal.html', {'form': form})
     
-
 
     #_____________________Liking profile________________________________
 #Profile 1

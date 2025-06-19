@@ -3,6 +3,7 @@ crispy-bootstrap5==2024.10
 Django==5.1.4
 django-crispy-forms==2.3
 django-phonenumber-field==8.0.0
+django-smart-selects==1.7.2
 phonenumbers==8.13.55
 pillow==11.1.0
 sqlparse==0.5.3

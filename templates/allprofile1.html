@@ -122,12 +122,45 @@
                   {% if profile.instagram_link %}
                     <a href="{{ profile.instagram_link }}" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
                   {% endif %}
+                  {% if request.user == profile.user %}
+  <div class="text-center mt-2">
+    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+      Edit Profile
+    </button>
+  </div>
+  
+{% endif %}
+
                 </div>
               </div>
             </div>
           {% endfor %}
         </div>
       </div>
+      <!-- Modal-->
+       {% if form %}
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Your Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{ form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save Changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
       <!-- Right Sidebar (col-md-2) -->
       <div class="col-md-2">
         <!-- Section Header Style -->
@@ -315,6 +348,49 @@
       background-color: #f8d7da;
       color: #721c24;
     }
+       .skills-container {
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: center;
+      }
+      .skills-label {
+        background-color: rgba(241, 241, 241, 0.9);
+        color: #333;
+        padding: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+        max-height: 100px;
+        overflow-y: auto;
+      }
+      .skill-tag-1 {
+        background-color: #e9f5ff;
+        color: #007bff;
+        padding: 8px 16px;
+        border-radius: 2px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: 1px solid #007bff;
+        transition: all 0.3s ease;
+      }
+      .skill-tag-1:hover {
+        background-color: #007bff;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+      }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
