@@ -1,4 +1,6 @@
-#!/home/tito/Documents/programming_projects/Django/church/env/bin/python3
+#!/bin/sh
+'''exec' "/home/tito/Documents/programming_projects/Django/Final project/RTH_Demo/env/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys

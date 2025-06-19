@@ -5,13 +5,14 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from. forms import ProfileForm,Level1ProfileForm,Level2ProfileForm,Level3ProfileForm,CompanyProfileForm,MessageForm
-from . models import Level1Profile,Level2Profile,Level3Profile, CompanyProfile,Message,Profile,Address,Skill
+from . models import Level1Profile,Level2Profile,Level3Profile, CompanyProfile,Message,Profile,Address,Skill,Category
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 #location fields
 import json
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 def index_view(request):
     return render(request, 'index.html')
@@ -113,7 +114,7 @@ def level1_dashboard(request):
             level1_profile.save()
             form.save_m2m()  # for skills
 
-            return redirect('home')  # or wherever
+            return redirect('index')  # or wherever
     else:
         form = Level1ProfileForm()
 
@@ -235,21 +236,59 @@ def level3_dashboard(request):
 
 
 # Company
-
 def company_dashboard(request):
+    with open(settings.BASE_DIR / 'static' / 'rwandaState.json') as f:
+        address_data = json.load(f)
+
     if request.method == 'POST':
-        form = CompanyProfileForm(request.POST,request.FILES)
+        form = CompanyProfileForm(request.POST, request.FILES)
         if form.is_valid():
+            # Step 1: Extract address values
+            province = request.POST.get('province')
+            district = request.POST.get('district')
+            sector = request.POST.get('sector')
+            cell = request.POST.get('cell')
+            village = request.POST.get('village')
+
+            # Step 2: Get or create the address
+            address, created = Address.objects.get_or_create(
+                province=province,
+                district=district,
+                sector=sector,
+                cell=cell,
+                village=village
+            )
+
+            # Step 3: Save profile with address
             company_profile = form.save(commit=False)
             company_profile.user = request.user
+            company_profile.address = address
             company_profile.save()
-            return redirect('index')
-    else:
 
-        form =  CompanyProfileForm()
+            return redirect('index')  # Or wherever you'd like
+    else:
+        form = CompanyProfileForm()
+
+    return render(request, 'users/company.html', {
+        'form': form,
+        'address_json': json.dumps(address_data)
+    })
+
+
+# def company_dashboard(request):
+#     if request.method == 'POST':
+#         form = CompanyProfileForm(request.POST,request.FILES)
+#         if form.is_valid():
+#             company_profile = form.save(commit=False)
+#             company_profile.user = request.user
+#             company_profile.save()
+#             return redirect('index')
+#     else:
+
+#         form =  CompanyProfileForm()
     
     
-    return render(request, 'users/company.html',{'form':form})
+#     return render(request, 'users/company.html',{'form':form})
 
 
 def user_profile_view(request):
@@ -331,15 +370,71 @@ def allprofiles3_view(request):
     return render(request,'allprofile3.html',context)
 
 def allprofiles1_view(request):
+    query = request.GET.get('q')  # global search
+    location = request.GET.get('location')
+    skill = request.GET.get('skill')
+    category = request.GET.get('category')
+
     profiles1_list = Level1Profile.objects.all()
-    paginator = Paginator(profiles1_list, 6)  # 6 profiles per page
+
+    if query:
+        profiles1_list = profiles1_list.filter(
+            Q(user__username__icontains=query) |
+            Q(phone__icontains=query) |
+            Q(skills__name__icontains=query) |
+            Q(address__province__icontains=query) |
+            Q(address__district__icontains=query) |
+            Q(address__cell__icontains=query) |
+            Q(address__village__icontains=query)
+        ).distinct()
+
+    if location:
+        profiles1_list = profiles1_list.filter(
+            Q(address__province__icontains=location) |
+            Q(address__district__icontains=location) |
+            Q(address__cell__icontains=location) |
+            Q(address__village__icontains=location)
+        ).distinct()
+
+    if skill:
+        profiles1_list = profiles1_list.filter(skills__name__icontains=skill).distinct()
+
+    if category:
+        profiles1_list = profiles1_list.filter(skills__category__name__icontains=category).distinct()
+
+    # Pagination
+    paginator = Paginator(profiles1_list, 6)
     page_number = request.GET.get('page')
     profiles1 = paginator.get_page(page_number)
 
+    # Pass filter options to the template
+    categories = Category.objects.all()
+    skills = Skill.objects.all()
+
     context = {
-        'profiles1': profiles1
+        'profiles1': profiles1,
+        'query': query,
+        'categories': categories,
+        'skills': skills,
     }
+
     return render(request, 'allprofile1.html', context)
+
+#______________________Updating Level1 profile_________________________
+@login_required
+def update_profile1(request):
+    profile = get_object_or_404(Level1Profile, user=request.user)
+
+    if request.method == 'POST':
+        form = Level1ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('allprofiles1')  # or any page you want
+    else:
+        form = Level1ProfileForm(instance=profile)
+
+    return render(request, 'update_profile1_modal.html', {'form': form})
+    
 
 
     #_____________________Liking profile________________________________

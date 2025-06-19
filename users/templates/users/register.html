@@ -2,81 +2,76 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}Register - TempConnect Hub{% endblock %}
+{% block title %}
+  Register - TempConnect Hub
+{% endblock %}
 
 {% block navbar %}
-{% include "register_navbar.html"%}
-{%endblock%}
+  {% include 'register_navbar.html' %}
+{% endblock %}
+
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card shadow-lg p-4 register-card">
+  <body style="background: url('{% static 'images/login-bg5.jpg' %}') no-repeat center center/cover;
+             background-color: rgba(0, 0, 0, 0.6);
+             background-blend-mode: multiply;
+             font-family: 'Poppins', sans-serif;
+             animation: gradient 10s ease infinite;">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+      <div class="card shadow-lg p-4 register-card">
         <h2 class="text-center mb-4">Register</h2>
 
         <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            
-            <!-- Registration Form Fields -->
-            {% for field in form %}
-            <div class="mb-3 ">
-                {% comment %} <label for="{{ field.id_for_label }}" class="form-label d-flex justify-content-center align-items-center">{{ field.label }}</label> {% endcomment %}
-                <div class="input-group d-flex justify-content-center align-items-center">
-                    <span class="input-group-text">
-                        {% if field.name == 'username' %}
-                            <i class="fas fa-user"></i>
-                        {% elif field.name == 'email' %}
-                            <i class="fas fa-envelope"></i>
-                        {% elif field.name == 'first_name' %}
-                            <i class="fas fa-id-card"></i>
-                        {% elif field.name == 'password1' or field.name == 'password2' %}
-                            <i class="fas fa-lock"></i>
-                        {% endif %}
-                    </span>
-                    {{ field }}
-                    
-                </div>
-                {% for error in field.errors %}
-                    <div class="text-danger">{{ error }}</div>
-                {% endfor %}
-            </div>
-            {% endfor %}
+          {% csrf_token %}
 
-            <!-- Registration Type Dropdown -->
+          <!-- Registration Form Fields -->
+          {% for field in form %}
             <div class="mb-3">
-                <label for="profile_type" class="form-label">Choose Registration Type:</label>
-                <select name="profile_type" id="profile_type" class="form-select">
-                    <option value="level1">Level 1 - Skilled but No Certification</option>
-                    <option value="level2">Level 2 - Certified Professional</option>
-                    <option value="level3">Level 3 - Expert/Experienced</option>
-                    <option value="company">Company</option>
-                </select>
+              <div class="input-group d-flex justify-content-center align-items-center">
+                <span class="input-group-text">
+                  {% if field.name == 'username' %}
+                    <i class="fas fa-user"></i>
+                  {% elif field.name == 'email' %}
+                    <i class="fas fa-envelope"></i>
+                  {% elif field.name == 'first_name' %}
+                    <i class="fas fa-id-card"></i>
+                  {% elif field.name == 'password1' or field.name == 'password2' %}
+                    <i class="fas fa-lock"></i>
+                  {% endif %}
+                </span>
+                {{ field }}
+              </div>
+              {% for error in field.errors %}
+                <div class="text-danger">{{ error }}</div>
+              {% endfor %}
             </div>
+          {% endfor %}
 
-            <!-- Register Button -->
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="fas fa-user-plus me-2"></i>Register
-            </button>
+          <!-- Registration Type Dropdown -->
+          <div class="mb-3">
+            <label for="profile_type" class="form-label">Choose Registration Type:</label>
+            <select name="profile_type" id="profile_type" class="form-select">
+              <option value="employer">Employer - Seeking for skilled worker</option>
+              <option value="level1">Level 1 - Skilled but No Certification</option>
+              <option value="level2">Level 2 - Certified Professional</option>
+              <option value="level3">Level 3 - Expert/Experienced</option>
+              <option value="company">Company - We are company providing service</option>
+            </select>
+          </div>
+
+          <!-- Register Button -->
+          <button type="submit" class="btn btn-primary w-100"><i class="fas fa-user-plus me-2"></i>Register</button>
         </form>
 
         <p class="text-center mt-3">
-            Already have an account? 
-            <a href="{% url 'login' %}" class="text-decoration-none text-primary">
-                <i class="fas fa-sign-in-alt me-1"></i>Login
-            </a>
+          Already have an account?
+          <a href="{% url 'login' %}" class="text-decoration-none text-primary"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
         </p>
+      </div>
     </div>
-</div>
 
-<style>
-    /* Full-Screen Background */
-    body {
-        background: url('{% static "images/login-bg5.jpg" %}') no-repeat center center/cover;
-        background-color: rgba(0, 0, 0, 0.6);
-        background-blend-mode: multiply;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    /* Glassmorphic Registration Card */
-    .register-card {
+    <style>
+      /* Glassmorphic Registration Card */
+      .register-card {
         max-width: 500px;
         width: 100%;
         background: rgba(255, 255, 255, 0.1);
@@ -86,54 +81,54 @@
         color: white;
         animation: fadeIn 0.6s ease-in-out;
         border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .register-card h2 {
+      }
+      
+      .register-card h2 {
         font-size: 24px;
         font-weight: 600;
         color: white;
-    }
-
-    /* Form Fields Styling */
-    .input {
+      }
+      
+      /* Form Fields Styling */
+      .input {
         background: rgba(255, 255, 255, 0.2);
         border: none;
         color: white;
         padding: 8px;
         border-radius: 8px;
         transition: all 0.3s ease;
-    }
-
-    .input::placeholder {
+      }
+      
+      .input::placeholder {
         color: rgba(255, 255, 255, 0.7);
-    }
-
-    .input:focus {
+      }
+      
+      .input:focus {
         background: rgba(255, 255, 255, 0.3);
         color: white;
         box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-    }
-
-    /* Input Group Styling */
-    .input-group-text {
+      }
+      
+      /* Input Group Styling */
+      .input-group-text {
         background: rgba(255, 255, 255, 0.2);
         border: none;
         color: white;
         padding: 12px;
         border-radius: 8px 0 0 8px;
         transition: all 0.3s ease;
-    }
-
-    .input-group:hover .input-group-text {
+      }
+      
+      .input-group:hover .input-group-text {
         background: rgba(255, 255, 255, 0.3);
-    }
-
-    .input-group:hover .input {
+      }
+      
+      .input-group:hover .input {
         background: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Buttons */
-    .btn-primary {
+      }
+      
+      /* Buttons */
+      .btn-primary {
         background-color: #007bff;
         border: none;
         padding: 12px;
@@ -142,61 +137,71 @@
         transition: 0.3s;
         border-radius: 25px;
         color: white;
-    }
-
-    .btn-primary:hover {
+      }
+      
+      .btn-primary:hover {
         background-color: #0056b3;
         transform: translateY(-2px);
-    }
-
-    /* Links */
-    a {
+      }
+      
+      /* Links */
+      a {
         color: #007bff;
         text-decoration: none;
         transition: 0.3s;
-    }
-
-    a:hover {
+      }
+      
+      a:hover {
         color: #0056b3;
         text-decoration: underline;
-    }
-
-    /* Fade-in Animation */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 576px) {
+      }
+      
+      /* Fade-in Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      /* Responsive Design */
+      @media (max-width: 576px) {
         .register-card {
-            width: 90%;
-            padding: 20px;
+          width: 90%;
+          padding: 20px;
         }
-
+      
         .register-card h2 {
-            font-size: 20px;
+          font-size: 20px;
         }
-    }
-
-    /* Error Messages */
-    .text-danger {
+      }
+      
+      /* Error Messages */
+      .text-danger {
         color: #dc3545 !important;
         font-size: 0.875rem;
         margin-top: 0.25rem;
-    }
-    body {
-        animation: gradient 10s ease infinite;
-    }
-    
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-</style>
+      }
+      
+      /* Gradient Background Animation */
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
 
-<!-- FontAwesome for Icons -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+    <!-- FontAwesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  </body>
 {% endblock %}
