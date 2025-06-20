@@ -2,7 +2,8 @@ from django.urls import path,include
 from .import views
 
 urlpatterns = [
-    path('',views.home_view,name='home'),
+    path('',views.landing_page_view,name='landing-page'),
+    path('home/',views.home_view,name='home'),
     path('index/', views.index_view, name='index'),
     path('register/', views.register, name='register'),
     path('login/',views.login_view,name='login'),
@@ -33,6 +34,9 @@ urlpatterns = [
     path('chaining/', include("smart_selects.urls")),
 
     path('appoitment/',views.appoitment_view,name='appoitment'),
+    path('superuser/',views.superuser_dashboard,name='superuser-dashboard'),
+    path('subscription-plans/',views.subscription_plans_view,name='subscription-plans'),
+     
    
     path('marketplace/', views.market_place_view, name='market-place'),
 

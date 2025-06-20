@@ -314,7 +314,13 @@ def appoitment_view(request):
     return render(request,'appoitment.html')
 def market_place_view(request):
     return render(request,'market_place.html')
+def superuser_dashboard(request):
+    return render(request,'superuser_dashboard.html')
+def subscription_plans_view(request):
+    return render(request,'subscription_plans.html')
 
+def landing_page_view(request):
+    return render(request,'landing_page.html')
 def allprofiles2_view(request):
     profiles2_list = Level2Profile.objects.all()
     paginator = Paginator(profiles2_list,8)

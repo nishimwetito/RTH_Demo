@@ -1,0 +1,597 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Admin Dashboard - Rwanda TempConnect Hub
+{% endblock %}
+
+{% block content %}
+  <style>
+    body {
+      background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    .dashboard-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background: rgba(30, 30, 45, 0.95);
+      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 30px 15px 30px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .sidebar-right {
+      width: 250px;
+      background: rgba(30, 30, 45, 0.95);
+      border-left: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 30px 15px 30px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .sidebar h4,
+    .sidebar-right h4 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: #4facfe;
+      letter-spacing: 1px;
+    }
+    .sidebar ul,
+    .sidebar-right ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar li,
+    .sidebar-right li {
+      margin-bottom: 15px;
+    }
+    .sidebar a,
+    .sidebar-right a,
+    .sidebar button,
+    .sidebar-right button {
+      color: #e0e0e0;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar a:hover,
+    .sidebar-right a:hover,
+    .sidebar button:hover,
+    .sidebar-right button:hover {
+      color: #00f2fe;
+    }
+    .sidebar .divider,
+    .sidebar-right .divider {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 20px 0;
+    }
+    .main-content {
+      flex: 1;
+      padding: 0 0 0 0;
+      min-width: 0;
+    }
+    @media (max-width: 1200px) {
+      .sidebar,
+      .sidebar-right {
+        width: 180px;
+        padding: 18px 5px;
+      }
+    }
+    @media (max-width: 992px) {
+      .sidebar,
+      .sidebar-right {
+        display: none;
+      }
+      .main-content {
+        padding: 0;
+      }
+    }
+    /* Existing styles below */
+    .dashboard-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .dashboard-card {
+      border: none;
+      border-radius: 12px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      min-height: 160px;
+      background: rgba(30, 30, 45, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .dashboard-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    }
+    .dashboard-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    .dashboard-card h2 {
+      font-weight: 600;
+      margin: 10px 0 5px 0;
+      font-size: 2rem;
+    }
+    .dashboard-card h5 {
+      font-weight: 500;
+      opacity: 0.8;
+      font-size: 1rem;
+    }
+    .chart-container {
+      background: rgba(30, 30, 45, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      margin-bottom: 25px;
+      height: 380px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .chart-container h5 {
+      margin-bottom: 15px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+    .chart-container h5 i {
+      margin-right: 10px;
+      color: #4facfe;
+    }
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .dashboard-header h2 {
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 2.2rem;
+    }
+    .dashboard-header p {
+      opacity: 0.7;
+      max-width: 600px;
+      margin: 10px auto 0;
+    }
+    .export-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+    }
+    .btn-export {
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+      transition: all 0.3s;
+      min-width: 220px;
+    }
+    .section-title {
+      font-size: 1.3rem;
+      margin: 30px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+    }
+    .section-title i {
+      margin-right: 10px;
+      color: #4facfe;
+    }
+    @media (max-width: 768px) {
+      .chart-container {
+        height: 300px;
+      }
+      .dashboard-card {
+        margin-bottom: 15px;
+      }
+      .export-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn-export {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <div class="dashboard-layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <h4><i class="fas fa-cogs"></i> Admin Tools</h4>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-users-cog"></i>Manage Profiles</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-user-edit"></i>Edit Profile</a>
+          </li>
+          <li>
+            <button onclick="deleteProfileModal()"><i class="fas fa-user-times"></i>Delete Profile</button>
+          </li>
+          <li>
+            <button onclick="featureProfileModal()"><i class="fas fa-star"></i>Feature Profile</button>
+          </li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h4><i class="fas fa-envelope"></i> Messaging</h4>
+        <ul>
+          <li>
+            <button onclick="sendMessageAllModal()"><i class="fas fa-paper-plane"></i>Message All</button>
+          </li>
+          <li>
+            <button onclick="sendMessageProfileModal()"><i class="fas fa-user-envelope"></i>Message Profile</button>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <h2><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</h2>
+          <p>Comprehensive overview of platform metrics and user analytics</p>
+        </div>
+
+        <!-- Key Metrics Section -->
+        <div class="section-title">
+          <i class="fas fa-chart-line"></i>
+          <span>Key Metrics</span>
+        </div>
+        <div class="row g-4 mb-5">
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="dashboard-card text-white p-4">
+              <h5><i class="fas fa-users me-2"></i>Total Users</h5>
+              <h2 id="totalUsers">1,284</h2>
+              <div class="text-success small mt-2">↑ 12% from last month</div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="dashboard-card text-white p-4">
+              <h5><i class="fas fa-coins me-2"></i>Total Revenue</h5>
+              <h2 id="totalRevenue">8.45M RWF</h2>
+              <div class="text-success small mt-2">↑ 8.5% from last month</div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="dashboard-card text-white p-4">
+              <h5><i class="fas fa-tools me-2"></i>Top Skill</h5>
+              <h2 id="topSkill">Plumbing</h2>
+              <div class="small mt-2">32% of all jobs</div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="dashboard-card text-white p-4">
+              <h5><i class="fas fa-map-marker-alt me-2"></i>Top Location</h5>
+              <h2 id="topLocation">Kigali</h2>
+              <div class="small mt-2">45% of all users</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Analytics Section -->
+        <div class="section-title">
+          <i class="fas fa-user-chart"></i>
+          <span>User Analytics</span>
+        </div>
+        <div class="row mb-4 g-4">
+          <div class="col-12 col-lg-6">
+            <div class="chart-container">
+              <h5><i class="fas fa-layer-group"></i>Profile Levels</h5>
+              <canvas id="profileLevelsChart"></canvas>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="chart-container">
+              <h5><i class="fas fa-map-marked-alt"></i>User Locations</h5>
+              <canvas id="locationChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills & Demographics Section -->
+        <div class="section-title">
+          <i class="fas fa-chart-pie"></i>
+          <span>Skills & Demographics</span>
+        </div>
+        <div class="row mb-4 g-4">
+          <div class="col-12 col-lg-6">
+            <div class="chart-container">
+              <h5><i class="fas fa-chart-bar"></i>Top Skills</h5>
+              <canvas id="topSkillsChart"></canvas>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="chart-container">
+              <h5><i class="fas fa-user-friends"></i>Age Distribution</h5>
+              <canvas id="ageDistributionChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Export Section -->
+        <div class="export-buttons">
+          <button class="btn btn-outline-primary btn-export" onclick="exportPDF()"><i class="fas fa-file-pdf me-2"></i> Export PDF Report</button>
+          <button class="btn btn-outline-success btn-export" onclick="exportCSV()"><i class="fas fa-file-csv me-2"></i> Export User Data</button>
+          <button class="btn btn-outline-info btn-export" onclick="exportExcel()"><i class="fas fa-file-excel me-2"></i> Export Excel</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar-right">
+      <div>
+        <h4><i class="fas fa-chart-bar"></i> Other Analysis</h4>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-chart-area"></i>Usage Trends</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-user-shield"></i>Active Admins</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-history"></i>Recent Activities</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-bell"></i>Notifications</a>
+          </li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h4><i class="fas fa-crown"></i> Featured Profiles</h4>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-star"></i>View Featured</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-plus-circle"></i>Add New Feature</a>
+          </li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h4><i class="fas fa-tools"></i> Quick Actions</h4>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-user-plus"></i>Add New User</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-database"></i>Backup Data</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+  <script>
+    // Set global chart styles
+    Chart.defaults.color = '#e0e0e0'
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)'
+    Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+    Chart.defaults.font.size = 13
+    
+    // Common chart options
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            padding: 15,
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(30, 30, 45, 0.95)',
+          titleColor: '#4facfe',
+          bodyColor: '#e0e0e0',
+          borderColor: 'rgba(255, 255, 255, 0.1)',
+          borderWidth: 1,
+          padding: 12,
+          usePointStyle: true
+        }
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          grid: {
+            color: 'rgba(255, 255, 255, 0.05)'
+          },
+          beginAtZero: true
+        }
+      },
+      elements: {
+        bar: {
+          borderRadius: 6
+        }
+      }
+    }
+    
+    // Profile Levels Chart
+    new Chart(document.getElementById('profileLevelsChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Level 1', 'Level 2', 'Level 3', 'Companies'],
+        datasets: [
+          {
+            data: [150, 85, 40, 20],
+            backgroundColor: ['rgba(79, 172, 254, 0.8)', 'rgba(17, 153, 142, 0.8)', 'rgba(244, 107, 69, 0.8)', 'rgba(142, 45, 226, 0.8)'],
+            borderColor: ['rgba(79, 172, 254, 1)', 'rgba(17, 153, 142, 1)', 'rgba(244, 107, 69, 1)', 'rgba(142, 45, 226, 1)'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        ...chartOptions,
+        cutout: '70%',
+        plugins: {
+          ...chartOptions.plugins,
+          legend: {
+            ...chartOptions.plugins.legend,
+            position: 'right'
+          }
+        }
+      }
+    })
+    
+    // Location Chart
+    new Chart(document.getElementById('locationChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Kigali', 'Huye', 'Musanze', 'Rubavu', 'Rwamagana'],
+        datasets: [
+          {
+            label: 'Users',
+            data: [120, 50, 30, 25, 15],
+            backgroundColor: 'rgba(79, 172, 254, 0.7)',
+            borderColor: 'rgba(79, 172, 254, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: chartOptions
+    })
+    
+    // Top Skills Chart
+    new Chart(document.getElementById('topSkillsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Plumbing', 'Catering', 'Mechanic', 'Electrician', 'Design'],
+        datasets: [
+          {
+            label: 'Active Workers',
+            data: [60, 45, 30, 25, 20],
+            backgroundColor: ['rgba(79, 172, 254, 0.7)', 'rgba(17, 153, 142, 0.7)', 'rgba(244, 107, 69, 0.7)', 'rgba(142, 45, 226, 0.7)', 'rgba(253, 126, 20, 0.7)'],
+            borderColor: ['rgba(79, 172, 254, 1)', 'rgba(17, 153, 142, 1)', 'rgba(244, 107, 69, 1)', 'rgba(142, 45, 226, 1)', 'rgba(253, 126, 20, 1)'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: chartOptions
+    })
+    
+    // Age Distribution Chart
+    new Chart(document.getElementById('ageDistributionChart'), {
+      type: 'pie',
+      data: {
+        labels: ['18-24', '25-34', '35-44', '45+'],
+        datasets: [
+          {
+            data: [70, 90, 40, 20],
+            backgroundColor: ['rgba(79, 172, 254, 0.7)', 'rgba(17, 153, 142, 0.7)', 'rgba(244, 107, 69, 0.7)', 'rgba(142, 45, 226, 0.7)'],
+            borderColor: ['rgba(79, 172, 254, 1)', 'rgba(17, 153, 142, 1)', 'rgba(244, 107, 69, 1)', 'rgba(142, 45, 226, 1)'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        ...chartOptions,
+        plugins: {
+          ...chartOptions.plugins,
+          legend: {
+            ...chartOptions.plugins.legend,
+            position: 'right'
+          }
+        }
+      }
+    })
+    
+    // Export functions
+    function exportPDF() {
+      Swal.fire({
+        title: 'Generating PDF Report',
+        html: 'Please wait while we prepare your document...',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        background: 'rgba(30, 30, 45, 0.95)',
+        color: '#e0e0e0'
+      })
+    }
+    
+    function exportCSV() {
+      Swal.fire({
+        title: 'Exporting User Data',
+        html: 'Preparing CSV file for download...',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        background: 'rgba(30, 30, 45, 0.95)',
+        color: '#e0e0e0'
+      })
+    }
+    
+    function exportExcel() {
+      Swal.fire({
+        title: 'Exporting Excel Report',
+        html: 'Compiling data for Excel export...',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        background: 'rgba(30, 30, 45, 0.95)',
+        color: '#e0e0e0'
+      })
+    }
+    
+    // Admin modal placeholders
+    function deleteProfileModal() {
+      Swal.fire('Delete Profile', 'This would open a modal to select and delete a user profile.', 'warning')
+    }
+    function featureProfileModal() {
+      Swal.fire('Feature Profile', 'This would open a modal to feature a user profile.', 'info')
+    }
+    function sendMessageAllModal() {
+      Swal.fire('Message All', 'This would open a modal to send a message to all users.', 'info')
+    }
+    function sendMessageProfileModal() {
+      Swal.fire('Message Profile', 'This would open a modal to send a message to a specific user.', 'info')
+    }
+  </script>
+{% endblock %}

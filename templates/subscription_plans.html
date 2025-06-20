@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Subscription Plans - Rwanda TempConnect Hub
+{% endblock %}
+
+{% block content %}
+  <style>
+    body {
+      background: linear-gradient(120deg, #f8f9fa 0%, #e3f2fd 100%);
+      font-family: 'Poppins', sans-serif;
+    }
+    .plans-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar-marketing {
+      width: 260px;
+      background: linear-gradient(135deg, #1976d2 0%, #64b5f6 100%);
+      color: #fff;
+      padding: 35px 18px 35px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 2px 0 16px 0 rgba(25, 118, 210, 0.08);
+    }
+    .sidebar-marketing h4 {
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+      color: #fff;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .sidebar-marketing ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar-marketing li {
+      margin-bottom: 18px;
+    }
+    .sidebar-marketing a,
+    .sidebar-marketing button {
+      color: #fff;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-marketing a:hover,
+    .sidebar-marketing button:hover {
+      color: #ffe082;
+    }
+    .sidebar-marketing .divider {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+      margin: 22px 0;
+    }
+    @media (max-width: 992px) {
+      .sidebar-marketing {
+        display: none;
+      }
+    }
+    .plan-highlight {
+      background: linear-gradient(90deg, #fffde7 0%, #e3f2fd 100%);
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 24px rgba(25, 118, 210, 0.07);
+      padding: 1.5rem 1rem;
+      margin-bottom: 2rem;
+      border: 1px solid #bbdefb;
+    }
+    .card {
+      border-radius: 1.2rem !important;
+      box-shadow: 0 2px 16px rgba(25, 118, 210, 0.08) !important;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-7px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13) !important;
+      z-index: 2;
+    }
+    .plan-badge {
+      font-size: 0.85rem;
+      background: #1976d2;
+      color: #fff;
+      border-radius: 0.5rem;
+      padding: 2px 10px;
+      margin-bottom: 8px;
+      display: inline-block;
+      letter-spacing: 0.5px;
+    }
+    .btn {
+      border-radius: 0.7rem !important;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+    }
+    .plan-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      color: #1976d2;
+    }
+    @media (max-width: 767px) {
+      .plan-highlight {
+        padding: 1rem 0.5rem;
+      }
+      .card {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+
+  <div class="plans-layout">
+    <!-- Left Sidebar for Marketing & Info -->
+    <aside class="sidebar-marketing">
+      <div>
+        <h4><i class="fas fa-bullhorn"></i> Why Upgrade?</h4>
+        <ul>
+          <li>
+            <i class="fas fa-rocket"></i> Boost your profile visibility
+          </li>
+          <li>
+            <i class="fas fa-star"></i> Get featured on homepage
+          </li>
+          <li>
+            <i class="fas fa-envelope-open-text"></i> Priority support
+          </li>
+          <li>
+            <i class="fas fa-chart-line"></i> Access analytics
+          </li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h4><i class="fas fa-gift"></i> Special Offers</h4>
+        <ul>
+          <li>
+            <i class="fas fa-percent"></i> 10% off for annual plans
+          </li>
+          <li>
+            <i class="fas fa-user-friends"></i> Refer & earn rewards
+          </li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h4><i class="fas fa-info-circle"></i> Need Help?</h4>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-question-circle"></i>FAQ</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-headset"></i>Contact Support</a>
+          </li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h4><i class="fas fa-users"></i> For Businesses</h4>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-briefcase"></i>Bulk Plans</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-building"></i>Company Branding</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+      <div class="plan-highlight text-center mb-5">
+        <h1 class="fw-bold text-primary mb-2">Choose Your Subscription Plan</h1>
+        <p class="text-muted mb-0">Flexible plans for both workers and employers on Rwanda TempConnect Hub</p>
+      </div>
+
+      <!-- Plans for Workers -->
+      <div class="mb-5">
+        <h2 class="text-center text-success fw-semibold mb-4">Plans for Skilled Workers & Companies</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+          <!-- Free Trial -->
+          <div class="col">
+            <div class="card border shadow h-100 text-center">
+              <div class="card-body">
+                <div class="plan-icon">
+                  <i class="fas fa-gift"></i>
+                </div>
+                <span class="plan-badge bg-secondary">Free Trial</span>
+                <h2 class="text-primary mt-2">0 RWF</h2>
+                <p>Try the platform for 7 days</p>
+                <ul class="list-unstyled small mb-4">
+                  <li>✅ Create profile (Level 1)</li>
+                  <li>✅ Upload one skill</li>
+                  <li>🚫 Limited visibility</li>
+                </ul>
+                <a href="#" class="btn btn-outline-primary">Start Free</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level 1 -->
+          <div class="col">
+            <div class="card border border-success shadow h-100 text-center">
+              <div class="card-body">
+                <div class="plan-icon">
+                  <i class="fas fa-user"></i>
+                </div>
+                <span class="plan-badge bg-success">Level 1</span>
+                <h2 class="text-success mt-2">1,000 RWF/mo</h2>
+                <p>For skilled workers without certification</p>
+                <ul class="list-unstyled small mb-4">
+                  <li>✅ Public profile page</li>
+                  <li>✅ Add multiple skills</li>
+                  <li>✅ Show availability</li>
+                </ul>
+                <a href="#" class="btn btn-success">Subscribe</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level 2 -->
+          <div class="col">
+            <div class="card border border-warning shadow h-100 text-center">
+              <div class="card-body">
+                <div class="plan-icon">
+                  <i class="fas fa-certificate"></i>
+                </div>
+                <span class="plan-badge bg-warning text-dark">Level 2</span>
+                <h2 class="text-warning mt-2">2,500 RWF/mo</h2>
+                <p>For certified professionals</p>
+                <ul class="list-unstyled small mb-4">
+                  <li>✅ Upload CV & Certificates</li>
+                  <li>✅ Social media links</li>
+                  <li>✅ More visibility</li>
+                </ul>
+                <a href="#" class="btn btn-warning text-white">Subscribe</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Company -->
+          <div class="col">
+            <div class="card border border-dark shadow h-100 text-center">
+              <div class="card-body">
+                <div class="plan-icon">
+                  <i class="fas fa-building"></i>
+                </div>
+                <span class="plan-badge bg-dark">Company Profile</span>
+                <h2 class="text-dark mt-2">5,000 RWF/mo</h2>
+                <p>For businesses hiring workers</p>
+                <ul class="list-unstyled small mb-4">
+                  <li>✅ Company branding</li>
+                  <li>✅ Multiple job posts</li>
+                  <li>✅ Full dashboard</li>
+                </ul>
+                <a href="#" class="btn btn-dark">Subscribe</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plans for Employers -->
+      <div>
+        <h2 class="text-center text-primary fw-semibold mb-4">Plans for Employers / Service Seekers</h2>
+        <div class="row justify-content-center">
+          <!-- Employer Plan -->
+          <div class="col-md-6">
+            <div class="card border border-info shadow text-center">
+              <div class="card-body">
+                <div class="plan-icon">
+                  <i class="fas fa-search"></i>
+                </div>
+                <span class="plan-badge bg-info">Employer Access</span>
+                <h2 class="text-info mt-2">2,000 RWF/mo</h2>
+                <p>Access worker profiles and contact them</p>
+                <ul class="list-unstyled small mb-4">
+                  <li>✅ Search and filter by skill/location</li>
+                  <li>✅ View detailed profile</li>
+                  <li>✅ Send direct messages</li>
+                </ul>
+                <a href="#" class="btn btn-info text-white">Subscribe</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+{% endblock %}
