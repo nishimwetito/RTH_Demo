@@ -626,8 +626,8 @@
               <div id="level-1" class="level-section">
                 <div class="row">
                   <div class="col-12 mb-4">
-                    <h3 class="fw-bold">Level 1 - Basic Profile</h3>
-                    <p class="text-muted">Perfect for skilled workers starting on the platform</p>
+                    <h3 class="fw-bold">Level 1 - Basic Essential Craftsmen</h3>
+                    <p class="text-muted">Skilled tradespeople with hands-on experience in core services-Especially home services</p>
                   </div>
                   <div class="row">
                     {% for profile in profile1 %}
@@ -636,8 +636,7 @@
                   </div>
 
                   <div class="col-12 mt-4 text-center">
-                    <a href="#pricing" class="btn btn-primary mx-4">See Level 1 Pricing</a>
-                    <a href="#pricing" class="btn btn-primary">See Level 1 Pricing</a>
+                    <a href="{% url 'allprofiles1' %}" class="btn btn-primary">Explore More</a>
                   </div>
                 </div>
               </div>
@@ -646,14 +645,14 @@
               <div id="level-2" class="level-section">
                 <div class="row">
                   <div class="col-12 mb-4">
-                    <h3 class="fw-bold">Level 2 - Professional Profile</h3>
-                    <p class="text-muted">For certified professionals with verifiable experience</p>
+                    <h3 class="fw-bold">Level 2 - Certified Professionals</h3>
+                    <p class="text-muted">Formally trained workers with technical certifications</p>
                   </div>
                   {% for profile in profile2 %}
                     {% include 'partials/profile_card2.html' %}
                   {% endfor %}
                   <div class="col-12 mt-4 text-center">
-                    <a href="#pricing" class="btn btn-warning text-white">See Level 2 Pricing</a>
+                    <a href="{% url 'allprofiles2' %}" class="btn btn-primary text-white">Explore More</a>
                   </div>
                 </div>
               </div>
@@ -662,14 +661,14 @@
               <div id="level-3" class="level-section">
                 <div class="row">
                   <div class="col-md-12 mb-4">
-                    <h3 class="fw-bold">Level 3 - Premium Profile</h3>
+                    <h3 class="fw-bold">Level 3 - Elite Specialists</h3>
                     <p class="text-muted">For top professionals with extensive experience and specialization</p>
                   </div>
                   {% for profile in profile3 %}
                     {% include 'partials/profile_card3.html' %}
                   {% endfor %}
                   <div class="col-12 mt-4 text-center">
-                    <a href="#pricing" class="btn btn-info">See Level 3 Pricing</a>
+                    <a href="{% url 'allprofiles3' %}" class="btn btn-primary">Explore More</a>
                   </div>
                 </div>
               </div>
@@ -678,14 +677,14 @@
               <div class="level-section" id="company-profile">
                 <div class="row">
                   <div class="col-12 mb-4">
-                    <h3 class="fw-bold">Company Profile</h3>
-                    <p class="text-muted">For businesses and organizations looking to hire skilled workers</p>
+                    <h3 class="fw-bold">Enterprise Teams & Companies</h3>
+                    <p class="text-muted">Registered businesses or organized teams offering specialized or large-scale services.</p>
                   </div>
                   {% for company in companies %}
                     {% include 'partials/companyprofile_card.html' %}
                   {% endfor %}
                   <div class="col-12 mt-4 text-center">
-                    <a href="#pricing" class="btn btn-dark">See Company Pricing</a>
+                    <a href="{% url 'allcompanyprofiles' %}" class="btn btn-primary">Explore More</a>
                   </div>
                 </div>
               </div>
@@ -802,7 +801,7 @@
               <p class="cta-subtitle">Join RwandaTempConnect Hub today and unlock new opportunities or find the skilled workers you need.</p>
               <div class="d-flex flex-wrap justify-content-center gap-3">
                 <a href="/register" class="btn btn-light btn-lg">Create Free Profile</a>
-                <a href="/employer-register" class="btn btn-outline-light btn-lg">Register as Employer</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg">Register as Employer</a>
               </div>
             </div>
           </section>
