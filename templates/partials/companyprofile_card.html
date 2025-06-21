@@ -1,0 +1,37 @@
+{% load static %}
+<div class="col-md-4 mb-4">
+  <div class="worker-card-4">
+    <!-- Profile Pictures and Info -->
+    {% if company.profile_picture_company %}
+      <img src="{{ company.profile_picture_company.url }}" class="background-img-4" alt="Background" />
+    {% else %}
+      <img src="{% static 'images/default-profile-company.png' %}" class="background-img-4" alt="Background" />
+    {% endif %}
+    {% if company.profile_picture_logo %}
+      <img src="{{ company.profile_picture_logo.url }}" class="profile-img-4" alt="Profile" />
+    {% else %}
+      <img src="{% static 'images/default-profile-logo.jpg' %}" class="profile-img-4" alt="Profile" />
+    {% endif %}
+    <h5>{{ company.user.username }}</h5>
+    <p>Web Developer | Django & React</p>
+    <div class="contact-info-4">
+      <p>
+        <i class="fas fa-map-marker-alt"></i> New York, USA
+      </p>
+      <p>
+        <i class="fas fa-envelope"></i> john.doe@example.com
+      </p>
+      <p>
+        <i class="fas fa-phone"></i> +1 234 567 890
+      </p>
+    </div>
+    <div class="social-icons-4">
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+    </div>
+    <button class="like-button-4"><i class="fas fa-thumbs-up"></i> Like</button>
+    <button class="message-button-4"><i class="fas fa-envelope"></i> Send Message</button>
+    <div class="likes-count-4">123 Likes</div>
+  </div>
+</div>

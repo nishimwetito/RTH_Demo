@@ -59,81 +59,7 @@
       <div class="col-md-8">
         <div class="row">
           {% for profile in profiles1 %}
-            <div class="col-12 col-md-6 col-lg-4">
-              <div class="profile-card-1">
-                <!-- Header with availability status -->
-                <div class="header-bg-2 position-relative">
-                  {% if profile.availability_status == 'available' %}
-                    <span class="availability-badge available"><i class="fas fa-circle-check"></i> Available</span>
-                  {% elif profile.availability_status == 'booked_today' %}
-                    <span class="availability-badge booked"><i class="fas fa-calendar-check"></i> Booked Today</span>
-                  {% else %}
-                    <span class="availability-badge unavailable"><i class="fas fa-circle-xmark"></i> Unavailable</span>
-                  {% endif %}
-                </div>
-                <!-- Profile Image -->
-                {% if profile.profile_picture %}
-                  <img src="{{ profile.profile_picture.url }}" alt="Profile Image" class="profile-image" />
-                {% else %}
-                  <img src="{% static 'images/default-profile.jpg' %}" alt="Profile Image" class="profile-image" />
-                {% endif %}
-                <!-- Profile Name -->
-                <div class="profile-name-1">{{ profile.user.username }}</div>
-
-                <!-- Profile Info -->
-                <div class="profile-info-1">
-                  <i class="fas fa-phone"></i> +250 {{ profile.phone }}
-                </div>
-                <div class="profile-info-1">
-                  <i class="fas fa-map-marker-alt"></i>
-                  {% if profile.address %}
-                    {{ profile.address.cell }}, {{ profile.address.province }}
-                  {% else %}
-                    <span class="text-muted">No address provided</span>
-                  {% endif %}
-                </div>
-
-                <!-- Profile Skills -->
-                <div class="skills-container-1">
-                  <div class="skills-label-1">Skills</div>
-                  <div class="skills-list-1">
-                    {% for skill in profile.skills.all %}
-                      <span class="skill-tag-1">{{ skill.name }}</span>
-                    {% empty %}
-                      <span class="text-muted">No skills listed</span>
-                    {% endfor %}
-                  </div>
-                </div>
-
-                <!-- Like Section -->
-                <div class="like-section-1">
-                  <i class="fas fa-thumbs-up {% if request.user in profile.likes.all %}liked{% endif %}" id="like-button-{{ profile.id }}"></i>
-                  <span id="like-count-{{ profile.id }}">{{ profile.total_likes }} Like{{ profile.total_likes|pluralize }}</span>
-                </div>
-
-                <!-- Social Media Links -->
-                <div class="social-icons-1">
-                  {% if profile.facebook_link %}
-                    <a href="{{ profile.facebook_link }}" aria-label="Facebook" target="_blank"><i class="fab fa-facebook"></i></a>
-                  {% endif %}
-                  {% if profile.twitter_link %}
-                    <a href="{{ profile.twitter_link }}" aria-label="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
-                  {% endif %}
-                  {% if profile.instagram_link %}
-                    <a href="{{ profile.instagram_link }}" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
-                  {% endif %}
-                  {% if request.user == profile.user %}
-  <div class="text-center mt-2">
-    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-      Edit Profile
-    </button>
-  </div>
-  
-{% endif %}
-
-                </div>
-              </div>
-            </div>
+          {% include "partials/profile_card1.html"%}
           {% endfor %}
         </div>
       </div>
@@ -300,7 +226,7 @@
     </div>
   </div>
 
-  <style>
+  {% comment %} <style>
     .fa-thumbs-up {
       color: #666;
       cursor: pointer;
@@ -391,7 +317,7 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
       }
-  </style>
+  </style> {% endcomment %}
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Handle all like button clicks

@@ -36,85 +36,7 @@
       <div class="col-md-8">
         <div class="row">
           {% for profile in profiles2 %}
-            <div class="profile-card-2">
-              <div class="header-bg-2">
-                <!-- Header with availability status -->
-                <div class="header-bg-2 position-relative">
-                  {% if profile.availability_status == 'available' %}
-                    <span class="availability-badge available"><i class="fas fa-circle-check"></i> Available</span>
-                  {% elif profile.availability_status == 'booked_today' %}
-                    <span class="availability-badge booked"><i class="fas fa-calendar-check"></i> Booked Today</span>
-                  {% else %}
-                    <span class="availability-badge unavailable"><i class="fas fa-circle-xmark"></i> Unavailable</span>
-                  {% endif %}
-                </div>
-              </div>
-              {% if profile.profile_picture %}
-                <img src="{{ profile.profile_picture.url }}" class="profile-img" alt="Profile" />
-              {% else %}
-                <img src="{% static 'images/default-profile.jpg' %}" class="profile-img" alt="Profile" />
-              {% endif %}
-              <a href="{% url 'level2_profile_detail' profile.id %}"><h5>{{ profile.user.username }}</h5></a>
-              <p class="info-2">
-                <i class="fas fa-phone"></i> +250 {{ profile.phone }}
-              </p>
-              <p class="info-2">
-                <i class="fas fa-map-marker-alt"></i> Kigali, Rwanda
-              </p>
-              <p class="skills-2">
-                <i class="fas fa-tools"></i> Graphic Design, UI/UX, Branding, Digital Marketing, Animation
-              </p>
-
-              <div class="btn-container-2">
-                <button class="like-btn-2" onclick="toggleLike()">
-                  <i id="heartIcon" class="far fa-heart"></i>
-                  <span id="likeCount">1.2k Likes</span>
-                </button>
-
-                <!-- Button trigger modal for sending message -->
-                <button type="button" class="btn-2 text-white text-decoration-none" data-bs-toggle="modal" data-bs-target="#messageModal{{ profile.id }}">Send Message</button>
-
-                <!-- Modal for sending message -->
-                <div class="modal fade" id="messageModal{{ profile.id }}" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <form method="POST" action="{% url 'create-message' profile.user.profile.id %}">
-                        {% csrf_token %}
-                        <div class="modal-header">
-                          <h5 class="modal-title">✉️ Send Message to {{ profile.user.username }}</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="mb-3">
-                            <input type="text" class="form-control" name="name" placeholder="Your name" required />
-                          </div>
-                          <div class="mb-3">
-                            <input type="email" class="form-control" name="email" placeholder="Email address" required />
-                          </div>
-                          <div class="mb-3">
-                            <input type="text" class="form-control" name="subject" placeholder="Subject" required />
-                          </div>
-                          <div class="mb-3">
-                            <textarea class="form-control" name="body" rows="4" placeholder="Your message..." required></textarea>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-sm btn-primary">Send Message</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="social-icons-2">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-              </div>
-            </div>
+            {% include 'partials/profile_card2.html' %}
           {% endfor %}
         </div>
       </div>
@@ -257,40 +179,4 @@
       </ul>
     </nav>
   </div>
-
-  <style>
-    /* Add these styles to your CSS  for availability status*/
-    .availability-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 5px 10px;
-      border-radius: 0px;
-      font-size: 12px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .availability-badge i {
-      font-size: 14px;
-    }
-    
-    .available {
-      background-color: #0d6efd;
-      color: #155724;
-    }
-    
-    .booked {
-      background-color: #fff3cd;
-      color: #856404;
-    }
-    
-    .unavailable {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
-  </style>
 {% endblock %}

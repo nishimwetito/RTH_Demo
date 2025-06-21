@@ -7,6 +7,11 @@
     <title>RwandaTempConnect Hub - Connect Skilled Workers with Employers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'profile1.css' %}" />
+    <link rel="stylesheet" href="{% static 'profile2.css' %}" />
+    <link rel="stylesheet" href="{% static 'profile3.css' %}" />
+    <link rel="stylesheet" href="{% static 'companyprofile.css' %}" />
     <style>
       :root {
         --primary: #4361ee;
@@ -183,70 +188,6 @@
       .profile-level-section {
         padding: 4rem 0;
       }
-      .profile-level-card {
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s;
-        background: white;
-        height: 100%;
-      }
-      .profile-level-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      }
-      .profile-level-header {
-        padding: 20px;
-        color: white;
-        text-align: center;
-      }
-      .level-free {
-        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-      }
-      .level-1 {
-        background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
-      }
-      .level-2 {
-        background: linear-gradient(135deg, #f8961e 0%, #f72585 100%);
-      }
-      .level-3 {
-        background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%);
-      }
-      .level-company {
-        background: linear-gradient(135deg, #212529 0%, #495057 100%);
-      }
-      .profile-sample {
-        padding: 25px;
-      }
-      .profile-avatar {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid white;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-      }
-      .profile-name {
-        font-weight: 600;
-        margin-top: 15px;
-      }
-      .profile-title {
-        color: var(--primary);
-        font-size: 0.9rem;
-        margin-bottom: 10px;
-      }
-      .profile-skills {
-        font-size: 0.85rem;
-        color: #666;
-      }
-      .profile-skills span {
-        display: inline-block;
-        background: #f0f4ff;
-        padding: 3px 10px;
-        border-radius: 20px;
-        margin: 3px;
-        font-size: 0.8rem;
-      }
       .cta-section {
         background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
         color: white;
@@ -317,26 +258,135 @@
       .social-icons a:hover {
         transform: translateY(-3px);
       }
+      
+      /* New styles for section separation */
+      .section-separator {
+        position: relative;
+        margin: 5rem 0;
+        text-align: center;
+      }
+      .section-separator::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+        z-index: -1;
+      }
+      .section-title {
+        display: inline-block;
+        background: #f8f9fa;
+        padding: 0 2rem;
+        position: relative;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 2rem;
+      }
+      
+      .feature-section {
+        padding: 5rem 0;
+        background: white;
+        position: relative;
+      }
+      .feature-section::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        right: 5%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+      }
+      
+      .how-it-works-section {
+        padding: 5rem 0;
+        background: #f8f9fa;
+        position: relative;
+      }
+      .how-it-works-section::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        right: 5%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+      }
+      
+      .profile-level-section {
+        padding: 5rem 0;
+        background: white;
+        position: relative;
+      }
+      .profile-level-section::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        right: 5%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+      }
+      
+      .level-section {
+        margin-bottom: 4rem;
+        padding: 2rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      .level-section h3 {
+        position: relative;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+      }
+      .level-section h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 3px;
+      }
+      
+      .employer-section {
+        padding: 5rem 0;
+        background: #f8f9fa;
+      }
+      
+      .employer-plans-section {
+        padding: 5rem 0;
+        background: white;
+      }
+      
       @media (max-width: 992px) {
+        .main-content {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
         .sidebar {
           display: none;
         }
-        .main-content {
-          margin-left: 0 !important;
-        }
       }
-      @media (max-width: 768px) {
-        .hero-title {
-          font-size: 2.2rem;
-        }
-        .hero-subtitle {
-          font-size: 1.1rem;
+      @media (max-width: 576px) {
+        .feature-card,
+        .level-section,
+        .cta-section,
+        .profile-level-section,
+        .how-it-works-section,
+        .employer-section,
+        .employer-plans-section {
+          padding-left: 0.5rem !important;
+          padding-right: 0.5rem !important;
         }
         .section-title {
-          font-size: 1.5rem;
-        }
-        .cta-title {
-          font-size: 2rem;
+          font-size: 1.2rem;
+          padding: 0 0.5rem;
         }
       }
     </style>
@@ -350,16 +400,11 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link text-white" href="#how-it-works">How It Works</a>
+              <a class="nav-link text-white" href="#how-it-works">Jobs & Opportunities</a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link text-white" href="#profile-levels">Profile Levels</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#for-employers">For Employers</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#pricing">Pricing</a>
+              <a class="nav-link text-white" href="{% url 'subscription-plans' %}">Pricing</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="{% url 'market-place' %}">Market place</a>
@@ -411,9 +456,6 @@
                   <a href="#profile-levels" class="active"><i class="fas fa-layer-group"></i> Profile Levels</a>
                 </li>
                 <li>
-                  <a href="#free-plan"><i class="fas fa-gift"></i> Free Plan</a>
-                </li>
-                <li>
                   <a href="#level-1"><i class="fas fa-user"></i> Level 1</a>
                 </li>
                 <li>
@@ -421,6 +463,9 @@
                 </li>
                 <li>
                   <a href="#level-3"><i class="fas fa-star"></i> Level 3</a>
+                </li>
+                <li>
+                  <a href="#company-profile"><i class="fas fa-gift"></i> Company</a>
                 </li>
               </ul>
             </div>
@@ -438,10 +483,10 @@
                   <a href="#employer-plans"><i class="fas fa-list-alt"></i> Employer Plans</a>
                 </li>
                 <li>
-                  <a href="#free-employer"><i class="fas fa-hand-holding-heart"></i> Free Plan</a>
+                  <a href="#free-employer"><i class="fas fa-hand-holding-heart"></i>All workers</a>
                 </li>
                 <li>
-                  <a href="#premium-employer"><i class="fas fa-crown"></i> Premium Plan</a>
+                  <a href="#premium-employer"><i class="fas fa-crown"></i>Jobs</a>
                 </li>
               </ul>
             </div>
@@ -483,7 +528,7 @@
         <!-- Main Content -->
         <div class="col-lg-10 main-content">
           <!-- Features Section -->
-          <section class="mt-5">
+          <section class="feature-section">
             <div class="container">
               <div class="row justify-content-center mb-5">
                 <div class="col-lg-8 text-center">
@@ -533,8 +578,8 @@
           </section>
 
           <!-- How It Works Section -->
-          <section id="how-it-works" class="py-5 bg-light">
-            <div class="container py-5">
+          <section id="how-it-works" class="how-it-works-section">
+            <div class="container">
               <div class="row justify-content-center mb-5">
                 <div class="col-lg-8 text-center">
                   <h2 class="section-title">How RwandaTempConnect Works</h2>
@@ -577,470 +622,79 @@
                 </div>
               </div>
 
-              <!-- Free Plan -->
-              <div id="free-plan" class="row mb-5">
-                <div class="col-12 mb-4">
-                  <h3 class="fw-bold">Free Plan - Basic Access</h3>
-                  <p class="text-muted">Get started with basic features at no cost</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-free">
-                      <h4 class="mb-0">Free</h4>
-                      <p class="mb-0">Basic Access</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Jean Claude</h5>
-                      <p class="profile-title">Construction Worker</p>
-                      <div class="profile-skills">
-                        <span>Masonry</span>
-                        <span>Painting</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-secondary mt-3">Start Free</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-free">
-                      <h4 class="mb-0">Free</h4>
-                      <p class="mb-0">Basic Access</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Marie Aimee</h5>
-                      <p class="profile-title">Housekeeper</p>
-                      <div class="profile-skills">
-                        <span>Cleaning</span>
-                        <span>Laundry</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-secondary mt-3">Start Free</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-free">
-                      <h4 class="mb-0">Free</h4>
-                      <p class="mb-0">Basic Access</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Eric</h5>
-                      <p class="profile-title">Driver</p>
-                      <div class="profile-skills">
-                        <span>Taxi Driving</span>
-                        <span>Delivery</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-secondary mt-3">Start Free</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-free">
-                      <h4 class="mb-0">Free</h4>
-                      <p class="mb-0">Basic Access</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Claudine</h5>
-                      <p class="profile-title">Gardener</p>
-                      <div class="profile-skills">
-                        <span>Landscaping</span>
-                        <span>Plant Care</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-secondary mt-3">Start Free</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 mt-4 text-center">
-                  <a href="#pricing" class="btn btn-secondary">See Free Plan Details</a>
-                </div>
-              </div>
-
               <!-- Level 1 -->
-              <div id="level-1" class="row mb-5">
-                <div class="col-12 mb-4">
-                  <h3 class="fw-bold">Level 1 - Basic Profile</h3>
-                  <p class="text-muted">Perfect for skilled workers starting on the platform</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-1">
-                      <h4 class="mb-0">Level 1</h4>
-                      <p class="mb-0">Basic Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Emmanuel</h5>
-                      <p class="profile-title">Painter</p>
-                      <div class="profile-skills">
-                        <span>Wall Painting</span>
-                        <span>Decorating</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-primary mt-3">Upgrade Now</a>
-                    </div>
+              <div id="level-1" class="level-section">
+                <div class="row">
+                  <div class="col-12 mb-4">
+                    <h3 class="fw-bold">Level 1 - Basic Profile</h3>
+                    <p class="text-muted">Perfect for skilled workers starting on the platform</p>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-1">
-                      <h4 class="mb-0">Level 1</h4>
-                      <p class="mb-0">Basic Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Josiane</h5>
-                      <p class="profile-title">Tailor</p>
-                      <div class="profile-skills">
-                        <span>Sewing</span>
-                        <span>Alterations</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-primary mt-3">Upgrade Now</a>
-                    </div>
+                  <div class="row">
+                    {% for profile in profile1 %}
+                      {% include 'partials/profile_card1.html' %}
+                    {% endfor %}
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-1">
-                      <h4 class="mb-0">Level 1</h4>
-                      <p class="mb-0">Basic Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Theogene</h5>
-                      <p class="profile-title">Welder</p>
-                      <div class="profile-skills">
-                        <span>Metal Work</span>
-                        <span>Fabrication</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-primary mt-3">Upgrade Now</a>
-                    </div>
+
+                  <div class="col-12 mt-4 text-center">
+                    <a href="#pricing" class="btn btn-primary mx-4">See Level 1 Pricing</a>
+                    <a href="#pricing" class="btn btn-primary">See Level 1 Pricing</a>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-1">
-                      <h4 class="mb-0">Level 1</h4>
-                      <p class="mb-0">Basic Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/77.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Ange</h5>
-                      <p class="profile-title">Hair Stylist</p>
-                      <div class="profile-skills">
-                        <span>Braiding</span>
-                        <span>Hair Care</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-primary mt-3">Upgrade Now</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 mt-4 text-center">
-                  <a href="#pricing" class="btn btn-primary">See Level 1 Pricing</a>
                 </div>
               </div>
 
               <!-- Level 2 -->
-              <div id="level-2" class="row mb-5">
-                <div class="col-12 mb-4">
-                  <h3 class="fw-bold">Level 2 - Professional Profile</h3>
-                  <p class="text-muted">For certified professionals with verifiable experience</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-2">
-                      <h4 class="mb-0">Level 2</h4>
-                      <p class="mb-0">Professional</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">David</h5>
-                      <p class="profile-title">Electrician</p>
-                      <div class="profile-skills">
-                        <span>Wiring</span>
-                        <span>Installation</span>
-                        <span>Repairs</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-warning" title="Verified"></i>
-                        <small class="text-muted">Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-warning mt-3">Upgrade Now</a>
-                    </div>
+              <div id="level-2" class="level-section">
+                <div class="row">
+                  <div class="col-12 mb-4">
+                    <h3 class="fw-bold">Level 2 - Professional Profile</h3>
+                    <p class="text-muted">For certified professionals with verifiable experience</p>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-2">
-                      <h4 class="mb-0">Level 2</h4>
-                      <p class="mb-0">Professional</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Grace</h5>
-                      <p class="profile-title">Plumber</p>
-                      <div class="profile-skills">
-                        <span>Pipe Repair</span>
-                        <span>Installation</span>
-                        <span>Maintenance</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-warning" title="Verified"></i>
-                        <small class="text-muted">Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-warning mt-3">Upgrade Now</a>
-                    </div>
+                  {% for profile in profile2 %}
+                    {% include 'partials/profile_card2.html' %}
+                  {% endfor %}
+                  <div class="col-12 mt-4 text-center">
+                    <a href="#pricing" class="btn btn-warning text-white">See Level 2 Pricing</a>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-2">
-                      <h4 class="mb-0">Level 2</h4>
-                      <p class="mb-0">Professional</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Samuel</h5>
-                      <p class="profile-title">Carpenter</p>
-                      <div class="profile-skills">
-                        <span>Furniture</span>
-                        <span>Cabinets</span>
-                        <span>Installation</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-warning" title="Verified"></i>
-                        <small class="text-muted">Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-warning mt-3">Upgrade Now</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-2">
-                      <h4 class="mb-0">Level 2</h4>
-                      <p class="mb-0">Professional</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/66.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Alice</h5>
-                      <p class="profile-title">Caterer</p>
-                      <div class="profile-skills">
-                        <span>Cooking</span>
-                        <span>Event Planning</span>
-                        <span>Baking</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-warning" title="Verified"></i>
-                        <small class="text-muted">Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-warning mt-3">Upgrade Now</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 mt-4 text-center">
-                  <a href="#pricing" class="btn btn-warning text-white">See Level 2 Pricing</a>
                 </div>
               </div>
 
               <!-- Level 3 -->
-              <div id="level-3" class="row mb-5">
-                <div class="col-12 mb-4">
-                  <h3 class="fw-bold">Level 3 - Premium Profile</h3>
-                  <p class="text-muted">For top professionals with extensive experience and specialization</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-3">
-                      <h4 class="mb-0">Level 3</h4>
-                      <p class="mb-0">Premium</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Patrick</h5>
-                      <p class="profile-title">Master Electrician</p>
-                      <div class="profile-skills">
-                        <span>Industrial Wiring</span>
-                        <span>Solar Installation</span>
-                        <span>System Design</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-info" title="Verified"></i>
-                        <small class="text-muted">Advanced Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-info mt-3">Upgrade Now</a>
-                    </div>
+              <div id="level-3" class="level-section">
+                <div class="row">
+                  <div class="col-md-12 mb-4">
+                    <h3 class="fw-bold">Level 3 - Premium Profile</h3>
+                    <p class="text-muted">For top professionals with extensive experience and specialization</p>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-3">
-                      <h4 class="mb-0">Level 3</h4>
-                      <p class="mb-0">Premium</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Valentine</h5>
-                      <p class="profile-title">Interior Designer</p>
-                      <div class="profile-skills">
-                        <span>Space Planning</span>
-                        <span>3D Rendering</span>
-                        <span>Project Management</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-info" title="Verified"></i>
-                        <small class="text-muted">Advanced Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-info mt-3">Upgrade Now</a>
-                    </div>
+                  {% for profile in profile3 %}
+                    {% include 'partials/profile_card3.html' %}
+                  {% endfor %}
+                  <div class="col-12 mt-4 text-center">
+                    <a href="#pricing" class="btn btn-info">See Level 3 Pricing</a>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-3">
-                      <h4 class="mb-0">Level 3</h4>
-                      <p class="mb-0">Premium</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Alex</h5>
-                      <p class="profile-title">HVAC Specialist</p>
-                      <div class="profile-skills">
-                        <span>AC Installation</span>
-                        <span>System Repair</span>
-                        <span>Energy Efficiency</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-info" title="Verified"></i>
-                        <small class="text-muted">Advanced Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-info mt-3">Upgrade Now</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-3">
-                      <h4 class="mb-0">Level 3</h4>
-                      <p class="mb-0">Premium</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Profile sample" class="profile-avatar" />
-                      <h5 class="profile-name">Beatrice</h5>
-                      <p class="profile-title">Event Planner</p>
-                      <div class="profile-skills">
-                        <span>Wedding Planning</span>
-                        <span>Catering</span>
-                        <span>Decor</span>
-                      </div>
-                      <div class="mt-2">
-                        <i class="fas fa-certificate text-info" title="Verified"></i>
-                        <small class="text-muted">Advanced Certified</small>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-info mt-3">Upgrade Now</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 mt-4 text-center">
-                  <a href="#pricing" class="btn btn-info">See Level 3 Pricing</a>
                 </div>
               </div>
 
               <!-- Company Profile -->
-              <div class="row">
-                <div class="col-12 mb-4">
-                  <h3 class="fw-bold">Company Profile</h3>
-                  <p class="text-muted">For businesses and organizations looking to hire skilled workers</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-company">
-                      <h4 class="mb-0">Company</h4>
-                      <p class="mb-0">Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://logo.clearbit.com/construction.com" alt="Company logo" class="profile-avatar" />
-                      <h5 class="profile-name">Rwanda Builders</h5>
-                      <p class="profile-title">Construction Company</p>
-                      <div class="profile-skills">
-                        <span>Hiring Masons</span>
-                        <span>Carpenters</span>
-                        <span>Laborers</span>
-                      </div>
-                      <a href="{% url 'register' %}" class="btn btn-sm btn-outline-dark mt-3">Register Company</a>
-                    </div>
+              <div class="level-section" id="company-profile">
+                <div class="row">
+                  <div class="col-12 mb-4">
+                    <h3 class="fw-bold">Company Profile</h3>
+                    <p class="text-muted">For businesses and organizations looking to hire skilled workers</p>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-company">
-                      <h4 class="mb-0">Company</h4>
-                      <p class="mb-0">Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://logo.clearbit.com/hotel.com" alt="Company logo" class="profile-avatar" />
-                      <h5 class="profile-name">Kigali Hotels</h5>
-                      <p class="profile-title">Hospitality Group</p>
-                      <div class="profile-skills">
-                        <span>Housekeeping</span>
-                        <span>Maintenance</span>
-                        <span>Chefs</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-dark mt-3">Register Company</a>
-                    </div>
+                  {% for company in companies %}
+                    {% include 'partials/companyprofile_card.html' %}
+                  {% endfor %}
+                  <div class="col-12 mt-4 text-center">
+                    <a href="#pricing" class="btn btn-dark">See Company Pricing</a>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-company">
-                      <h4 class="mb-0">Company</h4>
-                      <p class="mb-0">Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://logo.clearbit.com/cleaning.com" alt="Company logo" class="profile-avatar" />
-                      <h5 class="profile-name">CleanPro Rwanda</h5>
-                      <p class="profile-title">Cleaning Services</p>
-                      <div class="profile-skills">
-                        <span>Housekeepers</span>
-                        <span>Office Cleaners</span>
-                        <span>Supervisors</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-dark mt-3">Register Company</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="profile-level-card">
-                    <div class="profile-level-header level-company">
-                      <h4 class="mb-0">Company</h4>
-                      <p class="mb-0">Profile</p>
-                    </div>
-                    <div class="profile-sample text-center">
-                      <img src="https://logo.clearbit.com/restaurant.com" alt="Company logo" class="profile-avatar" />
-                      <h5 class="profile-name">Kigali Eats</h5>
-                      <p class="profile-title">Restaurant Group</p>
-                      <div class="profile-skills">
-                        <span>Chefs</span>
-                        <span>Waiters</span>
-                        <span>Delivery</span>
-                      </div>
-                      <a href="/register" class="btn btn-sm btn-outline-dark mt-3">Register Company</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 mt-4 text-center">
-                  <a href="#pricing" class="btn btn-dark">See Company Pricing</a>
                 </div>
               </div>
             </div>
           </section>
 
           <!-- For Employers Section -->
-          <section id="for-employers" class="py-5 bg-light">
-            <div class="container py-5">
+          <section id="for-employers" class="employer-section">
+            <div class="container">
               <div class="row align-items-center">
                 <div class="col-lg-6 mb-4 mb-lg-0">
                   <h2 class="section-title">For Employers</h2>
@@ -1070,8 +724,8 @@
           </section>
 
           <!-- Employer Plans Section -->
-          <section id="employer-plans" class="py-5">
-            <div class="container py-5">
+          <section id="employer-plans" class="employer-plans-section">
+            <div class="container">
               <div class="row justify-content-center mb-5">
                 <div class="col-lg-8 text-center">
                   <h2 class="section-title">Employer Subscription Plans</h2>
@@ -1141,120 +795,6 @@
             </div>
           </section>
 
-          <!-- Pricing Section -->
-          <section id="pricing" class="py-5 bg-light">
-            <div class="container py-5">
-              <div class="row justify-content-center mb-5">
-                <div class="col-lg-8 text-center">
-                  <h2 class="section-title">Complete Pricing Plans</h2>
-                  <p class="text-muted">Choose the plan that works best for you</p>
-                </div>
-              </div>
-              <div class="row g-4 justify-content-center">
-                <!-- Free Plan -->
-                <div class="col-md-6 col-lg-4">
-                  <div class="card border-secondary h-100">
-                    <div class="card-body text-center">
-                      <h4 class="card-title text-secondary">Free</h4>
-                      <h2 class="text-secondary my-3">0 RWF</h2>
-                      <p class="text-muted">Basic access</p>
-                      <ul class="list-unstyled my-4">
-                        <li class="mb-2">Create basic profile</li>
-                        <li class="mb-2">1 skill listing</li>
-                        <li class="mb-2">Limited visibility</li>
-                        <li class="mb-2">Apply to 3 jobs/month</li>
-                      </ul>
-                      <a href="/register" class="btn btn-outline-secondary">Get Started</a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Level 1 -->
-                <div class="col-md-6 col-lg-4">
-                  <div class="card border-primary h-100">
-                    <div class="card-body text-center">
-                      <h4 class="card-title text-primary">Level 1</h4>
-                      <h2 class="text-primary my-3">1,000 RWF</h2>
-                      <p class="text-muted">per month</p>
-                      <ul class="list-unstyled my-4">
-                        <li class="mb-2">Basic profile visibility</li>
-                        <li class="mb-2">Multiple skills listing</li>
-                        <li class="mb-2">Availability calendar</li>
-                        <li class="mb-2">Local job matching</li>
-                      </ul>
-                      <a href="/register" class="btn btn-outline-primary">Get Started</a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Level 2 -->
-                <div class="col-md-6 col-lg-4">
-                  <div class="card border-warning h-100">
-                    <div class="card-body text-center">
-                      <div class="position-absolute top-0 end-0 m-3">
-                        <span class="badge bg-warning text-dark">Popular</span>
-                      </div>
-                      <h4 class="card-title text-warning">Level 2</h4>
-                      <h2 class="text-warning my-3">2,500 RWF</h2>
-                      <p class="text-muted">per month</p>
-                      <ul class="list-unstyled my-4">
-                        <li class="mb-2">Premium profile visibility</li>
-                        <li class="mb-2">Certificate verification</li>
-                        <li class="mb-2">Priority in search results</li>
-                        <li class="mb-2">Direct employer contact</li>
-                      </ul>
-                      <a href="/register" class="btn btn-warning text-white">Upgrade Now</a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Level 3 -->
-                <div class="col-md-6 col-lg-4">
-                  <div class="card border-info h-100">
-                    <div class="card-body text-center">
-                      <h4 class="card-title text-info">Level 3</h4>
-                      <h2 class="text-info my-3">5,000 RWF</h2>
-                      <p class="text-muted">per month</p>
-                      <ul class="list-unstyled my-4">
-                        <li class="mb-2">Top profile visibility</li>
-                        <li class="mb-2">Featured in search results</li>
-                        <li class="mb-2">Advanced certification</li>
-                        <li class="mb-2">Premium support</li>
-                        <li class="mb-2">Job invitations</li>
-                      </ul>
-                      <a href="/register" class="btn btn-info text-white">Upgrade Now</a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Company -->
-                <div class="col-md-6 col-lg-4">
-                  <div class="card border-dark h-100">
-                    <div class="card-body text-center">
-                      <h4 class="card-title text-dark">Company</h4>
-                      <h2 class="text-dark my-3">5,000 RWF</h2>
-                      <p class="text-muted">per month</p>
-                      <ul class="list-unstyled my-4">
-                        <li class="mb-2">Company branding</li>
-                        <li class="mb-2">Multiple job postings</li>
-                        <li class="mb-2">Advanced search filters</li>
-                        <li class="mb-2">Dedicated support</li>
-                      </ul>
-                      <a href="/register" class="btn btn-dark">Register Company</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-4">
-                <div class="col-12 text-center">
-                  <p class="text-muted">
-                    Need help choosing? <a href="/contact">Contact our team</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
           <!-- CTA Section -->
           <section class="cta-section">
             <div class="container">
@@ -1263,64 +803,6 @@
               <div class="d-flex flex-wrap justify-content-center gap-3">
                 <a href="/register" class="btn btn-light btn-lg">Create Free Profile</a>
                 <a href="/employer-register" class="btn btn-outline-light btn-lg">Register as Employer</a>
-              </div>
-            </div>
-          </section>
-
-          <!-- FAQ Section -->
-          <section id="faq" class="py-5">
-            <div class="container py-5">
-              <div class="row justify-content-center mb-5">
-                <div class="col-lg-8 text-center">
-                  <h2 class="section-title">Frequently Asked Questions</h2>
-                  <p class="text-muted">Find answers to common questions about RwandaTempConnect Hub</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item">
-                      <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">How do I create a profile?</button></h2>
-                      <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">Creating a profile is easy! Just click on the "Create Free Profile" button and fill in your details. You can start with a free account and upgrade later if needed.</div>
-                      </div>
-                    </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">What payment methods do you accept?</button></h2>
-                      <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">We accept mobile money (MTN, Airtel), credit/debit cards, and bank transfers for subscription payments.</div>
-                      </div>
-                    </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Can I change my subscription level later?</button></h2>
-                      <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">Yes, you can upgrade or downgrade your subscription at any time from your account settings.</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="accordion" id="faqAccordion2">
-                    <div class="accordion-item">
-                      <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">How do employers contact workers?</button></h2>
-                      <div id="faq4" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion2">
-                        <div class="accordion-body">Employers can message workers directly through our platform. For higher level profiles, employers can also see contact information to call or WhatsApp directly.</div>
-                      </div>
-                    </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">Is there a mobile app available?</button></h2>
-                      <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
-                        <div class="accordion-body">Currently, we have a mobile-optimized website that works well on all devices. We're developing a mobile app that will be available soon.</div>
-                      </div>
-                    </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">How do I verify my skills or certificates?</button></h2>
-                      <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
-                        <div class="accordion-body">For Level 2 and 3 profiles, you can upload photos of your certificates or credentials. Our team will verify them within 24-48 hours.</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </section>

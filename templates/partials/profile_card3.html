@@ -1,0 +1,42 @@
+{% load static %}
+
+<div class="profile-card-3 m-2">
+  <!-- CARD HEADER WRAPPER - Added this wrapper div -->
+  <div class="card-header-wrapper">
+    <div class="header-bg-3">
+      <!-- Header with availability status -->
+      <div class="header-bg-2 position-relative">
+        {% if profile.availability_status == 'available' %}
+          <span class="availability-badge available"><i class="fas fa-circle-check"></i> Available</span>
+        {% elif profile.availability_status == 'booked_today' %}
+          <span class="availability-badge booked"><i class="fas fa-calendar-check"></i> Booked Today</span>
+        {% else %}
+          <span class="availability-badge unavailable"><i class="fas fa-circle-xmark"></i> Unavailable</span>
+        {% endif %}
+      </div>
+    </div>
+    <img src="{{ profile.profile_picture.url }}" class="profile-img-3" alt="Profile" />
+  </div>
+  <h5>{{ profile.user.username }}</h5>
+  <p class="job-title-3">Web Designer</p>
+  <p class="info-3">
+    <i class="fas fa-phone"></i> +250 788 123 456
+  </p>
+  <p class="info-3">
+    <i class="fas fa-map-marker-alt"></i> Kigali, Rwanda
+  </p>
+  <p class="info-3">
+    <i class="fas fa-tools"></i> Graphic Design, UI/UX
+  </p>
+  <div class="social-icons-3">
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-linkedin"></i></a>
+  </div>
+  <button class="btn-3">Send Message</button>
+  <div class="stats-3">
+    <button class="like-btn-3" onclick="toggleLike()"><i id="heartIcon" class="far fa-heart"></i></button>
+    <span class="like-count-3" id="likeCount">1.2k Likes</span>
+  </div>
+</div>

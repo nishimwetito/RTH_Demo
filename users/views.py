@@ -320,7 +320,18 @@ def subscription_plans_view(request):
     return render(request,'subscription_plans.html')
 
 def landing_page_view(request):
-    return render(request,'landing_page.html')
+    profile1 =Level1Profile.objects.all()[:3]
+    profile2 = Level2Profile.objects.all()[:4]
+    profile3 = Level3Profile.objects.all()[:4]
+    companies = CompanyProfile.objects.all()[:6]
+    context ={
+        'profile1':profile1,
+        'profile2':profile2,
+        'profile3':profile3,
+        'companies':companies,
+    }
+
+    return render(request,'landing_page.html',context)
 def allprofiles2_view(request):
     profiles2_list = Level2Profile.objects.all()
     paginator = Paginator(profiles2_list,8)

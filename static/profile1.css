@@ -9,39 +9,44 @@
   padding: 20px;
   width: 100%;
   text-align: center;
-  margin-bottom: 20px; /* Add spacing between cards */
+  margin-bottom: 20px;
+  position: relative;
 }
-.profile-image {
+.profile-card-1 .profile-image {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #007bff;
 }
-.profile-name-1 {
+.profile-card-1 .profile-name-1 {
   font-size: 1.6rem;
   font-weight: bold;
   color: #333;
   margin-top: 10px;
 }
-.profile-info-1 {
+.profile-card-1 .profile-info-1 {
   color: #6c757d;
   font-size: 0.95rem;
   margin: 5px 0;
 }
-.profile-info-1 i {
+.profile-card-1 .profile-info-1 i {
   margin-right: 8px;
   color: #007bff;
 }
-.skills-container-1 {
+
+/* Skills Section */
+.profile-card-1 .skills-container-1,
+.profile-card-1 .skills-container {
   background-color: #f1f1f1;
   padding: 10px;
   border-radius: 8px;
   margin-top: 15px;
   text-align: center;
 }
-.skills-label-1 {
-  background-color: rgba(241, 241, 241, 0.9); /* Gray with low opacity */
+.profile-card-1 .skills-label-1,
+.profile-card-1 .skills-label {
+  background-color: rgba(241, 241, 241, 0.9);
   color: #333;
   padding: 10px;
   font-size: 1rem;
@@ -49,57 +54,102 @@
   display: block;
   margin-bottom: 10px;
   border-radius: 5px;
-  width: 100%; /* Full width */
+  width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.skills-list-1 {
+.profile-card-1 .skills-list-1,
+.profile-card-1 .skills-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
-  max-height: 100px; /* Limit height for scrollable container */
-  overflow-y: auto; /* Add scrollbar if skills exceed container height */
+  max-height: 100px;
+  overflow-y: auto;
 }
-.skill-tag-1 {
-  background-color: #e9f5ff; /* Light blue background */
-  color: #007bff; /* Blue text */
+.profile-card-1 .skill-tag-1 {
+  background-color: #e9f5ff;
+  color: #007bff;
   padding: 8px 16px;
   border-radius: 2px;
   font-size: 0.9rem;
   font-weight: 500;
-  border: 1px solid #007bff; /* Blue border */
+  border: 1px solid #007bff;
   transition: all 0.3s ease;
 }
-.skill-tag-1:hover {
-  background-color: #007bff; /* Blue background on hover */
-  color: white; /* White text on hover */
+.profile-card-1 .skill-tag-1:hover {
+  background-color: #007bff;
+  color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
 }
-.like-section-1 {
+
+/* Like Section */
+.profile-card-1 .like-section-1 {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 15px;
   gap: 10px;
 }
-.like-section-1 i {
+.profile-card-1 .like-section-1 i,
+.profile-card-1 .fa-thumbs-up {
   font-size: 1.5rem;
-  color: #007bff;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
-.like-section-1 span {
+.profile-card-1 .fa-thumbs-up.liked {
+  color: #4267b2;
+}
+.profile-card-1 .fa-thumbs-up:hover {
+  color: #4267b2;
+}
+.profile-card-1 .like-section-1 span {
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
 }
-.social-icons-1 {
+
+/* Social Icons */
+.profile-card-1 .social-icons-1 {
   margin-top: 15px;
 }
-.social-icons-1 a {
+.profile-card-1 .social-icons-1 a {
   font-size: 1.4rem;
   margin: 0 8px;
   color: #007bff;
+  transition: color 0.2s;
 }
-.social-icons-1 a:hover {
+.profile-card-1 .social-icons-1 a:hover {
   color: #0056b3;
+}
+
+/* Availability Badge */
+.profile-card-1 .availability-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.profile-card-1 .availability-badge i {
+  font-size: 14px;
+}
+.profile-card-1 .availability-badge.available {
+  background-color: #20c170;
+  color: #155724;
+}
+.profile-card-1 .availability-badge.booked {
+  background-color: #fff3cd;
+  color: #856404;
+}
+.profile-card-1 .availability-badge.unavailable {
+  background-color: #f8d7da;
+  color: #721c24;
 }
