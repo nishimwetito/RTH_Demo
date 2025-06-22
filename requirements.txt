@@ -1,9 +1,13 @@
 asgiref==3.8.1
+charset-normalizer==3.4.2
 crispy-bootstrap5==2024.10
 Django==5.1.4
 django-crispy-forms==2.3
 django-phonenumber-field==8.0.0
 django-smart-selects==1.7.2
+et_xmlfile==2.0.0
+openpyxl==3.1.5
 phonenumbers==8.13.55
 pillow==11.1.0
+reportlab==4.4.2
 sqlparse==0.5.3

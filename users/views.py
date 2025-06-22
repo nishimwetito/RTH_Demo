@@ -13,6 +13,22 @@ import json
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render
+from django.contrib.auth.models import User
+from users.models import Level1Profile, Level2Profile, Level3Profile, CompanyProfile, Skill, Address
+from django.db import models
+import csv
+import io
+import openpyxl
+from django.http import HttpResponse
+from django.utils.timezone import is_aware
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
+from django.templatetags.static import static
 
 def index_view(request):
     return render(request, 'index.html')
@@ -68,7 +84,7 @@ def register(request):
             elif profile_type == 'company':
                 return redirect('company_dashboard')
             else:
-                return redirect('index')  # Default fallback  
+                return redirect('landing-page')  # Default fallback  
 
                 
     else:
@@ -314,8 +330,70 @@ def appoitment_view(request):
     return render(request,'appoitment.html')
 def market_place_view(request):
     return render(request,'market_place.html')
+@staff_member_required
 def superuser_dashboard(request):
-    return render(request,'superuser_dashboard.html')
+    # Key metrics
+    total_users = User.objects.count()
+    total_level1 = Level1Profile.objects.count()
+    total_level2 = Level2Profile.objects.count()
+    total_level3 = Level3Profile.objects.count()
+    total_companies = CompanyProfile.objects.count()
+    total_profiles = total_level1 + total_level2 + total_level3
+
+    # Example: Revenue (replace with your real logic)
+    total_revenue = 8450000  # Example static value
+
+    # Top skill
+    top_skill = (
+        Skill.objects.annotate(num_profiles=models.Count('level1_profiles') + models.Count('level2_profiles') + models.Count('level3_profiles'))
+        .order_by('-num_profiles')
+        .first()
+    )
+    top_skill_name = top_skill.name if top_skill else "N/A"
+    top_skill_percent = 32  # Example static value
+
+    # Top location
+    top_location = (
+        Address.objects.values('district')
+        .annotate(num=models.Count('id'))
+        .order_by('-num')
+        .first()
+    )
+    top_location_name = top_location['district'] if top_location else "N/A"
+    top_location_percent = 45  # Example static value
+
+    # Chart data (replace with real queries as needed)
+    profile_levels_chart = {
+        'labels': ['Level 1', 'Level 2', 'Level 3', 'Companies'],
+        'data': [total_level1, total_level2, total_level3, total_companies],
+    }
+    location_chart = {
+        'labels': ['Kigali', 'Huye', 'Musanze', 'Rubavu', 'Rwamagana'],
+        'data': [120, 50, 30, 25, 15],  # Replace with real counts
+    }
+    top_skills_chart = {
+        'labels': ['Plumbing', 'Catering', 'Mechanic', 'Electrician', 'Design'],
+        'data': [60, 45, 30, 25, 20],  # Replace with real counts
+    }
+    age_distribution_chart = {
+        'labels': ['18-24', '25-34', '35-44', '45+'],
+        'data': [70, 90, 40, 20],  # Replace with real counts
+    }
+
+    context = {
+        'total_users': total_users,
+        'total_revenue': total_revenue,
+        'top_skill': top_skill_name,
+        'top_skill_percent': top_skill_percent,
+        'top_location': top_location_name,
+        'top_location_percent': top_location_percent,
+        'profile_levels_chart': profile_levels_chart,
+        'location_chart': location_chart,
+        'top_skills_chart': top_skills_chart,
+        'age_distribution_chart': age_distribution_chart,
+    }
+    return render(request, 'superuser_dashboard.html', context)
+
 def subscription_plans_view(request):
     return render(request,'subscription_plans.html')
 
@@ -525,19 +603,16 @@ def new_inbox_view(request):
     return render(request, 'new_inbox.html',context)
 
 @login_required(login_url='login')
-
-
-
-def viewMessage(request,pk):
+def viewMessage(request, pk):
     profile = request.user.profile
     message = profile.messages.get(pk=pk)
-    if message.is_read == False:
-        message.is_read == True
+    if not message.is_read:
+        message.is_read = True
         message.save()
     context = {
-        'message':message
+        'message': message
     }
-    return render(request,'message.html',context)
+    return render(request, 'message.html', context)
 
 
 def createMessage(request, pk):
@@ -562,10 +637,312 @@ def createMessage(request, pk):
             message.save()
 
             messages.success(request, 'Your message was successfully sent!')
-            return redirect('index')
+            return redirect('allprofiles2')
 
     context = {'recipient': recipient, 'form': form}
     return render(request, 'message_form.html', context)
+
+@staff_member_required
+def export_users_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="users.csv"'
+    writer = csv.writer(response)
+    # Header
+    writer.writerow(['Username', 'Email', 'Phone', 'Address', 'Profile Level', 'Skills', 'Date Joined'])
+
+    from django.contrib.auth.models import User
+    for user in User.objects.all():
+        profile = None
+        profile_level = ''
+        phone = ''
+        address = ''
+        skills = ''
+        # Try Level1
+        try:
+            profile = user.level1profile
+            profile_level = 'Level 1'
+        except:
+            pass
+        # Try Level2
+        if not profile:
+            try:
+                profile = user.level2profile
+                profile_level = 'Level 2'
+            except:
+                pass
+        # Try Level3
+        if not profile:
+            try:
+                profile = user.level3profile
+                profile_level = 'Level 3'
+            except:
+                pass
+
+        if profile:
+            phone = str(getattr(profile, 'phone', ''))
+            addr = getattr(profile, 'address', None)
+            if addr:
+                address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
+            skills_qs = getattr(profile, 'skills', None)
+            if skills_qs:
+                skills = ', '.join([s.name for s in skills_qs.all()])
+        else:
+            phone = ''
+            address = ''
+            skills = ''
+            profile_level = ''
+
+        date_joined = user.date_joined.strftime('%Y-%m-%d %H:%M')
+        writer.writerow([
+            user.username,
+            user.email,
+            phone,
+            address,
+            profile_level,
+            skills,
+            date_joined
+        ])
+    return response
+
+@staff_member_required
+def export_users_excel(request):
+    from django.contrib.auth.models import User
+    import datetime
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "RwandaTempConnect Users"
+
+    # Branding: Title row
+    ws.merge_cells('A1:G1')
+    ws['A1'] = "RwandaTempConnect Hub - User Report"
+    ws['A1'].font = openpyxl.styles.Font(size=16, bold=True, color="FFFFFF")
+    ws['A1'].fill = openpyxl.styles.PatternFill("solid", fgColor="4FACFE")
+    ws['A1'].alignment = openpyxl.styles.Alignment(horizontal="center", vertical="center")
+
+    # Subtitle
+    ws.merge_cells('A2:G2')
+    ws['A2'] = "This document provides a summary of registered users on RwandaTempConnect Hub."
+    ws['A2'].font = openpyxl.styles.Font(size=11, italic=True, color="333333")
+    ws['A2'].alignment = openpyxl.styles.Alignment(horizontal="center", vertical="center")
+
+    # Header row
+    headers = ['Username', 'Email', 'Phone', 'Address', 'Profile Level', 'Skills', 'Date Joined']
+    ws.append(headers)
+    header_row = 3
+    for col, header in enumerate(headers, 1):
+        cell = ws.cell(row=header_row, column=col)
+        cell.font = openpyxl.styles.Font(bold=True, color="FFFFFF")
+        cell.fill = openpyxl.styles.PatternFill("solid", fgColor="4FACFE")
+        cell.alignment = openpyxl.styles.Alignment(horizontal="center", vertical="center")
+        ws.column_dimensions[openpyxl.utils.get_column_letter(col)].width = 18
+
+    # Data rows
+    for user in User.objects.all():
+        profile = None
+        profile_level = ''
+        phone = ''
+        address = ''
+        skills = ''
+        # Try Level1
+        try:
+            profile = user.level1profile
+            profile_level = 'Level 1'
+        except:
+            pass
+        # Try Level2
+        if not profile:
+            try:
+                profile = user.level2profile
+                profile_level = 'Level 2'
+            except:
+                pass
+        # Try Level3
+        if not profile:
+            try:
+                profile = user.level3profile
+                profile_level = 'Level 3'
+            except:
+                pass
+
+        if profile:
+            phone = str(getattr(profile, 'phone', ''))
+            addr = getattr(profile, 'address', None)
+            if addr:
+                address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
+            skills_qs = getattr(profile, 'skills', None)
+            if skills_qs:
+                skills = ', '.join([s.name for s in skills_qs.all()])
+        else:
+            phone = ''
+            address = ''
+            skills = ''
+            profile_level = ''
+
+        date_joined = user.date_joined
+        if is_aware(date_joined):
+            date_joined = date_joined.replace(tzinfo=None)
+
+        ws.append([
+            user.username,
+            user.email,
+            phone,
+            address,
+            profile_level,
+            skills,
+            date_joined.strftime('%Y-%m-%d %H:%M')
+        ])
+
+    # Zebra striping for rows
+    for row in ws.iter_rows(min_row=header_row+1, max_row=ws.max_row, min_col=1, max_col=7):
+        for cell in row:
+            if cell.row % 2 == 0:
+                cell.fill = openpyxl.styles.PatternFill("solid", fgColor="E3F0FF")
+            else:
+                cell.fill = openpyxl.styles.PatternFill("solid", fgColor="FFFFFF")
+            cell.alignment = openpyxl.styles.Alignment(vertical="center")
+
+    # Footer
+    footer_row = ws.max_row + 2
+    ws.merge_cells(start_row=footer_row, start_column=1, end_row=footer_row, end_column=7)
+    ws.cell(row=footer_row, column=1).value = "Generated by RwandaTempConnect Hub Admin Dashboard"
+    ws.cell(row=footer_row, column=1).font = openpyxl.styles.Font(italic=True, color="888888")
+    ws.cell(row=footer_row, column=1).alignment = openpyxl.styles.Alignment(horizontal="center")
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="users.xlsx"'
+    wb.save(response)
+    return response
+
+@staff_member_required
+def export_users_pdf(request):
+    from django.contrib.auth.models import User
+    import os
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="users_report.pdf"'
+
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4)
+    elements = []
+    styles = getSampleStyleSheet()
+
+    # Branding: Logo (optional)
+    logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'logo.png')
+    if os.path.exists(logo_path):
+        elements.append(Image(logo_path, width=120, height=60))
+        elements.append(Spacer(1, 12))
+
+    # Title and explanation
+    title = Paragraph("<b>RwandaTempConnect Hub - User Report</b>", styles['Title'])
+    subtitle = Paragraph(
+        "This document provides a summary of registered users on RwandaTempConnect Hub. "
+        "It includes key user information for administrative and analytical purposes.",
+        styles['Normal']
+    )
+    elements.extend([title, Spacer(1, 8), subtitle, Spacer(1, 20)])
+
+    # Table header (removed Status)
+    data = [['Username', 'Email', 'Phone', 'Address', 'Profile Level', 'Skills', 'Date Joined']]
+
+    # Collect user data
+    for user in User.objects.all():
+        profile = None
+        profile_level = ''
+        phone = ''
+        address = ''
+        skills = ''
+        # Try Level1
+        try:
+            profile = user.level1profile
+            profile_level = 'Level 1'
+        except:
+            pass
+        # Try Level2
+        if not profile:
+            try:
+                profile = user.level2profile
+                profile_level = 'Level 2'
+            except:
+                pass
+        # Try Level3
+        if not profile:
+            try:
+                profile = user.level3profile
+                profile_level = 'Level 3'
+            except:
+                pass
+
+        if profile:
+            phone = str(getattr(profile, 'phone', ''))
+            addr = getattr(profile, 'address', None)
+            if addr:
+                address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
+            skills_qs = getattr(profile, 'skills', None)
+            if skills_qs:
+                skills = ', '.join([s.name for s in skills_qs.all()])
+        else:
+            phone = ''
+            address = ''
+            skills = ''
+            profile_level = ''
+
+        date_joined = user.date_joined.strftime('%Y-%m-%d %H:%M')
+        data.append([
+            user.username,
+            user.email,
+            phone,
+            address,
+            profile_level,
+            skills,
+            date_joined
+        ])
+
+    # Table styling
+    table = Table(data, repeatRows=1, colWidths=[60, 100, 70, 120, 60, 100, 70])
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#4facfe')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+        ('FONTSIZE', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(table)
+    elements.append(Spacer(1, 12))
+
+    # Footer
+    footer = Paragraph(
+        "<i>Generated by RwandaTempConnect Hub Admin Dashboard</i>",
+        styles['Normal']
+    )
+    elements.append(footer)
+
+    doc.build(elements)
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+@login_required(login_url='login')
+def mark_message_read(request, pk):
+    if request.method == 'POST':
+        profile = request.user.profile
+        try:
+            message = profile.messages.get(pk=pk)
+            if not message.is_read:
+                message.is_read = True
+                message.save()
+            return JsonResponse({'success': True})
+        except Message.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Message not found'}, status=404)
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 
 
 

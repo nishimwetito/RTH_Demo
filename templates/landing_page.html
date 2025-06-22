@@ -399,6 +399,16 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
+            {% if request.user.is_authenticated and request.user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'superuser-dashboard' %}">Dashboard</a>
+              </li>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'home' %}">All Workers</a>
+              </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link text-white" href="#how-it-works">Jobs & Opportunities</a>
             </li>
@@ -409,11 +419,25 @@
             <li class="nav-item">
               <a class="nav-link text-white" href="{% url 'market-place' %}">Market place</a>
             </li>
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'inbox' %}">Messages</a>
+              </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-outline-success ms-2" href="{% url 'register' %}">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-warning ms-2" href="{% url 'logout' %}"><i class="fas fa-power-off"></i></a>
+            </li>
           </ul>
-          <div class="ms-lg-3 mt-3 mt-lg-0">
+          {% comment %} <div class="ms-lg-3 mt-3 mt-lg-0">
             <a href="/login" class="btn btn-outline-success me-2">Log In</a>
             <a href="/register" class="btn btn-outline-primary">Sign Up</a>
-          </div>
+          </div> {% endcomment %}
         </div>
       </div>
     </nav>
@@ -636,7 +660,14 @@
                   </div>
 
                   <div class="col-12 mt-4 text-center">
-                    <a href="{% url 'allprofiles1' %}" class="btn btn-primary">Explore More</a>
+                    <a href="{% if request.user.is_authenticated %}
+                        {% url 'allprofiles1' %}
+                      {% else %}
+                        {% url 'register' %}
+                      {% endif %}"
+                      class="btn btn-primary">
+                      Explore More
+                    </a>
                   </div>
                 </div>
               </div>
@@ -652,7 +683,14 @@
                     {% include 'partials/profile_card2.html' %}
                   {% endfor %}
                   <div class="col-12 mt-4 text-center">
-                    <a href="{% url 'allprofiles2' %}" class="btn btn-primary text-white">Explore More</a>
+                    <a href="{% if request.user.is_authenticated %}
+                        {% url 'allprofiles2' %}
+                      {% else %}
+                        {% url 'register' %}
+                      {% endif %}"
+                      class="btn btn-primary text-white">
+                      Explore More
+                    </a>
                   </div>
                 </div>
               </div>
@@ -668,7 +706,14 @@
                     {% include 'partials/profile_card3.html' %}
                   {% endfor %}
                   <div class="col-12 mt-4 text-center">
-                    <a href="{% url 'allprofiles3' %}" class="btn btn-primary">Explore More</a>
+                    <a href="{% if request.user.is_authenticated %}
+                        {% url 'allprofiles3' %}
+                      {% else %}
+                        {% url 'register' %}
+                      {% endif %}"
+                      class="btn btn-primary">
+                      Explore More
+                    </a>
                   </div>
                 </div>
               </div>
@@ -684,7 +729,14 @@
                     {% include 'partials/companyprofile_card.html' %}
                   {% endfor %}
                   <div class="col-12 mt-4 text-center">
-                    <a href="{% url 'allcompanyprofiles' %}" class="btn btn-primary">Explore More</a>
+                    <a href=" {% if request.user.is_authenticated %}
+                        {% url 'allcompanyprofiles' %}
+                      {% else %}
+                        {% url 'register' %}
+                      {% endif %}"
+                      class="btn btn-primary">
+                      Explore More
+                    </a>
                   </div>
                 </div>
               </div>

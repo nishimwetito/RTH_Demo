@@ -4,7 +4,6 @@ from .import views
 urlpatterns = [
     path('',views.landing_page_view,name='landing-page'),
     path('home/',views.home_view,name='home'),
-    path('index/', views.index_view, name='index'),
     path('register/', views.register, name='register'),
     path('login/',views.login_view,name='login'),
     path('logout/',views.logout_view,name='logout'),
@@ -39,16 +38,8 @@ urlpatterns = [
      
    
     path('marketplace/', views.market_place_view, name='market-place'),
-
-
-
-
-
-
-    
-
-
-    
-
-
+    path('export/csv/', views.export_users_csv, name='export_users_csv'),
+    path('export/excel/', views.export_users_excel, name='export_users_excel'),
+    path('export/pdf/', views.export_users_pdf, name='export_users_pdf'),
+    path('messages/mark-read/<uuid:pk>/', views.mark_message_read, name='mark_message_read'),
 ]
