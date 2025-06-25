@@ -29,6 +29,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
 from django.templatetags.static import static
+from datetime import datetime
 
 def index_view(request):
     return render(request, 'index.html')
@@ -392,6 +393,13 @@ def superuser_dashboard(request):
         'top_skills_chart': top_skills_chart,
         'age_distribution_chart': age_distribution_chart,
     }
+    all_skills = Skill.objects.all()
+    all_districts = Address.objects.values_list('district', flat=True).distinct()
+    context.update({
+        'all_skills': all_skills,
+        'all_districts': all_districts,
+        'filtered_profiles': get_filtered_profiles(request),  # Add this line
+    })
     return render(request, 'superuser_dashboard.html', context)
 
 def subscription_plans_view(request):
@@ -647,86 +655,44 @@ def export_users_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="users.csv"'
     writer = csv.writer(response)
-    # Header
     writer.writerow(['Username', 'Email', 'Phone', 'Address', 'Profile Level', 'Skills', 'Date Joined'])
 
-    from django.contrib.auth.models import User
-    for user in User.objects.all():
-        profile = None
-        profile_level = ''
-        phone = ''
+    profiles = get_filtered_profiles(request)
+    for profile in profiles:
+        user = getattr(profile, 'user', None)
+        username = user.username if user else ''
+        email = user.email if user else ''
+        phone = getattr(profile, 'phone', '')
         address = ''
+        if getattr(profile, 'address', None):
+            addr = profile.address
+            address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
+        profile_level = getattr(profile, 'level', '')
         skills = ''
-        # Try Level1
-        try:
-            profile = user.level1profile
-            profile_level = 'Level 1'
-        except:
-            pass
-        # Try Level2
-        if not profile:
-            try:
-                profile = user.level2profile
-                profile_level = 'Level 2'
-            except:
-                pass
-        # Try Level3
-        if not profile:
-            try:
-                profile = user.level3profile
-                profile_level = 'Level 3'
-            except:
-                pass
-
-        if profile:
-            phone = str(getattr(profile, 'phone', ''))
-            addr = getattr(profile, 'address', None)
-            if addr:
-                address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
-            skills_qs = getattr(profile, 'skills', None)
-            if skills_qs:
-                skills = ', '.join([s.name for s in skills_qs.all()])
-        else:
-            phone = ''
-            address = ''
-            skills = ''
-            profile_level = ''
-
-        date_joined = user.date_joined.strftime('%Y-%m-%d %H:%M')
-        writer.writerow([
-            user.username,
-            user.email,
-            phone,
-            address,
-            profile_level,
-            skills,
-            date_joined
-        ])
+        if hasattr(profile, 'skills'):
+            skills = ', '.join([s.name for s in profile.skills.all()])
+        date_joined = user.date_joined.strftime('%Y-%m-%d %H:%M') if user else ''
+        writer.writerow([username, email, phone, address, profile_level, skills, date_joined])
     return response
 
 @staff_member_required
 def export_users_excel(request):
-    from django.contrib.auth.models import User
     import datetime
-
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "RwandaTempConnect Users"
 
-    # Branding: Title row
     ws.merge_cells('A1:G1')
     ws['A1'] = "RwandaTempConnect Hub - User Report"
     ws['A1'].font = openpyxl.styles.Font(size=16, bold=True, color="FFFFFF")
     ws['A1'].fill = openpyxl.styles.PatternFill("solid", fgColor="4FACFE")
     ws['A1'].alignment = openpyxl.styles.Alignment(horizontal="center", vertical="center")
 
-    # Subtitle
     ws.merge_cells('A2:G2')
     ws['A2'] = "This document provides a summary of registered users on RwandaTempConnect Hub."
     ws['A2'].font = openpyxl.styles.Font(size=11, italic=True, color="333333")
     ws['A2'].alignment = openpyxl.styles.Alignment(horizontal="center", vertical="center")
 
-    # Header row
     headers = ['Username', 'Email', 'Phone', 'Address', 'Profile Level', 'Skills', 'Date Joined']
     ws.append(headers)
     header_row = 3
@@ -737,63 +703,28 @@ def export_users_excel(request):
         cell.alignment = openpyxl.styles.Alignment(horizontal="center", vertical="center")
         ws.column_dimensions[openpyxl.utils.get_column_letter(col)].width = 18
 
-    # Data rows
-    for user in User.objects.all():
-        profile = None
-        profile_level = ''
-        phone = ''
+    profiles = get_filtered_profiles(request)
+    for profile in profiles:
+        user = getattr(profile, 'user', None)
+        username = user.username if user else ''
+        email = user.email if user else ''
+        phone = getattr(profile, 'phone', '')
         address = ''
+        if getattr(profile, 'address', None):
+            addr = profile.address
+            address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
+        profile_level = getattr(profile, 'level', '')
         skills = ''
-        # Try Level1
-        try:
-            profile = user.level1profile
-            profile_level = 'Level 1'
-        except:
-            pass
-        # Try Level2
-        if not profile:
-            try:
-                profile = user.level2profile
-                profile_level = 'Level 2'
-            except:
-                pass
-        # Try Level3
-        if not profile:
-            try:
-                profile = user.level3profile
-                profile_level = 'Level 3'
-            except:
-                pass
-
-        if profile:
-            phone = str(getattr(profile, 'phone', ''))
-            addr = getattr(profile, 'address', None)
-            if addr:
-                address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
-            skills_qs = getattr(profile, 'skills', None)
-            if skills_qs:
-                skills = ', '.join([s.name for s in skills_qs.all()])
-        else:
-            phone = ''
-            address = ''
-            skills = ''
-            profile_level = ''
-
+        if hasattr(profile, 'skills'):
+            skills = ', '.join([s.name for s in profile.skills.all()])
         date_joined = user.date_joined
-        if is_aware(date_joined):
+        if user and is_aware(date_joined):
             date_joined = date_joined.replace(tzinfo=None)
-
         ws.append([
-            user.username,
-            user.email,
-            phone,
-            address,
-            profile_level,
-            skills,
-            date_joined.strftime('%Y-%m-%d %H:%M')
+            username, email, phone, address, profile_level, skills,
+            date_joined.strftime('%Y-%m-%d %H:%M') if user else ''
         ])
 
-    # Zebra striping for rows
     for row in ws.iter_rows(min_row=header_row+1, max_row=ws.max_row, min_col=1, max_col=7):
         for cell in row:
             if cell.row % 2 == 0:
@@ -802,7 +733,6 @@ def export_users_excel(request):
                 cell.fill = openpyxl.styles.PatternFill("solid", fgColor="FFFFFF")
             cell.alignment = openpyxl.styles.Alignment(vertical="center")
 
-    # Footer
     footer_row = ws.max_row + 2
     ws.merge_cells(start_row=footer_row, start_column=1, end_row=footer_row, end_column=7)
     ws.cell(row=footer_row, column=1).value = "Generated by RwandaTempConnect Hub Admin Dashboard"
@@ -816,9 +746,7 @@ def export_users_excel(request):
 
 @staff_member_required
 def export_users_pdf(request):
-    from django.contrib.auth.models import User
     import os
-
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="users_report.pdf"'
 
@@ -827,13 +755,11 @@ def export_users_pdf(request):
     elements = []
     styles = getSampleStyleSheet()
 
-    # Branding: Logo (optional)
     logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'logo.png')
     if os.path.exists(logo_path):
         elements.append(Image(logo_path, width=120, height=60))
         elements.append(Spacer(1, 12))
 
-    # Title and explanation
     title = Paragraph("<b>RwandaTempConnect Hub - User Report</b>", styles['Title'])
     subtitle = Paragraph(
         "This document provides a summary of registered users on RwandaTempConnect Hub. "
@@ -842,63 +768,25 @@ def export_users_pdf(request):
     )
     elements.extend([title, Spacer(1, 8), subtitle, Spacer(1, 20)])
 
-    # Table header (removed Status)
     data = [['Username', 'Email', 'Phone', 'Address', 'Profile Level', 'Skills', 'Date Joined']]
 
-    # Collect user data
-    for user in User.objects.all():
-        profile = None
-        profile_level = ''
-        phone = ''
+    profiles = get_filtered_profiles(request)
+    for profile in profiles:
+        user = getattr(profile, 'user', None)
+        username = user.username if user else ''
+        email = user.email if user else ''
+        phone = getattr(profile, 'phone', '')
         address = ''
+        if getattr(profile, 'address', None):
+            addr = profile.address
+            address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
+        profile_level = getattr(profile, 'level', '')
         skills = ''
-        # Try Level1
-        try:
-            profile = user.level1profile
-            profile_level = 'Level 1'
-        except:
-            pass
-        # Try Level2
-        if not profile:
-            try:
-                profile = user.level2profile
-                profile_level = 'Level 2'
-            except:
-                pass
-        # Try Level3
-        if not profile:
-            try:
-                profile = user.level3profile
-                profile_level = 'Level 3'
-            except:
-                pass
+        if hasattr(profile, 'skills'):
+            skills = ', '.join([s.name for s in profile.skills.all()])
+        date_joined = user.date_joined.strftime('%Y-%m-%d %H:%M') if user else ''
+        data.append([username, email, phone, address, profile_level, skills, date_joined])
 
-        if profile:
-            phone = str(getattr(profile, 'phone', ''))
-            addr = getattr(profile, 'address', None)
-            if addr:
-                address = f"{addr.village}, {addr.cell}, {addr.sector}, {addr.district}, {addr.province}"
-            skills_qs = getattr(profile, 'skills', None)
-            if skills_qs:
-                skills = ', '.join([s.name for s in skills_qs.all()])
-        else:
-            phone = ''
-            address = ''
-            skills = ''
-            profile_level = ''
-
-        date_joined = user.date_joined.strftime('%Y-%m-%d %H:%M')
-        data.append([
-            user.username,
-            user.email,
-            phone,
-            address,
-            profile_level,
-            skills,
-            date_joined
-        ])
-
-    # Table styling
     table = Table(data, repeatRows=1, colWidths=[60, 100, 70, 120, 60, 100, 70])
     table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#4facfe')),
@@ -914,7 +802,6 @@ def export_users_pdf(request):
     elements.append(table)
     elements.append(Spacer(1, 12))
 
-    # Footer
     footer = Paragraph(
         "<i>Generated by RwandaTempConnect Hub Admin Dashboard</i>",
         styles['Normal']
@@ -943,6 +830,68 @@ def mark_message_read(request, pk):
         except Message.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Message not found'}, status=404)
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
+
+def get_filtered_profiles(request):
+    level = request.GET.get('level')
+    skill_id = request.GET.get('skill')
+    location = request.GET.get('location')
+    age_range = request.GET.get('age_range')
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    # Collect all profiles based on level
+    profiles = []
+    if level == 'level1' or not level:
+        profiles += list(Level1Profile.objects.all())
+    if level == 'level2' or not level:
+        profiles += list(Level2Profile.objects.all())
+    if level == 'level3' or not level:
+        profiles += list(Level3Profile.objects.all())
+    if level == 'company' or not level:
+        profiles += list(CompanyProfile.objects.all())
+
+    # Filter by skill
+    if skill_id:
+        skill = Skill.objects.filter(id=skill_id).first()
+        if skill:
+            profiles = [p for p in profiles if hasattr(p, 'skills') and skill in p.skills.all()]
+
+    # Filter by location (district)
+    if location:
+        profiles = [p for p in profiles if p.address and p.address.district == location]
+
+    # Filter by age range (for Level1/2/3 only, assuming user.profile has date_of_birth or user has date_joined)
+    if age_range:
+        now = datetime.now().date()
+        age_bounds = {
+            '18-24': (18, 24),
+            '25-34': (25, 34),
+            '35-44': (35, 44),
+            '45+': (45, 150),
+        }
+        min_age, max_age = age_bounds.get(age_range, (0, 150))
+        filtered = []
+        for p in profiles:
+            user = getattr(p, 'user', None)
+            if user and hasattr(user, 'profile') and hasattr(user.profile, 'date_of_birth') and user.profile.date_of_birth:
+                dob = user.profile.date_of_birth
+                age = (now - dob).days // 365
+                if min_age <= age <= max_age:
+                    filtered.append(p)
+            else:
+                # If no DOB, skip or include based on your policy
+                pass
+        profiles = filtered if filtered else profiles
+
+    # Filter by join date (user.date_joined)
+    if start_date:
+        start = datetime.strptime(start_date, '%Y-%m-%d')
+        profiles = [p for p in profiles if hasattr(p, 'user') and p.user.date_joined.date() >= start.date()]
+    if end_date:
+        end = datetime.strptime(end_date, '%Y-%m-%d')
+        profiles = [p for p in profiles if hasattr(p, 'user') and p.user.date_joined.date() <= end.date()]
+
+    return profiles
 
 
 
